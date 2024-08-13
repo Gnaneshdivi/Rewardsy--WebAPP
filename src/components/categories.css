@@ -1,0 +1,60 @@
+/* src/components/Categories.css */
+.categories-container {
+    width: 100%;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    text-align: center;
+    color: #ffffff;
+  }
+  
+  .categories-list::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar for Safari and Chrome */
+  }
+  
+  .categories-title {
+    font-size: 1.5em;
+    color: #ffc107; /* Match the color for title */
+  }
+  
+  .categories-list {
+    display: flex;
+    overflow-x: auto; /* Make the list horizontally scrollable */
+    padding: 10px;
+    scroll-behavior: smooth;
+    white-space: nowrap; /* Prevent items from wrapping */
+    align-items: center; /* Center items vertically */
+  }
+  
+  .category-item {
+    display: inline-block;
+    margin: 0 10px; /* Space between items */
+    text-align: center;
+  }
+  
+  .category-icon {
+    width: 10vw; /* Adjust the size of the icons */
+    height: 10vw;
+    max-width: 100px; /* Set a maximum width */
+    max-height: 100px; /* Set a maximum height */
+    border-radius: 50%;
+    background-color: #333333; /* Placeholder color for icons */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .category-name {
+    margin-top: 10px;
+    font-size: 0.7em;
+    color: #ffc107; /* Match the color for category name */
+  }
+  
+  @media (max-width: 768px) {
+    .category-icon {
+      width: 20vw; /* Adjust size for smaller screens */
+      height: 20vw;
+      max-width: 80px;
+      max-height: 80px;
+    }
+  }
+  

@@ -1,0 +1,37 @@
+/* src/components/Tabs.css */
+.tabs-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333333; /* Background color for the tab container */
+  border-radius: 10px;
+  overflow: hidden;
+  width: 50vw;
+  margin: 0 auto;
+  padding: 2px;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #ffffff;
+  background-color: #333333;
+  
+  flex: 1;
+  text-align: center;
+}
+
+.tab:last-child {
+  border-right: none; /* Remove the border from the last tab */
+}
+
+.tab.active {
+  background-color: #000000; /* Active tab background color */
+  color: #ffc107;
+  border-radius: 10px; /* Active tab text color */
+}
+
+.tab-content-container {
+  position: relative;
+  margin-top: 20px;
+}

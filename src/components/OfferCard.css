@@ -1,0 +1,87 @@
+/* src/components/OfferCard.css */
+.offer-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #2e2e2e;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 10px;
+  width: 100% ; 
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.offer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.offer-header {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.offer-tag {
+  background-color: #444;
+  color: #fff;
+  padding: 5px 10px;
+  margin-left: 5px;
+  border-radius: 10px;
+  font-size: 0.55em;
+}
+
+.offer-body {
+  display: flex;
+  align-items: center;
+}
+
+.offer-logo img {
+  width: 80px;
+  height: auto;
+}
+
+.offer-details {
+  margin-left: 10px;
+  flex: 1;
+}
+
+.offer-title {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.offer-description {
+  font-size: 1em;
+  margin: 5px 0;
+}
+.redeemed-code{
+  font-size: 0.8em;
+  color: #ffc107;
+}
+.copy-message{
+  font-size: 0.6em;
+}
+
+.offer-button {
+  border: 2px solid #ffc107;
+  background-color: transparent;
+  border-width: 0.1em;
+  color: #ffc107;
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.65em;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.divider {
+  width: 2px;
+  height: 100%;
+  background-color: #fff; /* or another color that suits your design */
+  margin: 0 10px;
+}
+.offer-button:hover {
+  background-color: #ffc107;
+  color: #2e2e2e;
+}

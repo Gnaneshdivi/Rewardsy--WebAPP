@@ -1,0 +1,40 @@
+/* src/components/Carousel.css */
+
+/* Base Styles */
+.carousel {
+  flex: content;
+  padding: 10px; /* Increase width on smaller screens */
+  height: 20vh;
+  margin: 20px;
+  
+  justify-content: center; /* Center the carousel */
+}
+
+.carousel-inner {
+  height: 20vh; /* Set the desired height */
+  
+  border-radius: 10px;
+}
+
+.carousel-item {
+  height: 100%; /* Ensure the item takes the full height */
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the entire area without stretching */
+}
+
+.carousel-indicators {
+  bottom: 0px; /* Adjust the position of indicators if needed */
+}
+
+.carousel-indicators [data-bs-target] {
+  background-color: black; /* Customize the indicator color */
+}
+
+/* Adjustments for Smaller Screens */
+
+
+/* Adjustments for Larger Screens */
