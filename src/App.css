@@ -1,6 +1,3 @@
-/* src/App.css */
-
-/* General Reset and Global Styles */
 * {
   margin: 0;
   padding: 0;
@@ -26,30 +23,32 @@ a {
   min-width: 100vw;
 }
 
-/* Assuming you have a navbar class */
+/* Navbar Styles */
 .navbar {
   display: flex;
-  justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
+  justify-content: space-between;
+  align-items: center;
   background-color: #272727;
-  
-  position: relative;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  padding: 30px 20px;
 }
 
-/* This ensures the logo stays centered */
 .navbar-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 1.5em;
   color: #ffc107;
-  text-align: center;
 }
 
-/* Additional styling for other navbar items */
-.navbar-items {
-  position: absolute;
-  right: 20px;
+.authentication {
+  margin-left: auto;
   display: flex;
   gap: 10px;
 }
+
 .no-scroll {
   overflow: hidden;
 }
@@ -57,7 +56,6 @@ a {
 .scroll {
   overflow: auto;
 }
-
 
 .navbar-button {
   background-color: #ffc107;
@@ -70,4 +68,3 @@ a {
 .navbar-button:hover {
   background-color: #ffa000;
 }
-

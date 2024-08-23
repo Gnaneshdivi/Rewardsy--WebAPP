@@ -1,12 +1,18 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import StorePage from './pages/StorePage';
-import URLForwarding from './pages/URLForwarding';
-import RedirectToHome from './pages/RedirectToHomepage';
-import Footer from './components/Footer';
-import ReelsPage from './pages/ReelsPage';
-import './App.css'; // Include your global styles here
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  useLocation,
+} from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import StorePage from "./pages/StorePage";
+import URLForwarding from "./pages/URLForwarding";
+import RedirectToHome from "./pages/RedirectToHomepage";
+import Footer from "./components/Footer";
+import ReelsPage from "./pages/ReelsPage";
+import "./App.css"; // Include your global styles here
 
 const App = () => {
   return (
@@ -20,13 +26,27 @@ const AppContent = () => {
   const location = useLocation();
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <Link className="navbar-brand" to="/home">
-          <img src={'/Logo.png'} className="logo" alt='logo' />
+    <div className="full-screen">
+      <nav className="navbar">
+        <Link className="navbar-logo" to="/home">
+          <img src={"/Logo.png"} alt="logo" />
         </Link>
+
+        {/* <div className="authentication">
+          <Link className="navbar-button" to="/login">
+            Login
+          </Link>
+          <Link className="navbar-button" to="/SignUp">
+            SignUp
+          </Link>
+        </div> */}
       </nav>
-      <div className={location.pathname.startsWith('/reels') ? 'no-scroll' : 'scroll'}>
+
+      <div
+        className={
+          location.pathname.startsWith("/reels") ? "no-scroll" : "scroll"
+        }
+      >
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
@@ -36,7 +56,7 @@ const AppContent = () => {
           <Route path="/reels/:reelID" element={<ReelsPage />} />
           <Route path="/reels/" element={<ReelsPage />} />
         </Routes>
-        {!location.pathname.startsWith('/reels') && <Footer />}
+        {!location.pathname.startsWith("/reels") && <Footer />}
       </div>
     </div>
   );
