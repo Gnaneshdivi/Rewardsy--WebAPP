@@ -1,0 +1,23 @@
+.auth-modal {
+  position: fixed; /* Positioning relative to the viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the dialog */
+  /* Styling for the modal */
+  max-width: 400px; /* Max width of the modal */
+  width: 90%; /* Modal width on small devices */
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: rgb(190, 188, 24);
+  z-index: 1000; /* Make sure it sits on top of other content */
+}
+
+/* Responsive Media Query */
+@media (max-width: 600px) {
+  .auth-modal {
+    width: 90%;
+    border-radius: 8px; /* Adjust border-radius or other styles for small screens */
+  }
+}

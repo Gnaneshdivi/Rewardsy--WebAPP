@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
-  Route,
   Routes,
+  Route,
   Link,
   useLocation,
+  useNavigate, // import useNavigate for programmatically navigating
 } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import StorePage from "./pages/StorePage";
@@ -13,6 +14,7 @@ import RedirectToHome from "./pages/RedirectToHomepage";
 import Footer from "./components/Footer";
 import ReelsPage from "./pages/ReelsPage";
 import "./App.css"; // Include your global styles here
+import AuthModal from "./components/AuthModel";
 
 const App = () => {
   return (
@@ -24,6 +26,26 @@ const App = () => {
 
 const AppContent = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
+
+  useEffect(() => {
+    // Open the modal if the route is either /login or /signup
+    if (location.pathname === "/login" || location.pathname === "/signup") {
+      setAuthModalOpen(true);
+    } else {
+      setAuthModalOpen(false);
+    }
+  }, [location.pathname]);
+
+  const openAuthModal = (mode) => {
+    navigate(`/${mode}`); // Navigate programmatically to set URL
+  };
+
+  const closeAuthModal = () => {
+    setAuthModalOpen(false);
+    navigate("/home"); // Navigate back to home or another neutral path when closing the modal
+  };
 
   return (
     <div className="full-screen">
@@ -32,15 +54,29 @@ const AppContent = () => {
           <img src={"/Logo.png"} alt="logo" />
         </Link>
 
-        {/* <div className="authentication">
-          <Link className="navbar-button" to="/login">
+        <div className="authentication">
+          <button
+            className="navbar-button"
+            onClick={() => openAuthModal("login")}
+          >
             Login
-          </Link>
-          <Link className="navbar-button" to="/SignUp">
+          </button>
+          <button
+            className="navbar-button"
+            onClick={() => openAuthModal("signup")}
+          >
             SignUp
-          </Link>
-        </div> */}
+          </button>
+        </div>
       </nav>
+
+      {isAuthModalOpen && (
+        <AuthModal
+          isOpen={isAuthModalOpen}
+          close={closeAuthModal}
+          mode={location.pathname.substring(1)} // "login" or "signup"
+        />
+      )}
 
       <div
         className={

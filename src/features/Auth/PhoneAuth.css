@@ -1,0 +1,25 @@
+.phone-auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.phone-auth-container form {
+  width: 100%;
+}
+
+input[type="tel"] {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
