@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { auth, RecaptchaVerifier, signInWithPhoneNumber } from "../../firebase";
 import "./PhoneAuth.css"; // Ensure styles are set up for PhoneAuth
+import { Link } from "react-router-dom";
 
 const PhoneAuth = ({ onNumberSubmit }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -36,22 +37,40 @@ const PhoneAuth = ({ onNumberSubmit }) => {
   };
 
   return (
-    <div className="phone-auth-container">
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="phone-number">Phone Number:</label>
-        <input
-          type="text"
-          id="phone-number"
-          name="phone-number"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          placeholder="+916000000001" // Guide user with a placeholder
-          required
+    <div className="auth-container">
+      <div className="auth-left">
+        <h2>Login</h2>
+        {/* <p>Get access to your Orders, Wishlist and Recommendations</p> */}
+        <img
+          className="illustration"
+          src="/Login.png"
+          alt="Login Illustration"
         />
-        <button type="submit" className="submit-button">
-          Send OTP
-        </button>
-      </form>
+      </div>
+      <div className="auth-right">
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="phone-number">Enter Mobile number</label>
+          <input
+            type="text"
+            id="phone-number"
+            name="phone-number"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            placeholder="+916000000001"
+            required
+          />
+          {/* <p>
+            By continuing, you agree to our <a href="#">Terms of Use</a> and{" "}
+            <a href="#">Privacy Policy</a>.
+          </p> */}
+          <button type="submit" className="submit-button">
+            Request OTP
+          </button>
+        </form>
+        <p className="create-account">
+          New to the platform? <Link to="/signup">Create an account</Link>
+        </p>
+      </div>
       <div id="recaptcha-container"></div>
     </div>
   );

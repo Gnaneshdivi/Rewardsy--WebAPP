@@ -1,0 +1,68 @@
+.signup-details-container {
+  padding: 20px;
+  background-color: #f7f7f7; /* Light grey background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.signup-details-container h2 {
+  color: #333; /* Dark grey text color */
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333; /* Dark grey label color */
+  font-size: 14px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc; /* Light grey border */
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #333; /* Black background for the button */
+  color: #ffc107; /* Yellow text color */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+}
+
+.submit-button:hover {
+  background-color: #555; /* Slightly lighter black on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .signup-details-container {
+    padding: 15px;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"] {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .submit-button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
