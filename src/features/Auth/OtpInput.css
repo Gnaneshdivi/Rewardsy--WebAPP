@@ -1,19 +1,54 @@
 .otp-container {
+  position: relative; /* Ensure positioning context for the close button */
   display: flex;
-  max-width: 600px;
-  margin: 50px auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly darker shadow for better contrast */
-  border-radius: 8px;
+  width: 52vw; /* Match the width of PhoneAuth */
+  height: 75vh; /* Match the height of PhoneAuth */
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Similar shadow for consistency */
+  border-radius: 2px;
   overflow: hidden;
   flex-direction: row;
   background-color: #f7f7f7; /* Light grey background for the container */
+}
+
+.otp-input-box {
+  width: 40px; /* Increase width */
+  height: 40px; /* Increase height */
+  font-size: 24px; /* Increase font size for better readability */
+  text-align: center; /* Center the text */
+  border: 1px solid #ffc107; /* Yellow border */
+  border-radius: 4px; /* Rounded corners */
+  margin: 0 5px; /* Adjust spacing between input boxes */
+  background-color: #f7f7f7; /* Light grey background */
+  color: #333; /* Dark grey text color */
+}
+
+.otp-input-box:focus {
+  border-color: #e0a800; /* Darker yellow on focus */
+  outline: none; /* Remove default outline */
+}
+
+.close-button {
+  position: absolute; /* Position the button absolutely within the container */
+  top: 15px; /* Adjusted from the top edge */
+  right: 15px; /* Adjusted from the right edge */
+  background-color: transparent;
+  border: none;
+  font-size: 24px; /* Slightly larger for better visibility */
+  cursor: pointer;
+  color: #333;
+  z-index: 1; /* Ensure it stays above other elements */
+}
+
+.close-button:hover {
+  color: #000;
 }
 
 .otp-left {
   background-color: #ffc107; /* Yellow background */
   color: #333; /* Dark grey text color */
   padding: 30px;
-  flex: 1;
+  flex: 0.4; /* Match with PhoneAuth component */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,10 +56,12 @@
 }
 
 .otp-left h2 {
+  font-size: 24px;
   margin-bottom: 20px;
 }
 
 .otp-left p {
+  font-size: 16px;
   margin-bottom: 30px;
 }
 
@@ -34,9 +71,9 @@
 }
 
 .otp-right {
-  background-color: #333; /* Black background */
+  background-color: #e0dede; /* Black background */
   padding: 40px;
-  flex: 1.6;
+  flex: 0.6; /* Match with PhoneAuth component */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,48 +81,40 @@
   color: #ffc107; /* Yellow text color */
 }
 
-.otp-right form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.otp-right p {
+.otp-right label {
   font-size: 14px;
+  margin-bottom: 8px;
   color: #ffc107; /* Yellow text color */
-  margin-bottom: 20px;
-  text-align: center;
 }
 
-.otp-right .otp-inputs {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.otp-right input[type="text"] {
-  width: 40px;
-  padding: 10px;
-  font-size: 18px;
+.otp-right .otp-input {
+  width: 50px;
+  height: 50px;
+  margin: 0 5px; /* Spacing between OTP inputs */
+  font-size: 24px;
   text-align: center;
   border: 1px solid #ffc107; /* Yellow border */
   border-radius: 4px;
-  margin: 0 5px;
   background-color: #f7f7f7; /* Light grey background for inputs */
   color: #333; /* Dark grey text color */
 }
 
+.otp-right .otp-input:focus {
+  border-color: #e0a800; /* Darker yellow on focus */
+  outline: none; /* Remove default outline */
+}
+
 .otp-right .submit-button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   background-color: #ffc107; /* Yellow background */
   color: #333; /* Dark grey text color */
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
+  margin-top: 20px; /* Add spacing above the button */
 }
 
 .otp-right .submit-button:hover {
@@ -104,35 +133,49 @@
   color: #fff; /* White text for emphasis */
 }
 
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .otp-container {
+    width: 70vw; /* Match the width of PhoneAuth on medium screens */
+    height: auto; /* Auto height for better responsiveness */
+    flex-direction: column;
+  }
+
+  .otp-left,
+  .otp-right {
+    flex: none;
+    padding: 20px;
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .otp-container {
+    width: 80vw; /* Match the width of PhoneAuth on smaller screens */
+    height: auto; /* Auto height for better responsiveness */
     flex-direction: column;
-    max-width: 90%;
-    margin: 20px auto;
   }
 
-  .otp-left {
-    padding: 20px;
-    text-align: center;
-  }
-
+  .otp-left,
   .otp-right {
+    flex: none;
     padding: 20px;
+    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
   .otp-container {
-    max-width: 100%;
-    margin: 10px auto;
+    width: 84vw; /* Match the width of PhoneAuth on very small screens */
+    height: auto; /* Auto height for better responsiveness */
+    flex-direction: column;
   }
 
-  .otp-left {
-    padding: 15px;
-  }
-
+  .otp-left,
   .otp-right {
+    flex: none;
     padding: 15px;
+    width: 100%;
   }
 
   .otp-right input[type="text"] {

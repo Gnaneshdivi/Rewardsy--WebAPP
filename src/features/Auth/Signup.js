@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import "./Signup.css"; // Ensure styles are set up for Signup
 
 const Signup = ({ onNumberSubmit }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -11,11 +13,17 @@ const Signup = ({ onNumberSubmit }) => {
     }
   };
 
+  const handleClose = () => {
+    navigate("/home"); // Navigate to home when close button is clicked
+  };
+
   return (
     <div className="signup-container">
+      <button className="close-button" onClick={handleClose}>
+        X
+      </button>
       <div className="signup-left">
         <h2>Looks like you're new here!</h2>
-        <p>Sign up with your mobile number to get started</p>
         <img src="/Login.png" alt="Signup Illustration" />
       </div>
       <div className="signup-right">
@@ -33,7 +41,9 @@ const Signup = ({ onNumberSubmit }) => {
             Continue
           </button>
         </form>
-        <button className="login-button">Existing User? Log in</button>
+        <Link to="/login">
+          <button className="login-button">Existing User? Log in</button>
+        </Link>
       </div>
     </div>
   );

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { auth, RecaptchaVerifier, signInWithPhoneNumber } from "../../firebase";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./PhoneAuth.css"; // Ensure styles are set up for PhoneAuth
 import { Link } from "react-router-dom";
 
 const PhoneAuth = ({ onNumberSubmit }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [recaptchaVerifier, setRecaptchaVerifier] = useState(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     if (!recaptchaVerifier) {
@@ -36,11 +38,17 @@ const PhoneAuth = ({ onNumberSubmit }) => {
     }
   };
 
+  const handleClose = () => {
+    navigate("/home"); // Navigate to home when close button is clicked
+  };
+
   return (
     <div className="auth-container">
+      <button className="close-button" onClick={handleClose}>
+        X
+      </button>
       <div className="auth-left">
         <h2>Login</h2>
-        {/* <p>Get access to your Orders, Wishlist and Recommendations</p> */}
         <img
           className="illustration"
           src="/Login.png"
@@ -59,10 +67,6 @@ const PhoneAuth = ({ onNumberSubmit }) => {
             placeholder="+916000000001"
             required
           />
-          {/* <p>
-            By continuing, you agree to our <a href="#">Terms of Use</a> and{" "}
-            <a href="#">Privacy Policy</a>.
-          </p> */}
           <button type="submit" className="submit-button">
             Request OTP
           </button>

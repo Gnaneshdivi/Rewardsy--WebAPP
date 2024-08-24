@@ -4,7 +4,7 @@ import { Dialog } from "@reach/dialog";
 import "@reach/dialog/styles.css";
 import PhoneAuth from "../../features/Auth/PhoneAuth";
 import Signup from "../../features/Auth/Signup";
-import OtpInput from "../../features/Auth/OtpInput";
+import OtpInputs from "../../features/Auth/OtpInput";
 import OtpInputSignUp from "../../features/Auth/OtpInputSignUp";
 import SignupDetails from "../../features/Auth/SignupDetails";
 import { auth, signInWithPhoneNumber } from "../../firebase"; // Import Firebase auth functions
@@ -83,7 +83,7 @@ const AuthModal = ({ isOpen, close, mode }) => {
       }}
       className="auth-modal"
     >
-      <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+      {/* <ProgressBar currentStep={currentStep} totalSteps={totalSteps} /> */}
 
       {mode === "login" && (
         <>
@@ -95,7 +95,7 @@ const AuthModal = ({ isOpen, close, mode }) => {
             />
           )}
           {currentStep === 2 && (
-            <OtpInput
+            <OtpInputs
               onOTPSubmit={handleOTPSubmit}
               loading={loading}
               error={error}

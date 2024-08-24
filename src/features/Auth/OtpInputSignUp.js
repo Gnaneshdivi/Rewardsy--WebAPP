@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import OtpInput from "react-otp-input";
 import "./OtpInputSignUp.css"; // Ensure styles are set up for OtpInputSignUp
 
 const OtpInputSignUp = ({ confirmationResult, onOTPSubmit }) => {
@@ -25,8 +26,15 @@ const OtpInputSignUp = ({ confirmationResult, onOTPSubmit }) => {
     }
   };
 
+  const handleClose = () => {
+    navigate("/home"); // Navigate to home when close button is clicked
+  };
+
   return (
     <div className="otp-container">
+      <button className="close-button" onClick={handleClose}>
+        X
+      </button>
       <div className="otp-left">
         <h2>Enter OTP</h2>
         <p>We have sent an OTP to {phoneNumber}</p>
@@ -35,13 +43,14 @@ const OtpInputSignUp = ({ confirmationResult, onOTPSubmit }) => {
       <div className="otp-right">
         <form onSubmit={handleSubmit}>
           <label htmlFor="otp">Enter OTP</label>
-          <input
-            type="text"
-            id="otp"
-            name="otp"
+          <OtpInput
             value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            required
+            onChange={setOtp}
+            numInputs={6}
+            // renderSeparator={<span>-</span>}
+            renderInput={(props) => (
+              <input {...props} className="otp-input-box" />
+            )}
           />
           <button type="submit" className="submit-button">
             Verify OTP
