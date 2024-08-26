@@ -91,6 +91,8 @@ const AppContent = () => {
           <Route path="/qr/:shortUrl" element={<URLForwarding />} />
           <Route path="/reels/:reelID" element={<ReelsPage />} />
           <Route path="/reels/" element={<ReelsPage />} />
+          <Route path="/Login" element={<AuthModal />} />
+          <Route path="/Signup" element={<AuthModal />} />
         </Routes>
         {!location.pathname.startsWith("/reels") && <Footer />}
       </div>

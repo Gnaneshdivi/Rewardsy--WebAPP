@@ -32,6 +32,7 @@ const AuthModal = ({ isOpen, close, mode }) => {
 
       signInWithPhoneNumber(auth, number, appVerifier)
         .then((confirmationResult) => {
+          console.log("step : "+currentStep)
           setConfirmationResult(confirmationResult); // Save confirmation result for OTP verification
           setCurrentStep(2); // Proceed to OTP step
         })
