@@ -1,4 +1,3 @@
-// Signup.js
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsFillShieldLockFill, BsTelephoneFill } from "react-icons/bs";
@@ -6,7 +5,7 @@ import { CgSpinner } from "react-icons/cg";
 import OtpInput from "otp-input-react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { auth, db } from "../../firebase"; // Ensure db is imported to access Firestore
+import { auth, db } from "../../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
 import {
@@ -17,7 +16,7 @@ import {
   setDoc,
   doc,
 } from "firebase/firestore";
-import UserContext from "../../context/UserContext"; // Import the context
+import UserContext from "../../context/UserContext";
 
 const Signup = () => {
   const [otp, setOtp] = useState("");
@@ -33,7 +32,7 @@ const Signup = () => {
   });
 
   const navigate = useNavigate();
-  const { setUserDetails } = useContext(UserContext); // Use context to set user details
+  const { setUserDetails } = useContext(UserContext);
 
   async function checkIfUserExists(phoneNumber) {
     try {
@@ -43,7 +42,7 @@ const Signup = () => {
       return !querySnapshot.empty;
     } catch (error) {
       console.error("Error checking if user exists:", error);
-      return false; // If an error occurs, assume the user does not exist
+      return false;
     }
   }
 
@@ -54,9 +53,7 @@ const Signup = () => {
         "recaptcha-container",
         {
           size: "invisible",
-          callback: (response) => {
-            onSignup();
-          },
+          callback: () => onSignup(),
         }
       );
     }
@@ -65,7 +62,7 @@ const Signup = () => {
   async function onSignup() {
     setLoading(true);
 
-    const formatPh = "+" + ph; // Ensure phone number is formatted with country code
+    const formatPh = "+" + ph;
     const userExists = await checkIfUserExists(formatPh);
 
     if (userExists) {
@@ -77,9 +74,7 @@ const Signup = () => {
 
     onCaptchVerify();
 
-    const SignupVerifier = window.recaptchaVerifier;
-
-    signInWithPhoneNumber(auth, formatPh, SignupVerifier)
+    signInWithPhoneNumber(auth, formatPh, window.recaptchaVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
         setLoading(false);
@@ -87,7 +82,7 @@ const Signup = () => {
         toast.success("OTP sent successfully!");
       })
       .catch((error) => {
-        console.log(error);
+        console.error("Failed to send OTP:", error);
         setLoading(false);
         toast.error("Failed to send OTP. Please try again.");
       });
@@ -100,7 +95,7 @@ const Signup = () => {
       setUser(res.user);
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      console.error("Failed to verify OTP:", err);
       setLoading(false);
       toast.error("Failed to verify OTP. Please try again.");
     }
@@ -120,15 +115,18 @@ const Signup = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      toast.error("Please complete OTP verification first.");
+      return;
+    }
+
     try {
-      // Ensure user data is saved correctly in Firestore
       await setDoc(doc(db, "users", user.uid), {
         ...formData,
-        phoneNumber: ph, // Save the phone number as well
-        uid: user.uid, // Save the user ID from Firebase Auth
+        phoneNumber: ph,
+        uid: user.uid,
       });
 
-      // Update context with user details
       setUserDetails({
         ...formData,
         uid: user.uid,
@@ -136,7 +134,7 @@ const Signup = () => {
       });
 
       toast.success("Details submitted successfully!");
-      navigate("/home"); // Redirect user after successful submission
+      navigate("/home");
     } catch (error) {
       console.error("Error saving user data:", error);
       toast.error("Failed to submit details. Please try again.");
@@ -227,8 +225,13 @@ const Signup = () => {
               <button
                 type="submit"
                 className="bg-black w-full py-3 text-yellow-500 rounded-md mt-4"
+                disabled={loading}
               >
-                Submit
+                {loading ? (
+                  <CgSpinner size={20} className="animate-spin" />
+                ) : (
+                  "Submit"
+                )}
               </button>
             </form>
           ) : (
@@ -259,6 +262,7 @@ const Signup = () => {
                   <button
                     onClick={onOTPVerify}
                     className="bg-black w-full flex gap-1 items-center justify-center py-2.5 text-yellow-500 rounded"
+                    disabled={loading}
                   >
                     {loading && (
                       <CgSpinner size={20} className="mt-1 animate-spin" />
@@ -291,6 +295,7 @@ const Signup = () => {
                   <button
                     onClick={onSignup}
                     className="bg-black w-full flex gap-1 items-center justify-center py-2.5 text-yellow-500 rounded"
+                    disabled={loading}
                   >
                     {loading && (
                       <CgSpinner size={20} className="mt-1 animate-spin" />
