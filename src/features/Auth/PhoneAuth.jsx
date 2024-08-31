@@ -109,11 +109,8 @@ const PhoneAuth = () => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-10 relative">
-      <div
-        className="bg-gray-300 shadow-lg flex flex-col md:flex-row relative"
-        style={{ width: "100%", maxWidth: "900px" }}
-      >
+    <div className="flex items-center justify-center mt-1 h-screen sm:h-96">
+      <div className="bg-[#FFEA35] shadow-lg flex flex-col md:flex-row w-full max-w-lg sm:max-w-2xl md:max-w-4xl relative">
         {/* Close Button */}
         <button
           className="absolute top-4 right-4 text-black text-2xl"
@@ -122,30 +119,31 @@ const PhoneAuth = () => {
           &times;
         </button>
 
-        <div className="w-full md:w-1/3 bg-yellow-500 p-8 flex flex-col justify-center items-center">
-          <h2 className="text-3xl text-white font-semibold">Login</h2>
-          <img
-            src="/Login.png"
-            alt="Illustration"
-            className="mb-6"
-            style={{ maxWidth: "250px" }}
-          />
+        <div className="w-full md:w-1/2 bg-[#FFEA35] p-8 flex flex-col justify-center items-center">
+          <h2 className="text-4xl sm:text-5xl md:text-7xl text-black font-semibold">
+            Get Started
+          </h2>
+          <h4 className="text-base sm:text-lg md:text-2xl text-black mt-2 text-center">
+            Saving cannot get any more easier. Sign Up and start saving right
+            now.
+          </h4>
         </div>
-        <div className="flex-1 p-8 flex flex-col justify-center">
+        <div className="m-2 bg-black w-1"></div>
+        <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center">
           <Toaster toastOptions={{ duration: 4000 }} />
-          <div id="recaptcha-container"></div>
+          <div className="hidden" id="recaptcha-container"></div>
           {user ? (
             <h2 className="text-center text-gray-800 font-medium text-2xl">
               👍 Login Success
             </h2>
           ) : (
-            <div className="flex flex-col gap-4 m-auto">
-              <h1 className="text-center text-gray-800 font-medium text-xl">
-                Enter Mobile number
+            <div className="flex flex-col gap-2">
+              <h1 className="text-center text-black font-medium text-4xl sm:text-6xl">
+                LOGIN
               </h1>
               {showOTP ? (
                 <>
-                  <div className="bg-yellow-500 text-white w-fit mx-auto p-4 rounded-full">
+                  <div className="bg-[#f7e22b] text-white w-fit mx-auto p-4 rounded-full">
                     <BsFillShieldLockFill size={30} />
                   </div>
                   <label
@@ -162,10 +160,20 @@ const PhoneAuth = () => {
                     disabled={false}
                     autoFocus
                     className="opt-container text-black"
-                  ></OtpInput>
+                  />
+                  <p className="text-xs mt-3 text-black text-center">
+                    Did not receive OTP?{" "}
+                    <button
+                      onClick={onSignup}
+                      to="/signup"
+                      className="text-blue-700"
+                    >
+                      Resend OTP
+                    </button>
+                  </p>
                   <button
                     onClick={onOTPVerify}
-                    className="bg-black w-full flex gap-1 items-center justify-center py-2.5 text-yellow-500 rounded"
+                    className="bg-black w-full flex mt-10 gap-1 items-center justify-center py-2.5 text-[#FFEA35] rounded"
                   >
                     {loading && (
                       <CgSpinner size={20} className="mt-1 animate-spin" />
@@ -175,7 +183,7 @@ const PhoneAuth = () => {
                 </>
               ) : (
                 <>
-                  <div className="bg-yellow-500 text-white w-fit mx-auto p-4 rounded-full">
+                  <div className="bg-[#f7e22b] text-white w-fit mx-auto p-4 rounded-full">
                     <BsTelephoneFill size={30} />
                   </div>
                   <label
@@ -195,9 +203,15 @@ const PhoneAuth = () => {
                       fontSize: "1rem",
                     }}
                   />
+                  <p className="text-xs mt-3 text-black text-center">
+                    New to the platform?{" "}
+                    <Link to="/signup" className="text-blue-700">
+                      Create an account
+                    </Link>
+                  </p>
                   <button
                     onClick={onSignup}
-                    className="bg-black w-full flex gap-1 items-center justify-center py-2.5 text-yellow-500 rounded"
+                    className="bg-black w-full flex gap-1 items-center justify-center mt-10 py-2.5 text-[#FFEA35] rounded"
                   >
                     {loading && (
                       <CgSpinner size={20} className="mt-1 animate-spin" />
@@ -206,12 +220,6 @@ const PhoneAuth = () => {
                   </button>
                 </>
               )}
-              <p className="text-gray-800 text-center mt-4">
-                New to the platform?{" "}
-                <Link to="/signup" className="text-yellow-500">
-                  Create an account
-                </Link>
-              </p>
             </div>
           )}
         </div>

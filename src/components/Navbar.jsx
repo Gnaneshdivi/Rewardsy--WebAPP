@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import AuthModal from "./AuthModel";
 import { Link } from "react-router-dom";
+import { HiMenu } from "react-icons/hi";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
@@ -9,6 +10,11 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
   const { userDetails, clearUserDetails } = useContext(UserContext); // Access user details from context
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   useEffect(() => {
     // Open the modal if the route is either /login or /signup
@@ -17,6 +23,9 @@ const Navbar = () => {
     } else {
       setAuthModalOpen(false);
     }
+
+    // Close the menu automatically when the location changes (e.g., navigation occurs)
+    setMenuOpen(false);
   }, [location.pathname]);
 
   const openAuthModal = (mode) => {
@@ -35,20 +44,19 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex justify-between items-center p-4 bg-black relative">
-        <div className="flex-1"></div>
-        <Link
-          to="/home"
-          className="text-yellow-500 text-2xl md:text-3xl font-bold absolute left-1/2 transform -translate-x-1/2"
-        >
-          <img src="/Logo.png" alt="Logo" className="h-8 md:h-10" />
-        </Link>
-        <div className="flex space-x-2 md:space-x-4 flex-1 justify-end">
+      <nav className="flex justify-between items-center p-3 bg-black">
+        <div className="flex-shrink-0">
+          <Link to="/home">
+            <img src="/Logo.png" alt="Logo" className="h-8 md:h-10" />
+          </Link>
+        </div>
+
+        <div className="hidden sm:flex gap-2">
           {userDetails ? (
             <>
               <span className="text-white">{userDetails.name}</span>
               <button
-                className="bg-red-500 text-white font-bold py-1 px-3 md:py-2 md:px-4 rounded"
+                className="bg-red-500 text-white font-bold py-2 px-5 rounded"
                 onClick={handleSignOut}
               >
                 Sign Out
@@ -57,13 +65,13 @@ const Navbar = () => {
           ) : (
             <>
               <button
-                className="bg-yellow-500 text-black font-bold py-1 px-3 md:py-2 md:px-4 rounded"
+                className="bg-yellow-500 text-black font-bold py-2 px-5 rounded"
                 onClick={() => openAuthModal("login")}
               >
                 Login
               </button>
               <button
-                className="bg-yellow-500 text-black font-bold py-1 px-3 md:py-2 md:px-4 rounded"
+                className="bg-black text-[#FFEA35] font-medium py-2 px-5 border border-[#FFEA35] rounded"
                 onClick={() => openAuthModal("signup")}
               >
                 SignUp
@@ -71,6 +79,52 @@ const Navbar = () => {
             </>
           )}
         </div>
+        <div className="sm:hidden flex items-center">
+          <HiMenu
+            className="text-white text-2xl cursor-pointer"
+            onClick={toggleMenu}
+          />
+        </div>
+
+        {menuOpen && (
+          <div className="sm:hidden absolute top-16 right-3 bg-[#252525d8] rounded-lg shadow-lg p-3 mt-1 flex flex-col z-10">
+            {userDetails ? (
+              <>
+                <span className="text-white mb-2">{userDetails.name}</span>
+                <button
+                  className="bg-red-500 text-white font-bold py-2 px-5 rounded mb-2"
+                  onClick={() => {
+                    handleSignOut();
+                    setMenuOpen(false); // Close menu on sign out
+                  }}
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className="bg-yellow-500 text-black font-bold py-2 px-5 rounded mb-2"
+                  onClick={() => {
+                    openAuthModal("login");
+                    setMenuOpen(false); // Close menu on navigation to login
+                  }}
+                >
+                  Login
+                </button>
+                <button
+                  className="bg-black text-[#FFEA35] font-medium py-2 px-5 border border-[#FFEA35] rounded"
+                  onClick={() => {
+                    openAuthModal("signup");
+                    setMenuOpen(false); // Close menu on navigation to signup
+                  }}
+                >
+                  SignUp
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </nav>
 
       {isAuthModalOpen && (
