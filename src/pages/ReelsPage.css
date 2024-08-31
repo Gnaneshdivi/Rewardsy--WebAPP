@@ -16,19 +16,18 @@
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 100vh;
-  z-index: 1;
+  height: 100vh; /* Make sure each reel takes up the full screen */
   background-color: #000;
 }
 
-.reel-image {
+.reel-video {
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Ensure the video covers the entire container */
 }
 
 .reel-details {
   position: absolute;
-  bottom: 15%;
+  bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -41,7 +40,7 @@
 .profile-container {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px; /* Adjusted spacing */
 }
 
 .profile-image {
@@ -88,6 +87,6 @@
   }
 
   .reel-description {
-    font-size: 0.7em;
+    font-size: 0.8em; /* Slightly larger for readability on smaller screens */
   }
 }
