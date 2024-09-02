@@ -29,10 +29,10 @@ a {
   justify-content: space-between;
   align-items: center;
   background-color: #272727;
-  position: fixed;
+  /* position: fixed; */
   z-index: 1000;
   width: 100%;
-  padding: 30px 20px;
+  padding: 10px 20px;
 }
 
 .navbar-logo {

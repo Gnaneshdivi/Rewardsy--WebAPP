@@ -1,0 +1,160 @@
+/* Adjust container to accommodate absolute positioning */
+.auth-container {
+  position: relative; /* Relative positioning to contain the absolute close button */
+  display: flex;
+  width: 52vw; /* Adjusted width to 52% of the viewport */
+  height: 75vh; /* Adjusted height to 75% of the viewport */
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-direction: row;
+  background-color: #f7f7f7;
+}
+
+.close-button {
+  /* position: absolute; */
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+.auth-left {
+  background-color: #ffc107; /* Yellow background */
+  color: #333; /* Dark grey text color */
+  padding: 30px;
+  flex: 0.4; /* Adjusted to fit with the new container size */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-left h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.auth-left p {
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.auth-left img {
+  max-width: 100%;
+  height: auto;
+}
+
+.auth-right {
+  background-color: #fff; /* White background */
+  padding: 40px;
+  flex: 0.6; /* Adjusted to fit with the new container size */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 2px solid #333; /* Black border to separate the left and right sections */
+}
+
+.auth-right label {
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: block;
+  color: #333; /* Black label color */
+}
+
+.auth-right input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc; /* Light grey border */
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.auth-right p {
+  font-size: 12px;
+  color: #555; /* Dark grey color for text */
+  margin-bottom: 20px;
+}
+
+.auth-right .submit-button {
+  width: 100%;
+  padding: 14px; /* Increase padding */
+  background-color: #333; /* Black background for the button */
+  color: #ffc107; /* Yellow text color */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px; /* Increase font size */
+  text-align: center;
+}
+
+.auth-right .create-account {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px; /* Increase the font size */
+  color: #333; /* Black text */
+}
+
+.auth-right .create-account a {
+  color: #ffc107; /* Yellow link color */
+  text-decoration: none;
+}
+
+.auth-right .create-account a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .auth-container {
+    width: 70vw; /* Adjust width for medium screens */
+    height: auto; /* Auto height for better responsiveness */
+    flex-direction: column;
+  }
+
+  .auth-left,
+  .auth-right {
+    flex: none;
+    padding: 20px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    width: 80vw; /* Adjust width for smaller screens */
+    height: auto; /* Auto height for better responsiveness */
+    flex-direction: column;
+  }
+
+  .auth-left,
+  .auth-right {
+    flex: none;
+    padding: 20px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    width: 84vw; /* Adjust width for very small screens */
+    height: auto; /* Auto height for better responsiveness */
+    flex-direction: column;
+  }
+
+  .auth-left,
+  .auth-right {
+    flex: none;
+    padding: 15px;
+    width: 100%;
+  }
+}

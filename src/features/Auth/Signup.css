@@ -1,0 +1,160 @@
+.signup-container {
+  position: relative; /* Ensure positioning context for the close button */
+  display: flex;
+  width: 52vw; /* 52% of the screen width */
+  height: 75vh; /* 75% of the screen height */
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-direction: row;
+  background-color: #f7f7f7;
+}
+
+.close-button {
+  position: absolute; /* Position the button absolutely within the container */
+  top: 15px; /* Slightly adjust from the top edge */
+  right: 15px; /* Slightly adjust from the right edge */
+  background-color: transparent;
+  border: none;
+  font-size: 24px; /* Slightly larger for better visibility */
+  cursor: pointer;
+  color: #333;
+  z-index: 1; /* Ensure it stays above other elements */
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+.signup-left {
+  background-color: #ffc107; /* Yellow background */
+  color: #333; /* Dark grey text color */
+  padding: 30px;
+  flex: 0.4; /* Adjusted to fit with the new container size */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-left h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.signup-left p {
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.signup-left img {
+  max-width: 100%;
+  height: auto;
+}
+
+.signup-right {
+  background-color: #fff; /* White background */
+  padding: 40px;
+  flex: 0.6; /* Adjusted to fit with the new container size */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 2px solid #333; /* Black border to separate the left and right sections */
+}
+
+.signup-right label {
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: block;
+  color: #333; /* Black label color */
+}
+
+.signup-right input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc; /* Light grey border */
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.signup-right p {
+  font-size: 12px;
+  color: #555; /* Dark grey color for text */
+  margin-bottom: 20px;
+}
+
+.signup-right .submit-button {
+  width: 100%;
+  padding: 14px; /* Increase padding */
+  background-color: #333; /* Black background for the button */
+  color: #ffc107; /* Yellow text color */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px; /* Increase font size */
+  text-align: center;
+}
+
+.signup-right .login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #fff; /* White background for the button */
+  color: #333; /* Black text color */
+  border: 1px solid #ccc; /* Light grey border */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+}
+
+.signup-right .login-button:hover {
+  background-color: #f7f7f7; /* Slight grey background on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .signup-container {
+    width: 70vw; /* Adjust width for medium screens */
+    height: auto; /* Auto height for better responsiveness */
+    flex-direction: column;
+  }
+
+  .signup-left,
+  .signup-right {
+    flex: none;
+    padding: 20px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .signup-container {
+    width: 80vw; /* Adjust width for smaller screens */
+    height: auto; /* Auto height for better responsiveness */
+    flex-direction: column;
+  }
+
+  .signup-left,
+  .signup-right {
+    flex: none;
+    padding: 20px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-container {
+    width: 84vw; /* Full width for very small screens */
+    height: auto; /* Auto height for better responsiveness */
+    flex-direction: column;
+  }
+
+  .signup-left,
+  .signup-right {
+    flex: none;
+    padding: 15px;
+    width: 100%;
+  }
+}

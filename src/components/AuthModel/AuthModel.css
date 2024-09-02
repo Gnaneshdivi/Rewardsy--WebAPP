@@ -1,0 +1,41 @@
+.auth-modal {
+  position: fixed; /* Positioning relative to the viewport */
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the dialog */
+  /* max-width: 800px; Increase the max width of the modal */
+  width: 100%; /* Slightly reduced width for better responsiveness on larger screens */
+  /* padding: 30px; Increase padding for more content space */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0); /* Slightly enhanced shadow for better depth */
+  backdrop-filter: blur(10px);
+  border-radius: 10px; /* Increase border-radius for a smoother look */
+  background-color: transparent; /* Background color */
+  z-index: 1000; /* Ensure it sits on top of other content */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+/* Responsive Media Query for small devices */
+@media (max-width: 768px) {
+  .auth-modal {
+    width: 95%; /* Slightly reduce the width on tablets and small desktops */
+    padding: 20px; /* Adjust padding for smaller screens */
+    margin-top: 30px; /* Adjust top margin for better spacing */
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-modal {
+    width: 95%; /* Maintain a close to full-screen width on mobile devices */
+    padding: 20px; /* Maintain a comfortable padding */
+    margin-top: 60px; /* Adjust top margin for better spacing on small screens */
+  }
+
+  .auth-modal h2 {
+    font-size: 20px; /* Slightly larger font size for headers on small screens */
+  }
+
+  .auth-modal .submit-button {
+    padding: 12px;
+    font-size: 16px; /* Slightly larger button size for small screens */
+  }
+}

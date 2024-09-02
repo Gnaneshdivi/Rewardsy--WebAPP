@@ -1,17 +1,13 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-  useLocation,
-} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import Navbar from "./components/Navbar";
 import StorePage from "./pages/StorePage";
 import URLForwarding from "./pages/URLForwarding";
 import RedirectToHome from "./pages/RedirectToHomepage";
 import Footer from "./components/Footer";
 import ReelsPage from "./pages/ReelsPage";
+
 import "./App.css"; // Include your global styles here
 
 const App = () => {
@@ -23,25 +19,9 @@ const App = () => {
 };
 
 const AppContent = () => {
-  const location = useLocation();
-
   return (
     <div className="full-screen">
-      <nav className="navbar">
-        <Link className="navbar-logo" to="/home">
-          <img src={"/Logo.png"} alt="logo" />
-        </Link>
-
-        {/* <div className="authentication">
-          <Link className="navbar-button" to="/login">
-            Login
-          </Link>
-          <Link className="navbar-button" to="/SignUp">
-            SignUp
-          </Link>
-        </div> */}
-      </nav>
-
+      <Navbar />
       <div
         className={
           location.pathname.startsWith("/reels") ? "no-scroll" : "scroll"
