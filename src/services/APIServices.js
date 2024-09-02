@@ -1,5 +1,5 @@
 export const getBaseURL = ()=>{
-    return "http://localhost:5000";
+    return "https://rewardsy-dev-api-gmf5dbhcced2c0a0.eastus-01.azurewebsites.net";
 }
 
 export const APICallHandler = async ( url, method, token=undefined, body=undefined) => {
