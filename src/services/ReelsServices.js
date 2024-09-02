@@ -1,4 +1,4 @@
-import { getBaseURL, APICallHandler } from "./apiServices";
+import { getBaseURL, APICallHandler } from "./APIServices";
 
 export const getReels = async() => {
   const url = getBaseURL() + "/reels";

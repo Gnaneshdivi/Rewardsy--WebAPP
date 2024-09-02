@@ -1,4 +1,4 @@
-import { getBaseURL, APICallHandler } from "./apiServices";
+import { getBaseURL, APICallHandler } from "./APIServices";
 
 export const getOffersByStore = async (storeId) => {
   const url = getBaseURL() + `/offers/by-store/${storeId}`;
