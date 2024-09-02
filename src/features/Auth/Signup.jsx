@@ -49,12 +49,12 @@ const Signup = () => {
   function onCaptchVerify() {
     if (!window.recaptchaVerifier) {
       window.recaptchaVerifier = new RecaptchaVerifier(
-        auth,
         "recaptcha-container",
         {
           size: "invisible",
           callback: () => onSignup(),
-        }
+        },
+        auth
       );
     }
   }
@@ -142,11 +142,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-10 relative">
-      <div
-        className="bg-gray-300 shadow-lg flex flex-col md:flex-row relative"
-        style={{ width: "100%", maxWidth: "900px" }}
-      >
+    <div className="flex items-center justify-center mt-1 h-screen sm:h-96">
+      <div className="bg-[#FFEA35] shadow-lg flex flex-col md:flex-row w-full max-w-lg sm:max-w-2xl md:max-w-4xl relative">
+        {/* Close Button */}
         <button
           className="absolute top-4 right-4 text-black text-2xl"
           onClick={handleClose}
@@ -154,77 +152,85 @@ const Signup = () => {
           &times;
         </button>
 
-        <div className="w-full md:w-1/3 bg-yellow-500 p-8 flex flex-col justify-center items-center">
-          <h2 className="text-3xl text-white font-semibold mb-6 text-center">
-            Looks like you're new here!
+        <div className="w-full md:w-1/2 bg-[#FFEA35] p-8 flex flex-col justify-center items-center">
+          <h2 className="text-4xl sm:text-5xl md:text-7xl text-black font-semibold">
+            Welcome Back
           </h2>
-          <img
-            src="/Login.png"
-            alt="Illustration"
-            className="mb-6"
-            style={{ maxWidth: "250px" }}
-          />
+          <h4 className="text-base sm:text-lg md:text-2xl text-black mt-2 text-center">
+            Saving cannot get any more easier. Sign In and start saving right
+            now.
+          </h4>
         </div>
-
-        <div className="flex-1 p-8 flex flex-col justify-center">
+        <div className="m-2 bg-black w-1"></div>
+        <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center">
           <Toaster toastOptions={{ duration: 4000 }} />
-          <div id="recaptcha-container"></div>
+          <div className="hidden" id="recaptcha-container"></div>
           {user ? (
             <form onSubmit={handleFormSubmit} className="flex flex-col">
-              <h2 className="text-center text-gray-800 font-medium text-2xl">
+              <h2 className="text-center font-semibold text-black text-2xl">
                 Complete Your Profile
               </h2>
-              <label htmlFor="name" className="text-gray-800 font-semibold">
+              <label htmlFor="name" className="font-bold text-lg text-gray-800">
                 Name
               </label>
               <input
+                placeholder="Name"
                 type="text"
                 id="name"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className="border-2 text-black border-gray-300 p-2 rounded-md focus:outline-none focus:border-yellow-500"
+                className="border-2 text-black border-black bg-[#FFEA35] placeholder:text-[#55501cbb] p-2 rounded-md focus:outline-none focus:border-yellow-500 w-full"
               />
-              <label htmlFor="age" className="text-gray-800 font-semibold">
+              <label htmlFor="age" className="font-bold text-lg text-gray-800">
                 Age
               </label>
               <input
+                placeholder="10"
                 type="number"
                 id="age"
                 name="age"
                 value={formData.age}
                 onChange={handleInputChange}
                 required
-                className="border-2 text-black border-gray-300 p-2 rounded-md focus:outline-none focus:border-yellow-500"
+                className="border-2 text-black border-black bg-[#FFEA35] placeholder:text-[#55501cbb] p-2 rounded-md focus:outline-none focus:border-yellow-500 w-full"
               />
-              <label htmlFor="email" className="text-gray-800 font-semibold">
+              <label
+                htmlFor="email"
+                className="font-bold text-lg text-gray-800"
+              >
                 Email
               </label>
               <input
+                placeholder="email@gmail.com"
                 type="email"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="border-2 text-black border-gray-300 p-2 rounded-md focus:outline-none focus:border-yellow-500"
+                className="border-2 text-black border-black bg-[#FFEA35] placeholder:text-[#55501cbb] p-2 rounded-md focus:outline-none focus:border-yellow-500 w-full"
               />
-              <label htmlFor="state" className="text-gray-800 font-semibold">
+              <label
+                htmlFor="state"
+                className="font-bold text-lg text-gray-800"
+              >
                 State
               </label>
               <input
+                placeholder="Andhra Pradesh"
                 type="text"
                 id="state"
                 name="state"
                 value={formData.state}
                 onChange={handleInputChange}
                 required
-                className="border-2 text-black border-gray-300 p-2 rounded-md focus:outline-none focus:border-yellow-500"
+                className="border-2 text-black border-black bg-[#FFEA35] placeholder:text-[#55501cbb] p-2 rounded-md focus:outline-none focus:border-yellow-500 w-full"
               />
               <button
                 type="submit"
-                className="bg-black w-full py-3 text-yellow-500 rounded-md mt-4"
+                className="bg-black w-full py-3 text-[#FFEA35] rounded-md mt-4"
                 disabled={loading}
               >
                 {loading ? (
@@ -235,13 +241,13 @@ const Signup = () => {
               </button>
             </form>
           ) : (
-            <div className="flex flex-col gap-4 m-auto">
-              <h1 className="text-center text-gray-800 font-medium text-xl">
-                Enter Mobile number
+            <div className="flex flex-col gap-2">
+              <h1 className="text-center text-black font-medium text-4xl sm:text-6xl">
+                SIGNUP
               </h1>
               {showOTP ? (
                 <>
-                  <div className="bg-yellow-500 text-white w-fit mx-auto p-4 rounded-full">
+                  <div className="bg-[#f7e22b] text-white w-fit mx-auto p-4 rounded-full">
                     <BsFillShieldLockFill size={30} />
                   </div>
                   <label
@@ -257,12 +263,17 @@ const Signup = () => {
                     otpType="number"
                     disabled={false}
                     autoFocus
-                    className="opt-container text-black border-2 border-black"
-                  ></OtpInput>
+                    className="opt-container text-black mx-auto"
+                  />
+                  <p className="text-xs mt-3 text-black text-center">
+                    Did not receive OTP?{" "}
+                    <button onClick={onSignup} className="text-blue-700">
+                      Resend OTP
+                    </button>
+                  </p>
                   <button
                     onClick={onOTPVerify}
-                    className="bg-black w-full flex gap-1 items-center justify-center py-2.5 text-yellow-500 rounded"
-                    disabled={loading}
+                    className="bg-black w-full flex mt-10 gap-1 items-center justify-center py-2.5 text-[#FFEA35] rounded"
                   >
                     {loading && (
                       <CgSpinner size={20} className="mt-1 animate-spin" />
@@ -272,7 +283,7 @@ const Signup = () => {
                 </>
               ) : (
                 <>
-                  <div className="bg-yellow-500 text-white w-fit mx-auto p-4 rounded-full">
+                  <div className="bg-[#f7e22b] text-white w-fit mx-auto p-4 rounded-full">
                     <BsTelephoneFill size={30} />
                   </div>
                   <label
@@ -292,10 +303,15 @@ const Signup = () => {
                       fontSize: "1rem",
                     }}
                   />
+                  <p className="text-xs mt-3 text-black text-center">
+                    New to the platform?{" "}
+                    <Link to="/login" className="text-blue-700">
+                      Log in
+                    </Link>
+                  </p>
                   <button
                     onClick={onSignup}
-                    className="bg-black w-full flex gap-1 items-center justify-center py-2.5 text-yellow-500 rounded"
-                    disabled={loading}
+                    className="bg-black w-full flex gap-1 items-center justify-center mt-10 py-2.5 text-[#FFEA35] rounded"
                   >
                     {loading && (
                       <CgSpinner size={20} className="mt-1 animate-spin" />
@@ -304,11 +320,6 @@ const Signup = () => {
                   </button>
                 </>
               )}
-              <Link to="/login" className="mt-4">
-                <button className="w-full text-gray-800 py-3 rounded-md border-2 font-medium hover:bg-gray-100">
-                  Existing User? Log in
-                </button>
-              </Link>
             </div>
           )}
         </div>
