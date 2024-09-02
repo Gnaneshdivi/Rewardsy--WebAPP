@@ -33,8 +33,8 @@ const AppContent = () => {
           <Route path="/store" element={<RedirectToHome />} />
           <Route path="/store/:name" element={<StorePage />} />
           <Route path="/qr/:shortUrl" element={<URLForwarding />} />
+          {/* Update the route pattern to catch both /reelID and /reel1, /reel2, etc. */}
           <Route path="/reels/:reelID" element={<ReelsPage />} />
-          <Route path="/reels/" element={<ReelsPage />} />
         </Routes>
         {!location.pathname.startsWith("/reels") && <Footer />}
       </div>
