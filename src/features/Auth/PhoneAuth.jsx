@@ -1,4 +1,3 @@
-// PhoneAuth.js
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsFillShieldLockFill, BsTelephoneFill } from "react-icons/bs";
@@ -21,13 +20,11 @@ const PhoneAuth = () => {
   const navigate = useNavigate();
   const { setUserDetails } = useContext(UserContext); // Use context to set user details
 
-  async function checkIfUserExists(phoneNumber) {
+  async function checkIfUserExists(uid) {
     try {
-      const signInMethods = await fetchSignInMethodsForEmail(
-        auth, // Use the already initialized auth object
-        phoneNumber + "@phone.auth"
-      );
-      return signInMethods.length > 0;
+      const userDocRef = doc(db, "users", uid);
+      const userDoc = await getDoc(userDocRef);
+      return userDoc.exists(); // Return true if user data exists in Firestore
     } catch (error) {
       console.error("Error checking if user exists:", error);
       return false; // If an error occurs, assume the user does not exist
@@ -55,17 +52,8 @@ const PhoneAuth = () => {
     onCaptchVerify();
 
     const formatPh = "+" + ph;
-    const userExists = await checkIfUserExists("abc@gmail.com");
 
-    console.log(userExists, "user exists");
-    if (!userExists) {
-      setLoading(false);
-      // toast.error("Phone number is not registered. Redirecting to Signup.");
-      alert("Phone number is not registered. Redirecting to Signup.");
-      navigate("/signup");
-      return;
-    }
-
+    // Firebase Auth phone number sign-in
     signInWithPhoneNumber(auth, formatPh, window.recaptchaVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
@@ -85,19 +73,30 @@ const PhoneAuth = () => {
     try {
       const res = await window.confirmationResult.confirm(otp);
 
-      // Fetch user data from Firestore
-      const userDocRef = doc(db, "users", res.user.uid);
-      const userDoc = await getDoc(userDocRef);
+      const uid = res.user.uid; // Get the UID of the logged-in user
 
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        setUserDetails(userData); // Set user data in context
+      // Check if the user exists in Firestore
+      const userExists = await checkIfUserExists(uid);
+
+      if (userExists) {
+        // Fetch user data from Firestore
+        const userDocRef = doc(db, "users", uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setUserDetails(userData); // Set user data in context
+        }
+
+        setUser(res.user);
+        setLoading(false);
+        toast.success("Login successful!");
+        navigate("/home");
+      } else {
+        setLoading(false);
+        toast.error("User not found. Redirecting to Signup.");
+        navigate("/signup");
       }
-
-      setUser(res.user);
-      setLoading(false);
-      toast.success("Login successful!");
-      navigate("/home");
     } catch (err) {
       console.log(err);
       setLoading(false);
