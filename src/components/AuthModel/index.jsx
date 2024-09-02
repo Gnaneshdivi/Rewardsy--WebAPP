@@ -8,7 +8,10 @@ import "./AuthModel.css";
 
 const AuthModal = ({ isOpen, close, mode }) => {
   return (
-    <Dialog isOpen={isOpen} className="auth-modal">
+    <Dialog
+      isOpen={isOpen}
+      className="auth-modal flex justify-center items-center h-screen"
+    >
       {/* <ProgressBar currentStep={currentStep} totalSteps={totalSteps} /> */}
 
       {mode === "login" && (

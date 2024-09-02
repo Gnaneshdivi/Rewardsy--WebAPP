@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./style.css";
 import { BsFillShieldLockFill, BsTelephoneFill } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
 import OtpInput from "otp-input-react";
@@ -109,7 +110,7 @@ const PhoneAuth = () => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-1 h-screen sm:h-96">
+    <div className="flex items-center justify-center mt-1 h-screen">
       <div className="bg-[#FFEA35] shadow-lg flex flex-col md:flex-row w-full max-w-lg sm:max-w-2xl md:max-w-4xl relative">
         {/* Close Button */}
         <button
@@ -120,15 +121,15 @@ const PhoneAuth = () => {
         </button>
 
         <div className="w-full md:w-1/2 bg-[#FFEA35] p-8 flex flex-col justify-center items-center">
-          <h2 className="text-4xl sm:text-5xl md:text-7xl text-black font-semibold">
+          <h2 className="text-4xl sm:text-4xl md:text-6xl text-black font-semibold">
             Get Started
           </h2>
-          <h4 className="text-base sm:text-lg md:text-2xl text-black mt-2 text-center">
+          <h4 className="text-base sm:text-lg md:text-xl text-black mt-2">
             Saving cannot get any more easier. Sign Up and start saving right
             now.
           </h4>
         </div>
-        <div className="m-2 bg-black w-1"></div>
+        <div className="m-2 bg-black w-[2px] rounded-2xl"></div>
         <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center">
           <Toaster toastOptions={{ duration: 4000 }} />
           <div className="hidden" id="recaptcha-container"></div>
@@ -137,30 +138,38 @@ const PhoneAuth = () => {
               👍 Login Success
             </h2>
           ) : (
-            <div className="flex flex-col gap-2">
-              <h1 className="text-center text-black font-medium text-4xl sm:text-6xl">
+            <div className="flex flex-col gap-3 sm:p-6">
+              <h1 className="text-center text-black font-semibold text-3xl sm:text-5xl">
                 LOGIN
               </h1>
               {showOTP ? (
                 <>
-                  <div className="bg-[#f7e22b] text-white w-fit mx-auto p-4 rounded-full">
-                    <BsFillShieldLockFill size={30} />
-                  </div>
                   <label
                     htmlFor="otp"
-                    className="font-bold text-lg text-gray-800 text-center"
+                    className="font-bold text-xl text-black text-center"
                   >
                     Enter your OTP
                   </label>
-                  <OtpInput
-                    value={otp}
-                    onChange={setOtp}
-                    OTPLength={6}
-                    otpType="number"
-                    disabled={false}
-                    autoFocus
-                    className="opt-container text-black"
-                  />
+                  <div className="flex justify-center items-center">
+                    <OtpInput
+                      value={otp}
+                      onChange={setOtp}
+                      OTPLength={6}
+                      otpType="number"
+                      disabled={false}
+                      autoFocus
+                      inputStyles={{
+                        borderRadius: "4px",
+                        color: "black",
+                        width: "32px",
+                        height: "32px",
+                        textAlign: "center",
+                        marginRight: "8px",
+                        backgroundColor: "#FFEA35", // Yellow background
+                        border: "2px solid black", // Black border
+                      }}
+                    />
+                  </div>
                   <p className="text-xs mt-3 text-black text-center">
                     Did not receive OTP?{" "}
                     <button
@@ -173,7 +182,7 @@ const PhoneAuth = () => {
                   </p>
                   <button
                     onClick={onOTPVerify}
-                    className="bg-black w-full flex mt-10 gap-1 items-center justify-center py-2.5 text-[#FFEA35] rounded"
+                    className="bg-black w-full flex mt-10 gap-1 items-center justify-center py-2.5 text-white rounded"
                   >
                     {loading && (
                       <CgSpinner size={20} className="mt-1 animate-spin" />
@@ -183,26 +192,40 @@ const PhoneAuth = () => {
                 </>
               ) : (
                 <>
-                  <div className="bg-[#f7e22b] text-white w-fit mx-auto p-4 rounded-full">
-                    <BsTelephoneFill size={30} />
-                  </div>
                   <label
                     htmlFor=""
                     className="font-bold text-lg text-gray-800 text-center"
                   >
-                    Enter Mobile number
+                    {/* Enter Mobile number */}
                   </label>
-                  <PhoneInput
-                    country={"in"}
-                    value={ph}
-                    onChange={setPh}
-                    inputStyle={{
-                      width: "100%",
-                      borderRadius: "4px",
-                      height: "3rem",
-                      fontSize: "1rem",
-                    }}
-                  />
+                  <div className="custom-phone-input">
+                    <PhoneInput
+                      country={"in"}
+                      value={ph}
+                      onChange={setPh}
+                      buttonStyle={{
+                        backgroundColor: "#FFEA35",
+                        border: "2px solid black",
+                        borderRight: "transparent",
+                        borderEndStartRadius: "8px",
+                        borderTopLeftRadius: "8px",
+                        color: "black", // Make the country name black
+                        cursor: "default", // Prevent hover effects
+                      }}
+                      inputStyle={{
+                        border: "2px solid black",
+                        backgroundColor: "#FFEA35",
+                        width: "100%",
+                        borderRadius: "8px",
+                        height: "3rem",
+                        fontSize: "1rem",
+                        color: "black", // Keep the text color black
+                      }}
+                      containerStyle={{
+                        backgroundColor: "#FFEA35",
+                      }}
+                    />
+                  </div>
                   <p className="text-xs mt-3 text-black text-center">
                     New to the platform?{" "}
                     <Link to="/signup" className="text-blue-700">
@@ -211,7 +234,7 @@ const PhoneAuth = () => {
                   </p>
                   <button
                     onClick={onSignup}
-                    className="bg-black w-full flex gap-1 items-center justify-center mt-10 py-2.5 text-[#FFEA35] rounded"
+                    className="bg-black w-full flex gap-1 items-center justify-center mt-10 py-2.5 text-white rounded"
                   >
                     {loading && (
                       <CgSpinner size={20} className="mt-1 animate-spin" />
