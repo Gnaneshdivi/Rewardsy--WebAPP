@@ -86,6 +86,7 @@ const PhoneAuth = () => {
 
         if (userDoc.exists()) {
           const userData = userDoc.data();
+          userData.token = await auth.currentUser.getIdToken();
           setUserDetails(userData); // Set user data in context
         }
 
