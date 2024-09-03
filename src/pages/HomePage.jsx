@@ -31,8 +31,6 @@ const HomePage = () => {
     <div className="homepage">
       <CarouselComponent images={images} />
       <Categories categories={categories} setSelectedCategory={setSelectedCategory} selectedCategory={selectedCategory}/>
-      {console.log(selectedCategory)}
-      {console.log(Offers.filter((offer)=> selectedCategory=="All" || offer.tags.includes(selectedCategory)))}
       <Tabs
         offers={Offers.filter((offer)=> selectedCategory=="All" || offer.tags.includes(selectedCategory))}
         contents={Reels}

@@ -33,6 +33,7 @@
 
   .selected-item  .category-icon{
     background-color: #fbfafa;
+    padding: 0.25rem 0.25rem;
   }
 
   .category-item {
