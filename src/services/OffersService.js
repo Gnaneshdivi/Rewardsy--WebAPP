@@ -20,12 +20,12 @@ export const getOffers = async() => {
   }
 };
 
-export const redeemOffers = async (orderId, userId, token) => {
-  const url = getBaseURL() + `/offers/${orderId}/apply`;
-  const body = { userId, orderId };
+export const redeemOffers = async (offerId, userId, token) => {
+  const url = getBaseURL() + `/offers/${offerId}/apply`;
+  const body = { userId, offerId };
   try {
     const data = await APICallHandler(url, "POST", token, body);
-    return data;
+    return data.redemption.code;
   } catch (error) {
     throw error;
   }

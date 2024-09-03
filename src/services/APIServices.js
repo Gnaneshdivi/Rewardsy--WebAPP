@@ -12,9 +12,9 @@ export const APICallHandler = async ( url, method, token=undefined, body=undefin
       const response = await fetch(url, {
         method,
         headers,
-        body
+        body : JSON.stringify(body)
       });
-      
+      console.log(body)
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
