@@ -110,7 +110,7 @@ const PhoneAuth = () => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-1 h-screen">
+    <div className="flex items-center justify-center mt-1 h-screen sm:h-96">
       <div className="bg-[#FFEA35] shadow-lg flex flex-col md:flex-row w-full max-w-lg sm:max-w-2xl md:max-w-4xl relative">
         {/* Close Button */}
         <button
@@ -122,19 +122,19 @@ const PhoneAuth = () => {
 
         <div className="w-full md:w-1/2 bg-[#FFEA35] p-8 flex flex-col justify-center items-center">
           <h2 className="text-4xl sm:text-4xl md:text-6xl text-black font-semibold">
-            Get Started
+            Welcome Back
           </h2>
-          <h4 className="text-base sm:text-lg md:text-xl text-black mt-2">
-            Saving cannot get any more easier. Sign Up and start saving right
+          <h4 className="text-base sm:text-lg md:text-2xl text-black mt-2">
+            Saving cannot get any more easier. Sign-in and start saving right
             now.
           </h4>
         </div>
-        <div className="m-2 bg-black w-[2px] rounded-2xl"></div>
+        <div className="m-2 bg-black w-1"></div>
         <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center">
           <Toaster toastOptions={{ duration: 4000 }} />
           <div className="hidden" id="recaptcha-container"></div>
           {user ? (
-            <h2 className="text-center text-gray-800 font-medium text-2xl">
+            <h2 className="text-center text-black font-medium text-2xl">
               👍 Login Success
             </h2>
           ) : (
@@ -144,9 +144,12 @@ const PhoneAuth = () => {
               </h1>
               {showOTP ? (
                 <>
+                  {/* <div className="bg-[#f7e22b] text-white w-fit mx-auto p-4 rounded-full">
+                    <BsFillShieldLockFill size={30} />
+                  </div> */}
                   <label
                     htmlFor="otp"
-                    className="font-bold text-xl text-black text-center"
+                    className="font-bold text-lg text-black text-center"
                   >
                     Enter your OTP
                   </label>
@@ -192,9 +195,12 @@ const PhoneAuth = () => {
                 </>
               ) : (
                 <>
+                  {/* <div className="bg-[#f7e22b] text-white w-fit mx-auto p-4 rounded-full">
+                    <BsTelephoneFill size={30} />
+                  </div> */}
                   <label
                     htmlFor=""
-                    className="font-bold text-lg text-gray-800 text-center"
+                    className="font-bold text-lg text-black text-center"
                   >
                     {/* Enter Mobile number */}
                   </label>

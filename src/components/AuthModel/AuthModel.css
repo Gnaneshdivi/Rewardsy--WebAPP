@@ -6,8 +6,8 @@
   /* max-width: 800px; Increase the max width of the modal */
   width: 100%; /* Slightly reduced width for better responsiveness on larger screens */
   /* padding: 30px; Increase padding for more content space */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0); /* Slightly enhanced shadow for better depth */
-  backdrop-filter: blur(100px);
+  box-shadow: 0 6px 12px rgb(0, 0, 0); /* Slightly enhanced shadow for better depth */
+  backdrop-filter: blur(10px);
   border-radius: 10px; /* Increase border-radius for a smoother look */
   background-color: transparent; /* Background color */
   z-index: 1000; /* Ensure it sits on top of other content */

@@ -49,12 +49,12 @@ const Signup = () => {
   function onCaptchVerify() {
     if (!window.recaptchaVerifier) {
       window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
         "recaptcha-container",
         {
           size: "invisible",
           callback: () => onSignup(),
-        },
-        auth
+        }
       );
     }
   }
@@ -153,11 +153,11 @@ const Signup = () => {
         </button>
 
         <div className="w-full md:w-1/2 bg-[#FFEA35] p-8 flex flex-col justify-center items-center">
-          <h2 className="text-4xl sm:text-5xl md:text-7xl text-black font-semibold">
-            Welcome Back
+          <h2 className="text-4xl sm:text-4xl md:text-6xl text-black font-semibold">
+            Get Started
           </h2>
           <h4 className="text-base sm:text-lg md:text-2xl text-black mt-2">
-            Saving cannot get any more easier. Sign In and start saving right
+            Saving cannot get any more easier. Sign-up and start saving right
             now.
           </h4>
         </div>
@@ -165,7 +165,7 @@ const Signup = () => {
         <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center">
           <Toaster toastOptions={{ duration: 4000 }} />
           <div className="hidden" id="recaptcha-container"></div>
-          {!user ? (
+          {user ? (
             <form onSubmit={handleFormSubmit} className="flex flex-col">
               <h2 className="text-center font-semibold text-black text-2xl">
                 Complete Your Profile
@@ -317,7 +317,7 @@ const Signup = () => {
                     />
                   </div>
                   <p className="text-xs mt-3 text-black text-center">
-                    New to the platform?{" "}
+                    Already have a account ?
                     <Link to="/login" className="text-blue-700">
                       Log in
                     </Link>
