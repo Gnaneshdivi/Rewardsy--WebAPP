@@ -18,6 +18,8 @@ const Tabs = ({
 
   return (
     <div>
+      {console.log("offers")}
+      {console.log(offers)}
       <div className="tabs-container">
         <div
           className={`tab ${activeTab === "offers" ? "active" : ""}`}

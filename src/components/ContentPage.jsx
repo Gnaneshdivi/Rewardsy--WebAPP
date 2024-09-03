@@ -6,11 +6,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 const ContentPage = ({ contents, isLoading }) => {
   return (
     <div className="content-page-container">
-      <div className="content-page-grid-container">
-        {isLoading ? (
-          <ClipLoader isLoading={isLoading} />
-        ) : (
-          <>
+      {isLoading ? (
+        <ClipLoader loading={isLoading} color="white" />
+      ) : (
+        <>
+          <div className="content-page-grid-container">
             {contents.map((content, index) => (
               <ContentCard
                 key={index}
@@ -18,9 +18,9 @@ const ContentPage = ({ contents, isLoading }) => {
                 contentList={contents}
               />
             ))}
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

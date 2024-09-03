@@ -25,6 +25,16 @@
     align-items: center; /* Center items vertically */
   }
   
+  .selected-item {
+    display: inline-block;
+    margin: 0 10px; /* Space between items */
+    text-align: center;
+  }
+
+  .selected-item  .category-icon{
+    background-color: #fbfafa;
+  }
+
   .category-item {
     display: inline-block;
     margin: 0 10px; /* Space between items */
@@ -43,6 +53,18 @@
     justify-content: center;
   }
   
+  .category-img {
+    width: 9vw; /* Adjust the size of the icons */
+    height: 9vw;
+    max-width: 100px; /* Set a maximum width */
+    max-height: 100px; /* Set a maximum height */
+    border-radius: 50%;
+    background-color: #333333; /* Placeholder color for icons */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .category-name {
     margin-top: 10px;
     font-size: 0.7em;

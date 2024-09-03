@@ -21,7 +21,7 @@ export const getOffers = async() => {
 };
 
 export const redeemOffers = async (orderId, userId, token) => {
-  const url = getBaseURL() + "/offers";
+  const url = getBaseURL() + `/offers/${orderId}/apply`;
   const body = { userId, orderId };
   try {
     const data = await APICallHandler(url, "POST", token, body);

@@ -5,6 +5,7 @@ import { Mousewheel } from "swiper/modules";
 import "swiper/css";
 import "./ReelsPage.css";
 import { getReels } from "../services/ReelsServices";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const ReelsPage = () => {
   const { reelId } = useParams(); // Get the current reel ID from the URL
@@ -90,7 +91,7 @@ const ReelsPage = () => {
   return (
     <div className="reels-page">
       {isReelsLoading ? (
-        <>Loading ...</>
+        <ClipLoader loading={isReelsLoading} color="white"/>
       ) : (
         <Swiper
           direction={"vertical"}

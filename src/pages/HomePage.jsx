@@ -11,6 +11,7 @@ const HomePage = () => {
   const [ Reels, setReels ] = useState([]);
   const [ isOffersLoading, setisOffersLoading ] = useState(true);
   const [ isReelsLoading, setisReelsLoading ] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   useEffect(() => {
     const updateData = async () => {
@@ -24,14 +25,16 @@ const HomePage = () => {
 
   const images = ["/carousal/1.png", "/carousal/2.png"];
 
-  const categories = ["Category 1", "Category 2", "Category 3", "Category 4"];
+  const categories = ["All", "Fitness", "Discount"];
 
   return (
     <div className="homepage">
       <CarouselComponent images={images} />
-      <Categories categories={categories} />
+      <Categories categories={categories} setSelectedCategory={setSelectedCategory} selectedCategory={selectedCategory}/>
+      {console.log(selectedCategory)}
+      {console.log(Offers.filter((offer)=> selectedCategory=="All" || offer.tags.includes(selectedCategory)))}
       <Tabs
-        offers={Offers}
+        offers={Offers.filter((offer)=> selectedCategory=="All" || offer.tags.includes(selectedCategory))}
         contents={Reels}
         context={"home"}
         isOffersLoading={isOffersLoading}
