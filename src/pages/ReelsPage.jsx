@@ -19,10 +19,9 @@ const ReelsPage = () => {
       const reelsList = await getReels();
       setReels(reelsList);
       setisReelsLoading(false);
-      setCurrentReelIndex(0);
     }
     updateReels();
-  }, [reelId]);
+  }, []);
 
   // Handle video playback when the slide changes
   const handleSlideChange = (swiper) => {
