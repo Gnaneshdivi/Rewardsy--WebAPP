@@ -27,36 +27,36 @@ const StorePage = () => {
 
   return (
     <>
-      <div className="store-page">
-        <div className="store-header">
-          {isStoreLoading ? (
-            <ClipLoader isLoading={isStoreLoading} color="white" />
-          ) : (
-            <>
+      {isStoreLoading ? (
+        <div className="store-spinner">
+          <ClipLoader loading={isStoreLoading} color="white" />
+        </div>
+      ) : (
+        <div className="store-page">
+          <div className="store-header">
+            <img
+              src={store.background}
+              alt={`${store.name} banner`}
+              className="store-banner"
+            />
+            <div className="store-info">
               <img
-                src={store.background}
-                alt={`${store.name} banner`}
-                className="store-banner"
+                src={store.dp}
+                alt={`${store.name} logo`}
+                className="store-logo"
               />
-              <div className="store-info">
-                <img
-                  src={store.dp}
-                  alt={`${store.name} logo`}
-                  className="store-logo"
-                />
-                <div className="store-details">
-                  <h1>{store.name}</h1>
-                  <p>{store.location}</p>
-                  <p>{store.category}</p>
-                </div>
+              <div className="store-details">
+                <h1>{store.name}</h1>
+                <p>{store.location}</p>
+                <p>{store.category}</p>
               </div>
-            </>
+            </div>
+          </div>
+          {!isStoreLoading && (
+            <Tabs offers={offers} contents={content} context={"store"} />
           )}
         </div>
-        {!isStoreLoading && (
-          <Tabs offers={offers} contents={content} context={"store"} />
-        )}
-      </div>
+      )}
     </>
   );
 };

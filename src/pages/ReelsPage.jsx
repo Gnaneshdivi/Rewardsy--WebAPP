@@ -7,7 +7,7 @@ import "./ReelsPage.css";
 import { getReels } from "../services/ReelsServices";
 
 const ReelsPage = () => {
-  const { reelID } = useParams(); // Get the current reel ID from the URL
+  const { reelId } = useParams(); // Get the current reel ID from the URL
   const navigate = useNavigate(); // For updating the URL
   const [currentReelIndex, setCurrentReelIndex] = useState(0);
   const videoRefs = useRef([]); // To store references to video elements
@@ -16,18 +16,13 @@ const ReelsPage = () => {
 
   useEffect(() => {
     const updateReels = async () => {
-      setReels(await getReels());
+      const reelsList = await getReels();
+      setReels(reelsList);
       setisReelsLoading(false);
-      const initialIndex = reels.findIndex((reel) => reel.id === reelID);
-      if (initialIndex !== -1) {
-        setCurrentReelIndex(initialIndex);
-      }
-      console.log(reelID);
-      console.log(reels.length)
+      setCurrentReelIndex(0);
     }
     updateReels();
-    
-  }, [reelID]);
+  }, [reelId]);
 
   // Handle video playback when the slide changes
   const handleSlideChange = (swiper) => {
@@ -106,7 +101,6 @@ const ReelsPage = () => {
           className="mySwiper"
           initialSlide={currentReelIndex}
         >
-          {console.log(reels[currentReelIndex])}
           {reels.map((reel, index) => (
             <SwiperSlide key={reel.id} className="">
               <div className="reel-container">
@@ -117,8 +111,8 @@ const ReelsPage = () => {
                   playsInline
                   ref={(el) => (videoRefs.current[index] = el)} // Store video ref
                   onClick={() => togglePlayPause(index)} // Toggle play/pause on click
-                  autoPlay
                 />
+                {console.log(videoRefs.current.map((e)=>e.paused))}
                 <div className="reel-details">
                   <div className="profile-container">
                     <img
