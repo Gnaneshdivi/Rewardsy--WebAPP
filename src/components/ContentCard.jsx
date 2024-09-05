@@ -13,7 +13,7 @@ const ContentCard = ({ content, contentList }) => {
   return (
     <div className="content-card" onClick={handleViewReel}>
       <div className="content-image-container">
-        <img src={content.image} alt={content.description} className="content-image" />
+        <img src={content.url} alt={content.description} className="content-image" />
         <img src={"../playIcon.png"} alt="Play Icon" className="play-icon" />
       </div>
     </div>

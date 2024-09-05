@@ -4,42 +4,25 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper/modules";
 import "swiper/css";
 import "./ReelsPage.css";
-
-// Dummy data for reels
-const dummyReels = [
-  {
-    id: "reel1",
-    profileImage: "/avatar.jpg",
-    name: "Someone1",
-    description: "Random Reel 1 shown for testing purpose",
-    image:
-      "https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/Screenshot%202024-08-11%20at%207.30.42%20PM.png?alt=media&token=e408fb1a-b3da-4cbe-b3a9-0bebf08e92be",
-    url: "https://firebasestorage.googleapis.com/v0/b/clap-2425e.appspot.com/o/videos%2F2020-08-13%2018%3A55%3A38.501279?alt=media&token=0f9e8f13-12c4-41e8-97d1-dde944ca4015",
-  },
-  {
-    id: "reel2",
-    profileImage: "/avatar.jpg",
-    name: "Someone2",
-    description: "Random Reel 2 shown for testing purpose",
-    url: "https://firebasestorage.googleapis.com/v0/b/clap-2425e.appspot.com/o/videos%2F2020-08-14%2021%3A18%3A25.854864?alt=media&token=e55cb5c6-e20e-41c6-b45d-d8720a8f4120",
-    image:
-      "https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/Screenshot%202024-08-11%20at%207.30.36%20PM.png?alt=media&token=fcc3f5e0-e987-4bd1-bed3-51a06ac7b851",
-  },
-];
+import { getReels } from "../services/ReelsServices";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const ReelsPage = () => {
-  const { reelID } = useParams(); // Get the current reel ID from the URL
+  const { reelId } = useParams(); // Get the current reel ID from the URL
   const navigate = useNavigate(); // For updating the URL
   const [currentReelIndex, setCurrentReelIndex] = useState(0);
   const videoRefs = useRef([]); // To store references to video elements
+  const [reels, setReels] = useState([]);
+  const [isReelsLoading, setisReelsLoading] = useState(true);
 
-  // Set the initial reel index based on the reel ID in the URL
   useEffect(() => {
-    const initialIndex = dummyReels.findIndex((reel) => reel.id === reelID);
-    if (initialIndex !== -1) {
-      setCurrentReelIndex(initialIndex);
+    const updateReels = async () => {
+      const reelsList = await getReels();
+      setReels(reelsList);
+      setisReelsLoading(false);
     }
-  }, [reelID]);
+    updateReels();
+  }, []);
 
   // Handle video playback when the slide changes
   const handleSlideChange = (swiper) => {
@@ -58,7 +41,7 @@ const ReelsPage = () => {
       }
 
       setCurrentReelIndex(newIndex);
-      const newReelID = dummyReels[newIndex].id;
+      const newReelID = reels[newIndex].id;
       navigate(`/reels/${newReelID}`, { replace: true });
     }
   };
@@ -107,40 +90,45 @@ const ReelsPage = () => {
 
   return (
     <div className="reels-page">
-      <Swiper
-        direction={"vertical"}
-        mousewheel={true}
-        onSlideChange={handleSlideChange}
-        modules={[Mousewheel]}
-        className="mySwiper"
-        initialSlide={currentReelIndex}
-      >
-        {dummyReels.map((reel, index) => (
-          <SwiperSlide key={reel.id} className="">
-            <div className="reel-container">
-              <video
-                className="reel-video"
-                src={reel.url}
-                poster={reel.image}
-                playsInline
-                ref={(el) => (videoRefs.current[index] = el)} // Store video ref
-                onClick={() => togglePlayPause(index)} // Toggle play/pause on click
-              />
-              <div className="reel-details">
-                <div className="profile-container">
-                  <img
-                    className="profile-image"
-                    src={reel.profileImage}
-                    alt={reel.name}
-                  />
-                  <p className="profile-name">{reel.name}</p>
+      {isReelsLoading ? (
+        <ClipLoader loading={isReelsLoading} color="white"/>
+      ) : (
+        <Swiper
+          direction={"vertical"}
+          mousewheel={true}
+          onSlideChange={handleSlideChange}
+          modules={[Mousewheel]}
+          className="mySwiper"
+          initialSlide={currentReelIndex}
+        >
+          {reels.map((reel, index) => (
+            <SwiperSlide key={reel.id} className="">
+              <div className="reel-container">
+                <video
+                  className="reel-video"
+                  src={reel.link}
+                  poster={reel.url}
+                  playsInline
+                  ref={(el) => (videoRefs.current[index] = el)} // Store video ref
+                  onClick={() => togglePlayPause(index)} // Toggle play/pause on click
+                />
+                {console.log(videoRefs.current.map((e)=>e.paused))}
+                <div className="reel-details">
+                  <div className="profile-container">
+                    <img
+                      className="profile-image"
+                      src={reel.url}
+                      alt={reel.description}
+                    />
+                    <p className="profile-name">Reel Name</p>
+                  </div>
+                  <p className="reel-description">{reel.description}</p>
                 </div>
-                <p className="reel-description">{reel.description}</p>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </div>
   );
 };
