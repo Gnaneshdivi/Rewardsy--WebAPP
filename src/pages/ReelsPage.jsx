@@ -2,6 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper/modules";
+import { db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
+import AdPopup from "../components/AdPopup";
 import "swiper/css";
 import "./ReelsPage.css";
 
@@ -32,6 +35,24 @@ const ReelsPage = () => {
   const navigate = useNavigate(); // For updating the URL
   const [currentReelIndex, setCurrentReelIndex] = useState(0);
   const videoRefs = useRef([]); // To store references to video elements
+  const [adData, setAdData] = useState(null);
+
+  useEffect(() => {
+    const fetchAdData = async () => {
+      const docRef = doc(db, "qr", "DYj9KEMYlThEmP5eCFW5"); // Use a specific doc ID for reels ad
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists() && docSnap.data().active && docSnap.data().ads) {
+        setAdData(docSnap.data());
+      }
+    };
+
+    const adShown = localStorage.getItem("adShown");
+
+    if (!adData && !adShown) {
+      fetchAdData();
+    }
+  }, [adData]);
 
   // Set the initial reel index based on the reel ID in the URL
   useEffect(() => {
@@ -105,8 +126,15 @@ const ReelsPage = () => {
     }
   };
 
+  const handleAdClose = () => {
+    setAdData(null); // Close the popup
+    localStorage.setItem("adShown", "true"); // Set a flag in localStorage so the popup doesn't show again
+  };
+
   return (
     <div className="reels-page">
+      {adData && <AdPopup adData={adData} onClose={handleAdClose} />}
+      {/* Show AdPopup initially */}
       <Swiper
         direction={"vertical"}
         mousewheel={true}
