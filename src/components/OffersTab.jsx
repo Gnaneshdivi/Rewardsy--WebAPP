@@ -1,17 +1,17 @@
 import React from "react";
-import OfferCard from "../components/OfferCard";
-import "./OffersPage.css";
+import OfferCard from "./OfferCard";
+import "./OffersTab.css";
 import ClipLoader from "react-spinners/ClipLoader";
 
-const OffersPage = ({ offers, context, isLoading }) => {
+const OffersTab = ({ offers, context, isLoading }) => {
   return (
     <>
-      <div className="offers-page-container">
+      <div className="offers-tab-container">
         {isLoading ? (
           <ClipLoader loading={isLoading} color="white" />
         ) : (
           <>
-            <div className="offers-page-grid-container">
+            <div className="offers-tab-grid-container">
               {offers.map((offer, index) => (
                 <OfferCard key={index} offer={offer} context={context} />
               ))}
@@ -23,4 +23,4 @@ const OffersPage = ({ offers, context, isLoading }) => {
   );
 };
 
-export default OffersPage;
+export default OffersTab;

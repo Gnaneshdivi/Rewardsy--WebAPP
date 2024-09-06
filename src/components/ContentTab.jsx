@@ -1,16 +1,16 @@
 import React from "react";
 import ContentCard from "./ContentCard";
-import "./ContentPage.css";
+import "./ContentTab.css";
 import ClipLoader from "react-spinners/ClipLoader";
 
-const ContentPage = ({ contents, isLoading }) => {
+const ContentTab = ({ contents, isLoading }) => {
   return (
-    <div className="content-page-container">
+    <div className="content-tab-container">
       {isLoading ? (
         <ClipLoader loading={isLoading} color="white" />
       ) : (
         <>
-          <div className="content-page-grid-container">
+          <div className="content-tab-grid-container">
             {contents.map((content, index) => (
               <ContentCard
                 key={index}
@@ -25,4 +25,4 @@ const ContentPage = ({ contents, isLoading }) => {
   );
 };
 
-export default ContentPage;
+export default ContentTab;

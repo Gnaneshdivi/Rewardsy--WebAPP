@@ -1,0 +1,12 @@
+#logo{
+    margin-left: 5vw;
+}
+
+@media screen and (max-width: 645px) {
+    #nav{
+        justify-content: space-between;
+    }
+    #logo{
+        height: 30px;
+    }
+}

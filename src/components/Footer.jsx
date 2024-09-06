@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import './Footer.css';
+import UserContext from "../context/UserContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const { userDetails, clearUserDetails } = useContext(UserContext); // Access user details from context
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const openAuthModal = (mode) => {
+    navigate(`/${mode}`); // Navigate programmatically to set URL
+  };
   return (
     <footer className="footer">
       <div className="footer-top">
@@ -34,10 +43,12 @@ const Footer = () => {
             </ul>
           </div>
         </div>
+        {!userDetails ? (
         <div className="footer-buttons">
-          <button className="register-button">Register</button>
-          <button className="login-button">Log in</button>
-        </div>
+          <button className="register-button" onClick={() => openAuthModal("signup")}>Register</button>
+          <button className="login-button" onClick={() => openAuthModal("login")}>Log in</button>
+        </div>) : <></>}
+
       </div>
       <div className="footer-bottom">
         <div className="footer-copyright">

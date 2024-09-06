@@ -1,11 +1,11 @@
 /* src/pages/ContentPage.css */
-.content-page-container {
+.content-tab-container {
   display: flex;
   justify-content: center;
   padding: 10px;
 }
 
-.content-page-grid-container {
+.content-tab-grid-container {
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -14,7 +14,7 @@
 }
 
 @media (max-width: 768px) {
-  .content-page-grid-container {
+  .content-tab-grid-container {
     grid-template-columns: repeat(3, 1fr); /* Auto-fill for smaller screens */
     max-width: 90vw;
   }
@@ -22,7 +22,7 @@
 
 
 @media (min-width: 768px) {
-  .content-page-grid-container {
+  .content-tab-grid-container {
     grid-template-columns: repeat(4, 1fr); /* 4 items per row for larger screens */
   }
 }
