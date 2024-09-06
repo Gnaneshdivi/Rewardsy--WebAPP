@@ -2,9 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper/modules";
+import { collection, query, where, getDocs } from "firebase/firestore"; // Import Firestore query functions
 import { db } from "../firebase";
-import { doc, getDoc } from "firebase/firestore";
 import AdPopup from "../components/AdPopup";
+import { useLocation } from "react-router-dom";
+
 import "swiper/css";
 import "./ReelsPage.css";
 
@@ -35,24 +37,26 @@ const ReelsPage = () => {
   const navigate = useNavigate(); // For updating the URL
   const [currentReelIndex, setCurrentReelIndex] = useState(0);
   const videoRefs = useRef([]); // To store references to video elements
-  const [adData, setAdData] = useState(null);
+
+  const location = useLocation();
+  const data = location.state?.data;
+  const error = location.state?.error;
+  const [showAdPopup, setShowAdPopup] = useState(false);
 
   useEffect(() => {
-    const fetchAdData = async () => {
-      const docRef = doc(db, "qr", "DYj9KEMYlThEmP5eCFW5"); // Use a specific doc ID for reels ad
-      const docSnap = await getDoc(docRef);
+    console.log(data);
+    const popupShownKey = `popupShown-${data?.id}`;
+    const popupShown = localStorage.getItem(popupShownKey) === "true";
 
-      if (docSnap.exists() && docSnap.data().active && docSnap.data().ads) {
-        setAdData(docSnap.data());
-      }
-    };
+    if (data && data.active && data.ads && !popupShown) {
+      setShowAdPopup(true);
 
-    const adShown = localStorage.getItem("adShown");
-
-    if (!adData && !adShown) {
-      fetchAdData();
+      localStorage.setItem(popupShownKey, "true");
     }
-  }, [adData]);
+    if (error) {
+      console.error("Error:", error);
+    }
+  }, [data, error]);
 
   // Set the initial reel index based on the reel ID in the URL
   useEffect(() => {
@@ -126,14 +130,11 @@ const ReelsPage = () => {
     }
   };
 
-  const handleAdClose = () => {
-    setAdData(null); // Close the popup
-    localStorage.setItem("adShown", "true"); // Set a flag in localStorage so the popup doesn't show again
-  };
-
   return (
     <div className="reels-page">
-      {adData && <AdPopup adData={adData} onClose={handleAdClose} />}
+      {showAdPopup && (
+        <AdPopup adData={data} onClose={() => setShowAdPopup(false)} />
+      )}
       {/* Show AdPopup initially */}
       <Swiper
         direction={"vertical"}

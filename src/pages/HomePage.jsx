@@ -7,6 +7,7 @@ import AdPopup from "../components/AdPopup";
 import Categories from "../components/categories";
 import Tabs from "../components/Tabs";
 import "./HomePage.css";
+import { useLocation } from "react-router-dom";
 
 const HomePage = () => {
   const images = ["/carousal/1.png", "/carousal/2.png"];
@@ -152,34 +153,31 @@ const HomePage = () => {
     },
   ];
 
-  // const [adData, setAdData] = useFetchAd("useDefaultAds");
-  const [adData, setAdData] = useState(null);
+  const location = useLocation();
+  const data = location.state?.data;
+  const error = location.state?.error;
+  const [showAdPopup, setShowAdPopup] = useState(false);
 
   useEffect(() => {
-    const fetchAdData = async () => {
-      const docRef = doc(db, "qr", "DYj9KEMYlThEmP5eCFW5"); // Use a specific doc ID for homepage ad
-      const docSnap = await getDoc(docRef);
+    console.log(data);
+    // const popupShownKey = `popupShown-${data?.id}`;
+    // const popupShown = localStorage.getItem(popupShownKey) === "true";
 
-      if (docSnap.exists() && docSnap.data().active && docSnap.data().ads) {
-        setAdData(docSnap.data());
-      }
-    };
+    if (data && data.active && data.ads) {
+      setShowAdPopup(true);
 
-    const adShown = localStorage.getItem("adShown");
-
-    if (!adData && !adShown) {
-      fetchAdData();
+      // localStorage.setItem(popupShownKey, "true");
     }
-  }, [adData]);
-
-  const handleAdClose = () => {
-    setAdData(null); // Close the popup
-    localStorage.setItem("adShown", "true"); // Set a flag in localStorage so the popup doesn't show again
-  };
+    if (error) {
+      console.error("Error:", error);
+    }
+  }, [data, error]);
 
   return (
     <div className="homepage">
-      {adData && <AdPopup adData={adData} onClose={handleAdClose} />}
+      {showAdPopup && (
+        <AdPopup adData={data} onClose={() => setShowAdPopup(false)} />
+      )}
       <CarouselComponent images={images} />
       <Categories categories={categories} />
       <Tabs offers={offers} contents={contents} context={"home"} />

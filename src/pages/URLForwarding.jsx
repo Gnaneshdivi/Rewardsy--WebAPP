@@ -3,12 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
-import AdPopup from "../components/AdPopup";
+import { CgSpinner } from "react-icons/cg";
 
 const URLForwarding = () => {
   const { shortUrl } = useParams();
   const navigate = useNavigate();
-  const [adData, setAdData] = useState(null);
 
   useEffect(() => {
     const fetchMapping = async () => {
@@ -18,15 +17,16 @@ const URLForwarding = () => {
 
         if (docSnap.exists()) {
           const data = docSnap.data();
-          if (data.active && data.ads) {
-            setAdData(data);
-          }
-          navigate(`${data.link}`, { replace: true });
+          console.log(data);
+          navigate(`${data.link}`, { state: { data }, replace: true });
         } else {
-          navigate("/home", { replace: true });
+          navigate("/home", {
+            state: { error: "No data found" },
+            replace: true,
+          });
         }
       } catch (error) {
-        navigate("/home", { replace: true });
+        navigate("/home", { error: "Error fetching data", replace: true });
       }
     };
 
@@ -34,9 +34,8 @@ const URLForwarding = () => {
   }, [shortUrl, navigate]);
 
   return (
-    <div>
-      {adData && <AdPopup adData={adData} onClose={() => setAdData(null)} />}
-      Redirecting...
+    <div className="flec justify-center">
+      <CgSpinner />
     </div>
   );
 };
