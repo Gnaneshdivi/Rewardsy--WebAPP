@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { HiMenu } from "react-icons/hi";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
+import "./Navbar.css"
 
 const Navbar = () => {
   const location = useLocation();
@@ -44,10 +45,10 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex justify-between items-center p-3 bg-black">
-        <div className="flex-shrink-0">
+      <nav className="flex justify-between items-center p-3 bg-black" id="nav">
+        <div className="flex-shrink-0" id="logoDiv">
           <Link to="/home">
-            <img src="/Logo.png" alt="Logo" className="h-8 md:h-10" />
+            <img id="logo" src="/Logo.png" alt="Logo" className="h-10 ml-5 " />
           </Link>
         </div>
 
@@ -125,7 +126,7 @@ const Navbar = () => {
             )}
           </div>
         )}
-      </nav>
+      </nav> 
 
       {isAuthModalOpen && (
         <AuthModal

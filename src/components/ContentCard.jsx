@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ContentCard.css';
 
-const ContentCard = ({ content, contentList }) => {
+const ContentTab = ({ content, contentList }) => {
   const navigate = useNavigate();
 
   const handleViewReel = () => {
@@ -20,4 +20,4 @@ const ContentCard = ({ content, contentList }) => {
   );
 };
 
-export default ContentCard;
+export default ContentTab;

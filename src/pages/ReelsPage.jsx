@@ -112,7 +112,7 @@ const ReelsPage = () => {
                   ref={(el) => (videoRefs.current[index] = el)} // Store video ref
                   onClick={() => togglePlayPause(index)} // Toggle play/pause on click
                 />
-                {console.log(videoRefs.current.map((e)=>e.paused))}
+                {/* {console.log(videoRefs.current.map((e)=>e.paused))} */}
                 <div className="reel-details">
                   <div className="profile-container">
                     <img

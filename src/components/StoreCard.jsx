@@ -1,11 +1,10 @@
-// src/components/OfferCard.js
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import "./OfferCard.css";
+import "./StoreCard.css";
 import { redeemOffers } from "../services/OffersService";
 import UserContext from "../context/UserContext";
 
-const OfferCard = ({ offer, context }) => {
+const StoreCard = ({ store, context }) => {
   const navigate = useNavigate();
   const [redeemedCode, setRedeemedCode] = useState(null);
   const [redeemCodeLoading, setRedeemedCodeLoading] = useState(false);
@@ -18,13 +17,14 @@ const OfferCard = ({ offer, context }) => {
   // Handle the redeem button click
   const handleButtonClick = async () => {
     if (context === "home") {
-      navigate(`/store/${offer.store}`);
+      navigate(`/store/${store.id}`);
     } else if (context === "store") {
       if (userDetails) {
         setRedeemedCodeLoading(true);
         let userId = userDetails.uid;
         let token = userDetails.token;
         let code = await redeemOffers(offer.id, userId, token);
+        console.log(userDetails);
         setRedeemedCode(code);
         setRedeemedCodeLoading(false);
       } else {
@@ -44,22 +44,22 @@ const OfferCard = ({ offer, context }) => {
   };
 
   return (
-    <div className="offer-card">
-      <div className="offer-body">
+    <div className="store-card">
+      <div className="store-body">
         <div className="offer-logo">
-          <img src={offer.image} alt={offer.title} />
+          <img src={store.dp} alt={store.name} />
         </div>
         <div className="divider"></div>
-        <div className="offer-details">
+        <div className="store-details">
           <div className="offer-header">
-            {offer.tags.map((tag, index) => (
-              <span key={index} className="offer-tag">
+            {store.category.map((tag, index) => (
+              <span key={index} className="store-tag">
                 {tag}
               </span>
             ))}
           </div>
-          <h3 className="offer-title">{offer.title}</h3>
-          <p className="offer-description">{offer.description}</p>
+          <h3 className="store-title">{store.name}</h3>
+          <p className="store-description">{store.desc}</p>
           {context === "store" && redeemedCode ? (
             <div className="redeemed-section" onClick={handleCopyClick}>
               <p className="redeemed-code">Redeem Code: {redeemedCode}</p>
@@ -67,7 +67,7 @@ const OfferCard = ({ offer, context }) => {
             </div>
           ) : (
             <button
-              className="offer-button"
+              className="store-button"
               onClick={handleButtonClick}
               disabled={redeemCodeLoading}
             >
@@ -80,4 +80,4 @@ const OfferCard = ({ offer, context }) => {
   );
 };
 
-export default OfferCard;
+export default StoreCard;
