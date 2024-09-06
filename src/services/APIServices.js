@@ -2,11 +2,12 @@ export const getBaseURL = ()=>{
     return "https://rewardsy-dev-api-gmf5dbhcced2c0a0.eastus-01.azurewebsites.net";
 }
 
-export const APICallHandler = async ( url, method, token=undefined, body=undefined) => {
+export const APICallHandler = async ( url, method,  header, token=undefined, body=undefined) => {
     try {
       const headers = {
         'Content-Type': 'application/json',
         ...(token && { 'Authorization': `Bearer ${token}` }),
+        ...(header && {header})
       };
 
       const response = await fetch(url, {
@@ -14,7 +15,7 @@ export const APICallHandler = async ( url, method, token=undefined, body=undefin
         headers,
         body : JSON.stringify(body)
       });
-      console.log(body)
+      // console.log(body)
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
       }

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import OffersPage from "../components/OffersPage";
-import ContentPage from "../components/ContentPage";
+import OffersTab from "./OffersTab";
+import ContentTab from "../components/ContentTab";
+import StoresTab from "./StoresTab";
 import "./Tabs.css";
 
 const Tabs = ({
   offers,
   contents,
+  stores,
   context,
   isOffersLoading,
   isContentsLoading,
@@ -15,11 +17,9 @@ const Tabs = ({
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-
+  
   return (
     <div>
-      {console.log("offers")}
-      {console.log(offers)}
       <div className="tabs-container">
         <div
           className={`tab ${activeTab === "offers" ? "active" : ""}`}
@@ -33,17 +33,31 @@ const Tabs = ({
         >
           Content
         </div>
+        {context === "store" ? <div></div> : 
+        <div
+          className={`tab ${activeTab === "stores" ? "active" : ""}`}
+          onClick={() => handleTabClick("stores")}
+        >
+          Stores
+        </div>}
       </div>
       <div className="tab-content-container">
         {activeTab === "offers" && (
-          <OffersPage
+          <OffersTab
             offers={offers}
             context={context}
             isLoading={isOffersLoading}
           />
         )}
         {activeTab === "content" && (
-          <ContentPage contents={contents} isLoading={isContentsLoading} />
+          <ContentTab contents={contents} isLoading={isContentsLoading} />
+        )}
+        {activeTab === "stores" && (
+          <StoresTab
+            stores={stores}
+            context={context}
+            isLoading={isOffersLoading}
+          />
         )}
       </div>
     </div>

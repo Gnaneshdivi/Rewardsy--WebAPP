@@ -35,3 +35,10 @@
   position: relative;
   margin-top: 20px;
 }
+
+
+@media screen and (max-width: 645px) {
+  .tabs-container {
+    width: 90vw;
+  }
+}
