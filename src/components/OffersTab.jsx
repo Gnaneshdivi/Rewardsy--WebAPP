@@ -16,6 +16,11 @@ const OffersTab = ({ offers, context, isLoading }) => {
                 <OfferCard key={index} offer={offer} context={context} />
               ))}
             </div>
+            {offers.length===0 && (
+                <div className="offer-placeholder-text">
+                  No offers found under this categories
+                </div>
+              )}
           </>
         )}
       </div>

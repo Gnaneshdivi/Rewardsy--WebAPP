@@ -15,6 +15,11 @@
   padding: 10px;
 }
 
+.store-placeholder-text {
+  color: #ffc107;
+  text-align: center;
+}
+
 @media (max-width: 1000px) {
   .store-tab-grid-container {
     gap: 0px;
