@@ -45,7 +45,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex justify-between items-center p-3 bg-black" id="nav">
+      <div className="flex justify-between items-center p-3 bg-black" id="nav">
         <div className="flex-shrink-0" id="logoDiv">
           <Link to="/home">
             <img id="logo" src="/Logo.png" alt="Logo" className="h-10 ml-5 " />
@@ -126,7 +126,7 @@ const Navbar = () => {
             )}
           </div>
         )}
-      </nav> 
+      </div> 
 
       {isAuthModalOpen && (
         <AuthModal

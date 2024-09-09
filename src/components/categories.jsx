@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+ import React, { useEffect, useRef } from 'react';
 import './categories.css';
 
 const Categories = ({ categories, setSelectedCategory, selectedCategory }) => {
@@ -29,9 +29,9 @@ const Categories = ({ categories, setSelectedCategory, selectedCategory }) => {
         {categories.map((category, index) => (
           <div key={index} className={selectedCategory===category?"selected-item":"category-item"} onClick={()=>setSelectedCategory(category)}>
             <div className="category-icon">
-              <img className="category-img" src="https://picsum.photos/200/300?random=4"/>
+              <img className="category-img" src={category.asset}/>
             </div>
-            <p className="category-name">{category}</p>
+            <p className="category-name">{category.name}</p>
           </div>
         ))}
       </div>
