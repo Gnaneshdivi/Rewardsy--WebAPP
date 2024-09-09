@@ -15,7 +15,7 @@ const ContentTab = ({ contents, isLoading }) => {
               <ContentCard
                 key={index}
                 content={content}
-                contentList={contents}
+                reels={contents}
               />
             ))}
           </div>

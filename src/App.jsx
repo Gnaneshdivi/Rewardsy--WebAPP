@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route,useLocation  } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
 import StorePage from "./pages/StorePage";
@@ -19,7 +19,9 @@ const App = () => {
 };
 
 const AppContent = () => {
+  const location = useLocation();
   return (
+    
     <div className="full-screen">
       <Navbar />
       <div

@@ -26,9 +26,9 @@ const ReelsPage = () => {
 
       try {
         // Use content from location state if available
-        if (location.state?.contentList) {
-          setReels(location.state.contentList);
-          const reelIndex = location.state.contentList.findIndex(
+        if (location.state?.reels) {
+          setReels(location.state.reels);
+          const reelIndex = location.state.reels.findIndex(
             (reel) => reel.id === reelId
           );
           initialIndex = reelIndex !== -1 ? reelIndex : 0;
@@ -73,7 +73,7 @@ const ReelsPage = () => {
       setCurrentReelIndex(newIndex);
       const newReelID = reels[newIndex]?.id;
       if (newReelID) {
-        navigate(`/reels/${newReelID}`, { replace: true, state: { contentList } }); // Update the URL without adding to history
+        navigate(`/reels/${newReelID}`, { replace: true, state: { reels } }); // Update the URL without adding to history
       }
     }
   };
