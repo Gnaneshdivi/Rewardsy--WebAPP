@@ -10,6 +10,7 @@
     /* background-color: #333333; */
     border-radius: 10px;
     overflow-x: scroll;
+    overflow: hidden;
     padding: 10px;
   }
 
@@ -52,13 +53,12 @@
   
   .selected-item {
     display: inline-block;
-    margin: 0 10px; /* Space between items */
+    margin: 0 15px; /* Space between items */
     text-align: center;
   }
 
   .selected-item  .category-icon{
-    background-color: #fbfafa;
-    padding: 0.25rem 0.25rem;
+    background-color: #ffc107;
   }
 
   .category-item {
@@ -70,40 +70,31 @@
   .category-icon {
     width: 10vw; /* Adjust the size of the icons */
     height: 10vw;
-    max-width: 100px; /* Set a maximum width */
-    max-height: 100px; /* Set a maximum height */
+    padding: 10px;
+    max-width: 80px; /* Set a maximum width */
+    max-height: 80px; /* Set a maximum height */
     border-radius: 50%;
-    background-color: #333333; /* Placeholder color for icons */
+    background-color: whitesmoke; /* Placeholder color for icons */
     display: flex;
     align-items: center;
     justify-content: center;
   }
   
-  .category-img {
-    width: 9vw; /* Adjust the size of the icons */
-    height: 9vw;
-    padding: 10px;
-    max-width: 100px; /* Set a maximum width */
-    max-height: 100px; /* Set a maximum height */
-    border-radius: 50%;
-    background-color: #333333; /* Placeholder color for icons */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  
 
   .category-name {
+    overflow-y: auto;
     margin-top: 10px;
-    font-size: 0.7em;
+    font-size:1em;
     color: #ffc107; /* Match the color for category name */
   }
   
   @media (max-width: 768px) {
     .category-icon {
-      width: 20vw; /* Adjust size for smaller screens */
-      height: 20vw;
-      max-width: 80px;
-      max-height: 80px;
+      width: 15vw; /* Adjust size for smaller screens */
+      height: 15vw;
+      max-width: 60px;
+      max-height: 60px;
     }
   }
   
