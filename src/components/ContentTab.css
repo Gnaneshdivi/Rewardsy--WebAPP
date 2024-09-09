@@ -13,6 +13,11 @@
   max-width: 60vw; /* Adjust this value based on your desired maximum width */
 }
 
+.content-placeholder-text {
+  color: #ffc107;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .content-tab-grid-container {
     grid-template-columns: repeat(3, 1fr); /* Auto-fill for smaller screens */
