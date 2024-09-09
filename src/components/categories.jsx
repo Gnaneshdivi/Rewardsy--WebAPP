@@ -27,10 +27,9 @@ const Categories = ({ categories, setSelectedCategory, selectedCategory }) => {
       <h2 className="categories-title">Categories</h2>
       <div className="categories-list" ref={listRef}>
         {categories.map((category, index) => (
-          <div key={index} className={selectedCategory===category?"selected-item":"category-item"} onClick={()=>setSelectedCategory(category)}>
-            <div className="category-icon">
-              <img className="category-img" src={category.asset}/>
-            </div>
+          <div key={index} className={selectedCategory===category.name?"selected-item":"category-item"} onClick={()=>setSelectedCategory(category.name)}>
+            <img className="category-icon" src={category.asset}/>
+            
             <p className="category-name">{category.name}</p>
           </div>
         ))}

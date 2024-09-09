@@ -15,15 +15,28 @@ const HomePage = () => {
   const [ isOffersLoading, setisOffersLoading ] = useState(true);
   const [ isReelsLoading, setisReelsLoading ] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [ isContentLoading, setisContentLoading ] = useState(true);
 
   useEffect(() => {
     const updateData = async () => {
-      setStores(await getStoreByLocation(""));
-      setOffers(await getOffers());
-      setReels(await getReels());
-      setisOffersLoading(false);
-      setisReelsLoading(false);
+      try {
+        // Call both APIs concurrently
+        const [offersData, reelsData,storeData] = await Promise.all([getOffers(), getReels(),getStoreByLocation("")]);
+        
+        // Update the state once both API calls are complete
+        setOffers(offersData);
+        setReels(reelsData);
+        setStores(storeData)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        // Ensure loading states are updated regardless of success or failure
+        setisOffersLoading(false);
+        setisReelsLoading(false);
+        setisContentLoading(false);
+      }
     };
+  
     updateData();
   }, []);
 
@@ -63,6 +76,7 @@ const HomePage = () => {
         context={"home"}
         isOffersLoading={isOffersLoading}
         isContentsLoading={isReelsLoading}
+        isContentLoading={isContentLoading}
       />
     </div>
   );
