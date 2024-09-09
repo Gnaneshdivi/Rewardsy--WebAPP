@@ -17,7 +17,6 @@ const URLForwarding = () => {
 
         if (docSnap.exists()) {
           const data = docSnap.data();
-          console.log(data);
           navigate(`${data.link}`, { state: { data }, replace: true });
         } else {
           navigate("/home", {

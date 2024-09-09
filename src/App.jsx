@@ -40,7 +40,6 @@ const AppContent = () => {
           <Route path="/reels" element={<ReelsPage />} />
         </Routes>
         {!location.pathname.startsWith("/reels") && <Footer />}
-        {!location.pathname.startsWith("/qr") && <Footer /> && <Navbar />}
       </div>
     </div>
   );

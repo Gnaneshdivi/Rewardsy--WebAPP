@@ -26,7 +26,6 @@ const ReelsPage = () => {
   const [showAdPopup, setShowAdPopup] = useState(false);
 
   useEffect(() => {
-    console.log(data);
     const popupShownKey = `popupShown-${data?.id}`;
     const popupShown = localStorage.getItem(popupShownKey) === "true";
 
@@ -142,7 +141,6 @@ const ReelsPage = () => {
                   ref={(el) => (videoRefs.current[index] = el)} // Store video ref
                   onClick={() => togglePlayPause(index)} // Toggle play/pause on click
                 />
-                {/* {console.log(videoRefs.current.map((e)=>e.paused))} */}
                 <div className="reel-details">
                   <div className="profile-container">
                     <img
