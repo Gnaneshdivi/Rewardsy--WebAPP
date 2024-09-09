@@ -2,6 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper/modules";
+import { collection, query, where, getDocs } from "firebase/firestore"; // Import Firestore query functions
+import { db } from "../firebase";
+import AdPopup from "../components/AdPopup";
+import { useLocation } from "react-router-dom";
+
 import "swiper/css";
 import "./ReelsPage.css";
 import { getReels } from "../services/ReelsServices";
@@ -12,8 +17,28 @@ const ReelsPage = () => {
   const navigate = useNavigate(); // For updating the URL
   const [currentReelIndex, setCurrentReelIndex] = useState(0);
   const videoRefs = useRef([]); // To store references to video elements
+
+  const location = useLocation();
+  const data = location.state?.data;
+  const error = location.state?.error;
   const [reels, setReels] = useState([]);
   const [isReelsLoading, setisReelsLoading] = useState(true);
+  const [showAdPopup, setShowAdPopup] = useState(false);
+
+  useEffect(() => {
+    const popupShownKey = `popupShown-${data?.id}`;
+    const popupShown = localStorage.getItem(popupShownKey) === "true";
+
+    if (data && data.active && data.ads && !popupShown) {
+      setShowAdPopup(true);
+
+      localStorage.setItem(popupShownKey, "true");
+    }
+    if (error) {
+      console.error("Error:", error);
+    }
+  }, [data, error]);
+
 
   useEffect(() => {
     const updateReels = async () => {
@@ -90,6 +115,10 @@ const ReelsPage = () => {
 
   return (
     <div className="reels-page">
+      {showAdPopup && (
+        <AdPopup adData={data} onClose={() => setShowAdPopup(false)} />
+      )}
+      {/* Show AdPopup initially */}
       {isReelsLoading ? (
         <ClipLoader loading={isReelsLoading} color="white"/>
       ) : (
@@ -112,7 +141,6 @@ const ReelsPage = () => {
                   ref={(el) => (videoRefs.current[index] = el)} // Store video ref
                   onClick={() => togglePlayPause(index)} // Toggle play/pause on click
                 />
-                {/* {console.log(videoRefs.current.map((e)=>e.paused))} */}
                 <div className="reel-details">
                   <div className="profile-container">
                     <img

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
@@ -19,6 +20,7 @@ const App = () => {
 };
 
 const AppContent = () => {
+  const location = useLocation();
   return (
     <div className="full-screen">
       <Navbar />
@@ -34,7 +36,8 @@ const AppContent = () => {
           <Route path="/store/:storeId" element={<StorePage />} />
           <Route path="/qr/:shortUrl" element={<URLForwarding />} />
           {/* Update the route pattern to catch both /reelID and /reel1, /reel2, etc. */}
-          <Route path="/reels/:reelId" element={<ReelsPage />} />
+          <Route path="/reels/:reelID" element={<ReelsPage />} />
+          <Route path="/reels" element={<ReelsPage />} />
         </Routes>
         {!location.pathname.startsWith("/reels") && <Footer />}
       </div>

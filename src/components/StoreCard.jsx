@@ -24,7 +24,6 @@ const StoreCard = ({ store, context }) => {
         let userId = userDetails.uid;
         let token = userDetails.token;
         let code = await redeemOffers(offer.id, userId, token);
-        console.log(userDetails);
         setRedeemedCode(code);
         setRedeemedCodeLoading(false);
       } else {
