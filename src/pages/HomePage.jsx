@@ -71,8 +71,8 @@ const HomePage = () => {
       <Categories categories={categories} setSelectedCategory={setSelectedCategory} selectedCategory={selectedCategory}/>
       <Tabs
         offers={Offers.filter((offer)=> selectedCategory=="All" || offer.tags.includes(selectedCategory))}
-        contents={Reels}
-        stores={Stores}
+        contents={Reels.filter((reel)=> selectedCategory=="All" || reel.tags.includes(selectedCategory))}
+        stores={Stores.filter((store)=> selectedCategory=="All" || store.category.includes(selectedCategory))}
         context={"home"}
         isOffersLoading={isOffersLoading}
         isContentsLoading={isReelsLoading}
