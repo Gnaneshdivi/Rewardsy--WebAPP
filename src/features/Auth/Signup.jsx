@@ -131,6 +131,7 @@ const Signup = () => {
         ...formData,
         uid: user.uid,
         phoneNumber: ph,
+        token: await auth.currentUser.getIdToken()
       });
 
       toast.success("Details submitted successfully!");

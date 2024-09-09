@@ -1,177 +1,40 @@
 import React, { useState, useEffect } from "react";
 import CarouselComponent from "../components/Carousel";
-// import useFetchAd from "../hooks/UseFetchAd";
-import { db } from "../firebase";
-import { doc, getDoc } from "firebase/firestore";
 import AdPopup from "../components/AdPopup";
 import Categories from "../components/categories";
 import Tabs from "../components/Tabs";
 import "./HomePage.css";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import CarouselComponent from "../components/Carousel";
+import Categories from "../components/categories";
+import Tabs from "../components/Tabs";
+import "./HomePage.css";
+import { getOffers } from "../services/OffersService";
+import { getReels } from "../services/ReelsServices";
+import { getStoreByLocation } from "../services/StoreServices";
 
 const HomePage = () => {
-  const images = ["/carousal/1.png", "/carousal/2.png"];
-
-  const categories = ["Category 1", "Category 2", "Category 3", "Category 4"];
-
-  const offers = [
-    {
-      title: "BIKE",
-      description: "Flat 10% discount",
-      tags: ["Recommended", "Fast selling"],
-      active: true,
-      endDate: "",
-      image: "./offerLogo.png",
-      numberOfOffers: 0,
-      redemptions: 0,
-      startDate: "",
-      store: "ids",
-    },
-    {
-      title: "NIKE",
-      description: "Flat 10% discount",
-      tags: ["Recommended", "Fast selling"],
-      active: true,
-      endDate: "",
-      image: "./offerLogo.png",
-      numberOfOffers: 0,
-      redemptions: 0,
-      startDate: "",
-      store: "/stores/id",
-    },
-    {
-      title: "NIKE",
-      description: "Flat 10% discount",
-      tags: ["Recommended", "Fast selling"],
-      active: true,
-      endDate: "",
-      image: "./offerLogo.png",
-      numberOfOffers: 0,
-      redemptions: 0,
-      startDate: "",
-      store: "/stores/id",
-    },
-    {
-      title: "NIKE",
-      description: "Flat 10% discount",
-      tags: ["Recommended", "Fast selling"],
-      active: true,
-      endDate: "",
-      image: "./offerLogo.png",
-      numberOfOffers: 0,
-      redemptions: 0,
-      startDate: "",
-      store: "/stores/id",
-    },
-    {
-      title: "Adidas",
-      ddescription: "Flat 15% discount",
-      tags: ["Recommended"],
-      active: true,
-      endDate: "",
-      image: "",
-      numberOfOffers: 0,
-      redemptions: 0,
-      startDate: "",
-      store: "/stores/id",
-    },
-    {
-      title: "Adidas",
-      ddescription: "Flat 15% discount",
-      tags: ["Recommended"],
-      active: true,
-      endDate: "",
-      image: "",
-      numberOfOffers: 0,
-      redemptions: 0,
-      startDate: "",
-      store: "/stores/id",
-    },
-
-    {
-      title: "Adidas",
-      ddescription: "Flat 15% discount",
-      tags: ["Recommended"],
-      active: true,
-      endDate: "",
-      image: "",
-      numberOfOffers: 0,
-      redemptions: 0,
-      startDate: "",
-      store: "/stores/id",
-    },
-
-    {
-      title: "Adidas",
-      ddescription: "Flat 15% discount",
-      tags: ["Recommended"],
-      active: true,
-      endDate: "",
-      image: "",
-      numberOfOffers: 0,
-      redemptions: 0,
-      startDate: "",
-      store: "/stores/id",
-    },
-
-    // Add more offers here
-  ];
-
-  const contents = [
-    {
-      description: "testing",
-      interactions: "",
-      link: "/offers/id",
-      store: "/stores/id",
-      url: "",
-      image: "../content.png",
-    },
-    {
-      description: "testing",
-      interactions: "",
-      link: "/offers/id",
-      store: "/stores/id",
-      url: "",
-      image: "../content.png",
-    },
-
-    {
-      description: "testing",
-      interactions: "",
-      link: "/offers/id",
-      store: "/stores/id",
-      url: "",
-      image: "../content.png",
-    },
-    {
-      description: "testing",
-      interactions: "",
-      link: "/offers/id",
-      store: "/stores/id",
-      url: "",
-      image: "../content.png",
-    },
-  ];
-
-  const location = useLocation();
-  const data = location.state?.data;
-  const error = location.state?.error;
-  const [showAdPopup, setShowAdPopup] = useState(false);
+  const [ Offers, setOffers ] = useState([]);
+  const [ Reels, setReels ] = useState([]);
+  const [ Stores, setStores ] = useState([]);
+  const [ isOffersLoading, setisOffersLoading ] = useState(true);
+  const [ isReelsLoading, setisReelsLoading ] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   useEffect(() => {
-    console.log(data);
-    // const popupShownKey = `popupShown-${data?.id}`;
-    // const popupShown = localStorage.getItem(popupShownKey) === "true";
+    const updateData = async () => {
+      setStores(await getStoreByLocation(""));
+      setOffers(await getOffers());
+      setReels(await getReels());
+      setisOffersLoading(false);
+      setisReelsLoading(false);
+    };
+    updateData();
+  }, []);
 
-    if (data && data.active && data.ads) {
-      setShowAdPopup(true);
+  const images = ["/carousal/1.png", "/carousal/2.png"];
 
-      // localStorage.setItem(popupShownKey, "true");
-    }
-    if (error) {
-      console.error("Error:", error);
-    }
-  }, [data, error]);
+  const categories = ["All", "Fitness", "Discount"];
 
   return (
     <div className="homepage">
@@ -179,9 +42,15 @@ const HomePage = () => {
         <AdPopup adData={data} onClose={() => setShowAdPopup(false)} />
       )}
       <CarouselComponent images={images} />
-      <Categories categories={categories} />
-      <Tabs offers={offers} contents={contents} context={"home"} />
-      {/* Add other sections of the HomePage here */}
+      <Categories categories={categories} setSelectedCategory={setSelectedCategory} selectedCategory={selectedCategory}/>
+      <Tabs
+        offers={Offers.filter((offer)=> selectedCategory=="All" || offer.tags.includes(selectedCategory))}
+        contents={Reels}
+        stores={Stores}
+        context={"home"}
+        isOffersLoading={isOffersLoading}
+        isContentsLoading={isReelsLoading}
+      />
     </div>
   );
 };

@@ -63,7 +63,7 @@ const PhoneAuth = () => {
         toast.success("OTP sent successfully!");
       })
       .catch((error) => {
-        console.log(error);
+        error.log(error);
         setLoading(false);
         toast.error("Failed to send OTP. Please try again.");
       });
@@ -86,6 +86,7 @@ const PhoneAuth = () => {
 
         if (userDoc.exists()) {
           const userData = userDoc.data();
+          userData.token = await auth.currentUser.getIdToken();
           setUserDetails(userData); // Set user data in context
         }
 
@@ -99,7 +100,7 @@ const PhoneAuth = () => {
         navigate("/signup");
       }
     } catch (err) {
-      console.log(err);
+      error.log(err);
       setLoading(false);
       toast.error("Failed to verify OTP. Please try again.");
     }

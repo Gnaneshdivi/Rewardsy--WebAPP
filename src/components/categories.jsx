@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './categories.css';
 
-const Categories = ({ categories }) => {
+const Categories = ({ categories, setSelectedCategory, selectedCategory }) => {
   const listRef = useRef(null);
 
   useEffect(() => {
@@ -27,8 +27,10 @@ const Categories = ({ categories }) => {
       <h2 className="categories-title">Categories</h2>
       <div className="categories-list" ref={listRef}>
         {categories.map((category, index) => (
-          <div key={index} className="category-item">
-            <div className="category-icon"></div>
+          <div key={index} className={selectedCategory===category?"selected-item":"category-item"} onClick={()=>setSelectedCategory(category)}>
+            <div className="category-icon">
+              <img className="category-img" src="https://picsum.photos/200/300?random=4"/>
+            </div>
             <p className="category-name">{category}</p>
           </div>
         ))}
