@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import ReelsPage from "./pages/ReelsPage";
 
 import "./App.css"; // Include your global styles here
+import AuthModal from "./components/AuthModel";
 
 const App = () => {
   return (
@@ -35,6 +36,8 @@ const AppContent = () => {
           <Route path="/store" element={<RedirectToHome />} />
           <Route path="/store/:storeId" element={<StorePage />} />
           <Route path="/qr/:shortUrl" element={<URLForwarding />} />
+          <Route path="/Login" element={<HomePage />} />
+          <Route path="/SignUp" element={<HomePage />} />
           {/* Update the route pattern to catch both /reelID and /reel1, /reel2, etc. */}
           <Route path="/reels/:reelId" element={<ReelsPage />} />
         </Routes>
