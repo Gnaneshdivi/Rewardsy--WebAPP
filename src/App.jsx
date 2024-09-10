@@ -24,7 +24,7 @@ const AppContent = () => {
   return (
     
     <div className="full-screen">
-      <Navbar />
+       { !location.pathname.startsWith("/qr")  &&<Navbar />}
       <div
         className={
           location.pathname.startsWith("/reels") ? "no-scroll" : "scroll"
@@ -41,7 +41,7 @@ const AppContent = () => {
           {/* Update the route pattern to catch both /reelID and /reel1, /reel2, etc. */}
           <Route path="/reels/:reelId" element={<ReelsPage />} />
         </Routes>
-        {!location.pathname.startsWith("/reels") && <Footer />}
+        {!location.pathname.startsWith("/reels") && !location.pathname.startsWith("/qr")  &&<Footer />}
       </div>
     </div>
   );

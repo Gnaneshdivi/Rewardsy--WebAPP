@@ -33,7 +33,7 @@ const URLForwarding = () => {
     fetchMapping();
   }, [shortUrl, navigate]);
 
-  return <div>Redirecting...</div>;
+  return <></>;
 };
 
 export default URLForwarding;
