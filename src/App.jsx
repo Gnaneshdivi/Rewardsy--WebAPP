@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route,useLocation  } from "react-router-dom";
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
 import StorePage from "./pages/StorePage";
@@ -7,9 +7,10 @@ import URLForwarding from "./pages/URLForwarding";
 import RedirectToHome from "./pages/RedirectToHomepage";
 import Footer from "./components/Footer";
 import ReelsPage from "./pages/ReelsPage";
+import AuthModal from "./components/AuthModel";
+import UserContext from "./context/UserContext"; // Import the UserContext
 
 import "./App.css"; // Include your global styles here
-import AuthModal from "./components/AuthModel";
 
 const App = () => {
   return (
@@ -21,15 +22,18 @@ const App = () => {
 
 const AppContent = () => {
   const location = useLocation();
+  const { userDetails, loading } = useContext(UserContext); // Get user details and loading state from context
+
+  // Show a loading indicator while checking authentication
+  if (loading) {
+    return <div>Loading...</div>; // You can replace this with a spinner or loader component
+  }
+
   return (
-    
     <div className="full-screen">
-       { !location.pathname.startsWith("/qr")  &&<Navbar />}
-      <div
-        className={
-          location.pathname.startsWith("/reels") ? "no-scroll" : "scroll"
-        }
-      >
+      {/* Conditionally render Navbar */}
+      {!location.pathname.startsWith("/qr") && <Navbar />}
+      <div className={location.pathname.startsWith("/reels") ? "no-scroll" : "scroll"}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
@@ -41,7 +45,8 @@ const AppContent = () => {
           {/* Update the route pattern to catch both /reelID and /reel1, /reel2, etc. */}
           <Route path="/reels/:reelId" element={<ReelsPage />} />
         </Routes>
-        {!location.pathname.startsWith("/reels") && !location.pathname.startsWith("/qr")  &&<Footer />}
+        {/* Conditionally render Footer */}
+        {!location.pathname.startsWith("/reels") && !location.pathname.startsWith("/qr") && <Footer />}
       </div>
     </div>
   );
