@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Mousewheel } from "swiper/modules";
-import "swiper/css";
-import "./ReelsPage.css";
-import { getReels } from "../services/ReelsServices";
-import ClipLoader from "react-spinners/ClipLoader";
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Mousewheel } from 'swiper/modules';
+import { useLocation } from 'react-router-dom';
+import 'swiper/css';
+import './ReelsPage.css';
+import { getReels, getReelById } from '../services/ReelsServices';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const ReelsPage = () => {
   const { reelId } = useParams(); // Get the current reel ID from the URL
@@ -14,15 +15,49 @@ const ReelsPage = () => {
   const videoRefs = useRef([]); // To store references to video elements
   const [reels, setReels] = useState([]);
   const [isReelsLoading, setisReelsLoading] = useState(true);
+  const location = useLocation();
 
+  // Fetch reels data and manage the state
   useEffect(() => {
     const updateReels = async () => {
-      const reelsList = await getReels();
-      setReels(reelsList);
-      setisReelsLoading(false);
-    }
+      setisReelsLoading(true); // Start loading state
+      let initialIndex = 0;
+      console.log('Location state:', location.state);
+
+      try {
+        // Use content from location state if available
+        if (location.state?.reels) {
+          setReels(location.state.reels);
+          const reelIndex = location.state.reels.findIndex(
+            (reel) => reel.id === reelId
+          );
+          initialIndex = reelIndex !== -1 ? reelIndex : 0;
+          setCurrentReelIndex(initialIndex);
+        } else if (reelId) {
+          // Fetch reel by ID if `reelId` is provided
+          const reel = await getReelById(reelId);
+          if (reel) {
+            const randomReels = await getReels();
+            setReels([reel, ...randomReels.filter((r) => r.id !== reelId)]);
+          } else {
+            const randomReels = await getReels();
+            setReels(randomReels);
+          }
+        } else {
+          // Fetch random reels if no specific `reelId` is provided
+          const randomReels = await getReels();
+          setReels(randomReels);
+        }
+        setCurrentReelIndex(initialIndex);
+      } catch (error) {
+        console.error('Error fetching reels:', error);
+      } finally {
+        setisReelsLoading(false); // Ensure loading state is stopped
+      }
+    };
+
     updateReels();
-  }, []);
+  }, [reelId]); // Removed location.state to avoid unnecessary re-renders
 
   // Handle video playback when the slide changes
   const handleSlideChange = (swiper) => {
@@ -30,49 +65,42 @@ const ReelsPage = () => {
 
     if (newIndex !== currentReelIndex) {
       // Pause the previous video
-      if (videoRefs.current[currentReelIndex]) {
-        videoRefs.current[currentReelIndex].pause();
-        videoRefs.current[currentReelIndex].currentTime = 0; // Reset to start
-      }
+      videoRefs.current[currentReelIndex]?.pause(); // Reset to start
 
       // Play the new video
-      if (videoRefs.current[newIndex]) {
-        videoRefs.current[newIndex].play();
-      }
+      videoRefs.current[newIndex]?.play();
 
       setCurrentReelIndex(newIndex);
-      const newReelID = reels[newIndex].id;
-      navigate(`/reels/${newReelID}`, { replace: true });
+      const newReelID = reels[newIndex]?.id;
+      if (newReelID) {
+        navigate(`/reels/${newReelID}`, { replace: true, state: { reels } }); // Update the URL without adding to history
+      }
     }
   };
 
-  // Automatically play the video when the component is mounted
+  // Automatically play the video when the component is mounted or `currentReelIndex` changes
   useEffect(() => {
-    if (videoRefs.current[currentReelIndex]) {
+    if (!isReelsLoading && videoRefs.current[currentReelIndex]) {
       videoRefs.current[currentReelIndex].play();
     }
-  }, [currentReelIndex]);
+  }, [currentReelIndex, isReelsLoading]);
 
   // Pause video on window blur and resume on focus
   useEffect(() => {
     const handleWindowBlur = () => {
-      if (videoRefs.current[currentReelIndex]) {
-        videoRefs.current[currentReelIndex].pause();
-      }
+      videoRefs.current[currentReelIndex]?.pause();
     };
 
     const handleWindowFocus = () => {
-      if (videoRefs.current[currentReelIndex]) {
-        videoRefs.current[currentReelIndex].play();
-      }
+      videoRefs.current[currentReelIndex]?.play();
     };
 
-    window.addEventListener("blur", handleWindowBlur);
-    window.addEventListener("focus", handleWindowFocus);
+    window.addEventListener('blur', handleWindowBlur);
+    window.addEventListener('focus', handleWindowFocus);
 
     return () => {
-      window.removeEventListener("blur", handleWindowBlur);
-      window.removeEventListener("focus", handleWindowFocus);
+      window.removeEventListener('blur', handleWindowBlur);
+      window.removeEventListener('focus', handleWindowFocus);
     };
   }, [currentReelIndex]);
 
@@ -91,10 +119,10 @@ const ReelsPage = () => {
   return (
     <div className="reels-page">
       {isReelsLoading ? (
-        <ClipLoader loading={isReelsLoading} color="white"/>
+        <ClipLoader loading={isReelsLoading} color="white" />
       ) : (
         <Swiper
-          direction={"vertical"}
+          direction={'vertical'}
           mousewheel={true}
           onSlideChange={handleSlideChange}
           modules={[Mousewheel]}
@@ -111,8 +139,8 @@ const ReelsPage = () => {
                   playsInline
                   ref={(el) => (videoRefs.current[index] = el)} // Store video ref
                   onClick={() => togglePlayPause(index)} // Toggle play/pause on click
+                  autoPlay={index === currentReelIndex} // Auto-play the current video
                 />
-                {/* {console.log(videoRefs.current.map((e)=>e.paused))} */}
                 <div className="reel-details">
                   <div className="profile-container">
                     <img

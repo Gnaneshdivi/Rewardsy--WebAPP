@@ -11,11 +11,17 @@ const StoresTab = ({ stores, context, isLoading }) => {
           <ClipLoader loading={isLoading} color="white" />
         ) : (
           <>
-            <div className="store-tab-grid-container">
-              {stores.map((store, index) => (
-                <StoreCard key={index} store={store} context={context} />
-              ))}
-            </div>
+            {stores.length === 0 ? (
+              <div className="store-placeholder-text">
+                No stores found under this categories
+              </div>
+            ) : (
+              <div className="store-tab-grid-container">
+                {stores.map((store, index) => (
+                  <StoreCard key={index} store={store} context={context} />
+                ))}
+              </div>
+            )}
           </>
         )}
       </div>

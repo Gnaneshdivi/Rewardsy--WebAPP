@@ -16,7 +16,7 @@ const URLForwarding = () => {
     const fetchMapping = async () => {
         
         try {
-            const docRef = doc(db, 'urlMappings', shortUrl);
+            const docRef = doc(db, 'qr', shortUrl);
             const docSnap = await getDoc(docRef);
     
             if (docSnap.exists()) {
@@ -33,7 +33,7 @@ const URLForwarding = () => {
     fetchMapping();
   }, [shortUrl, navigate]);
 
-  return <div>Redirecting...</div>;
+  return <></>;
 };
 
 export default URLForwarding;

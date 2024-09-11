@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route,useLocation  } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
 import StorePage from "./pages/StorePage";
@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import ReelsPage from "./pages/ReelsPage";
 
 import "./App.css"; // Include your global styles here
+import AuthModal from "./components/AuthModel";
 
 const App = () => {
   return (
@@ -19,9 +20,11 @@ const App = () => {
 };
 
 const AppContent = () => {
+  const location = useLocation();
   return (
+    
     <div className="full-screen">
-      <Navbar />
+       { !location.pathname.startsWith("/qr")  &&<Navbar />}
       <div
         className={
           location.pathname.startsWith("/reels") ? "no-scroll" : "scroll"
@@ -33,10 +36,12 @@ const AppContent = () => {
           <Route path="/store" element={<RedirectToHome />} />
           <Route path="/store/:storeId" element={<StorePage />} />
           <Route path="/qr/:shortUrl" element={<URLForwarding />} />
+          <Route path="/Login" element={<HomePage />} />
+          <Route path="/SignUp" element={<HomePage />} />
           {/* Update the route pattern to catch both /reelID and /reel1, /reel2, etc. */}
           <Route path="/reels/:reelId" element={<ReelsPage />} />
         </Routes>
-        {!location.pathname.startsWith("/reels") && <Footer />}
+        {!location.pathname.startsWith("/reels") && !location.pathname.startsWith("/qr")  &&<Footer />}
       </div>
     </div>
   );

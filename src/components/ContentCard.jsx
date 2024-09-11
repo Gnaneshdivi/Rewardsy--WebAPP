@@ -3,11 +3,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ContentCard.css';
 
-const ContentTab = ({ content, contentList }) => {
+const ContentTab = ({ content, reels }) => {
   const navigate = useNavigate();
 
   const handleViewReel = () => {
-    navigate(`/reels/${content.id}`, { state: { contentList } });
+    navigate(`/reels/${content.id}`, { state: { reels } });
   };
 
 

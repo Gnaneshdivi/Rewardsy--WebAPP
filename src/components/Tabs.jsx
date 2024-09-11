@@ -11,6 +11,7 @@ const Tabs = ({
   context,
   isOffersLoading,
   isContentsLoading,
+  isStoreLoading
 }) => {
   const [activeTab, setActiveTab] = useState("offers");
 
@@ -56,7 +57,7 @@ const Tabs = ({
           <StoresTab
             stores={stores}
             context={context}
-            isLoading={isOffersLoading}
+            isLoading={isStoreLoading}
           />
         )}
       </div>
