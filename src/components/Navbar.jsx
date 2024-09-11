@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import AuthModal from "./AuthModel";
 import { Link } from "react-router-dom";
 import { HiMenu } from "react-icons/hi";
 import { useLocation, useNavigate } from "react-router-dom";
-import UserContext from "../context/UserContext";
-import "./Navbar.css"
+import UserContext from "../context/UserContext"; // Import UserContext
+
+import "./Navbar.css";
 
 const Navbar = () => {
   const location = useLocation();
@@ -29,13 +30,13 @@ const Navbar = () => {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  const openAuthModal = (mode) => {
-    navigate(`/${mode}`); // Navigate programmatically to set URL
+  const openAuthModal = () => {
+    setAuthModalOpen(true); // Open the modal for login/signup
   };
 
   const closeAuthModal = () => {
     setAuthModalOpen(false);
-    navigate("/home"); // Navigate back to home or another neutral path when closing the modal
+    navigate("/home");
   };
 
   const handleSignOut = () => {
@@ -67,15 +68,9 @@ const Navbar = () => {
             <>
               <button
                 className="bg-yellow-500 text-black font-bold py-2 px-5 rounded"
-                onClick={() => openAuthModal("login")}
+                onClick={openAuthModal}
               >
-                Login
-              </button>
-              <button
-                className="bg-black text-[#FFEA35] font-medium py-2 px-5 border border-[#FFEA35] rounded"
-                onClick={() => openAuthModal("signup")}
-              >
-                SignUp
+                Login / Signup
               </button>
             </>
           )}
@@ -107,36 +102,26 @@ const Navbar = () => {
                 <button
                   className="bg-yellow-500 text-black font-bold py-2 px-5 rounded mb-2"
                   onClick={() => {
-                    openAuthModal("login");
+                    openAuthModal();
                     setMenuOpen(false); // Close menu on navigation to login
                   }}
                 >
-                  Login
-                </button>
-                <button
-                  className="bg-black text-[#FFEA35] font-medium py-2 px-5 border border-[#FFEA35] rounded"
-                  onClick={() => {
-                    openAuthModal("signup");
-                    setMenuOpen(false); // Close menu on navigation to signup
-                  }}
-                >
-                  SignUp
+                  Login / Signup
                 </button>
               </>
             )}
           </div>
         )}
-      </div> 
+      </div>
 
       {isAuthModalOpen && (
         <AuthModal
           isOpen={isAuthModalOpen}
           close={closeAuthModal}
-          mode={location.pathname.substring(1)} // "login" or "signup"
         />
       )}
     </>
   );
 };
 
-export default Navbar;
+export default Navbar
