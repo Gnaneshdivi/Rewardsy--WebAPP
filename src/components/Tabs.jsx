@@ -11,14 +11,16 @@ const Tabs = ({
   context,
   isOffersLoading,
   isContentsLoading,
-  isStoreLoading
+  isStoreLoading,
 }) => {
-  const [activeTab, setActiveTab] = useState("stores");
+  const [activeTab, setActiveTab] = useState(
+    context === "store" ? "content" : "stores"
+  );
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-  
+
   return (
     <div>
       <div className="tabs-container">
@@ -28,20 +30,22 @@ const Tabs = ({
         >
           Offers
         </div>
-        {context === "store" ? <div></div> : 
-        <div
-          className={`tab ${activeTab === "stores" ? "active" : ""}`}
-          onClick={() => handleTabClick("stores")}
-        >
-          Stores
-        </div>}
+        {context === "store" ? (
+          <div></div>
+        ) : (
+          <div
+            className={`tab ${activeTab === "stores" ? "active" : ""}`}
+            onClick={() => handleTabClick("stores")}
+          >
+            Stores
+          </div>
+        )}
         <div
           className={`tab ${activeTab === "content" ? "active" : ""}`}
           onClick={() => handleTabClick("content")}
         >
-          Content
+          Reels
         </div>
-        
       </div>
       <div className="tab-content-container">
         {activeTab === "offers" && (
@@ -51,7 +55,7 @@ const Tabs = ({
             isLoading={isOffersLoading}
           />
         )}
-        {activeTab === "stores" && (
+        {context === "home" && activeTab === "stores" && (
           <StoresTab
             stores={stores}
             context={context}
@@ -61,7 +65,6 @@ const Tabs = ({
         {activeTab === "content" && (
           <ContentTab contents={contents} isLoading={isContentsLoading} />
         )}
-        
       </div>
     </div>
   );

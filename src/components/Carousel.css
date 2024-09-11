@@ -40,8 +40,8 @@
 /* Adjustments for Smaller Screens */
 @media (max-width : 1100px){
   .carousel-item img{
-    max-width: 90%;
-    margin-left: 5%;
+    max-width: 96%;
+    margin-left: 2%;
   }
 }
 
