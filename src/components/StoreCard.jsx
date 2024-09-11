@@ -18,18 +18,6 @@ const StoreCard = ({ store, context }) => {
   const handleButtonClick = async () => {
     if (context === "home") {
       navigate(`/store/${store.id}`);
-    } else if (context === "store") {
-      if (userDetails) {
-        setRedeemedCodeLoading(true);
-        let userId = userDetails.uid;
-        let token = userDetails.token;
-        let code = await redeemOffers(offer.id, userId, token);
-        console.log(userDetails);
-        setRedeemedCode(code);
-        setRedeemedCodeLoading(false);
-      } else {
-        navigate(`/login`);
-      }
     }
   };
 

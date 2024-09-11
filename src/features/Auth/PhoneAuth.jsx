@@ -100,7 +100,8 @@ const PhoneAuth = () => {
         navigate("/signup");
       }
     } catch (err) {
-      error.log(err);
+      // error.log(err);
+      console.log(err)
       setLoading(false);
       toast.error("Failed to verify OTP. Please try again.");
     }

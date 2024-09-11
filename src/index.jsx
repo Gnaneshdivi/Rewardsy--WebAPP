@@ -9,6 +9,8 @@ const root = createRoot(container);
 
 root.render(
     <UserProvider>
-      <App />
+      <React.StrictMode>
+    <App />
+  </React.StrictMode>
     </UserProvider>
 );
