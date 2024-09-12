@@ -10,8 +10,6 @@ const ContentTab = ({ content, reels }) => {
     navigate(`/reels/${content.id}`, { state: { reels } });
   };
 
-  console.log(content)
-  console.log("content")
 
   return (
     <div className="content-card" onClick={handleViewReel}>
