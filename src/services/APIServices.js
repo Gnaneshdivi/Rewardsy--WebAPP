@@ -1,5 +1,5 @@
 export const getBaseURL = ()=>{
-    return "https://rewardsy-dev-api-gmf5dbhcced2c0a0.eastus-01.azurewebsites.net";
+    return "https://rewardsy-dev-backend-api-duhwf8eue9a0a9gk.centralindia-01.azurewebsites.net";
     //  return "http://localhost:3000";
 }
 
