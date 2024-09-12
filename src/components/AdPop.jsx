@@ -10,7 +10,7 @@ const AdPopup = ({ img, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50 py-10">
-      <div className="relative bg-white px-2 sm:px-5 pt-2 border border-black rounded-lg w-full sm:w-full lg:w-3/4 h-full max-h-full mx-4 overflow-auto">
+      <div className="relative bg-white px-2 sm:px-5 pt-2 border border-black rounded-lg w-full sm:w-full lg:w-3/4 h-3/4 max-h-3/4 mx-4 overflow-auto">
         {/* Close "X" button at the top right */}
         <button
           onClick={onClose}
@@ -25,7 +25,7 @@ const AdPopup = ({ img, onClose }) => {
           <img
             src={decodeURI(img)}
             alt="ad"
-            className="w-full h-full object-cover rounded-md mb-3"
+            className="w-3/4 h-3/4 m-auto object-cover rounded-md mb-3"
           />
         )}
       </div>
