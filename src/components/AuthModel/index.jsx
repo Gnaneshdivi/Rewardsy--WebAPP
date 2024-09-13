@@ -1,16 +1,23 @@
 import React, { useState, useContext } from "react";
-import { Dialog } from "@reach/dialog";
-import "@reach/dialog/styles.css";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import OtpInput from "otp-input-react";
 import { auth, db } from "../../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
-import { doc, getDoc, setDoc, collection, query, where, getDocs } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import UserContext from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { CgSpinner } from "react-icons/cg";
+import "./authmodel.css"; // Import the CSS file
 
 const AuthModal = ({ isOpen, close }) => {
   const [step, setStep] = useState(1); // Step 1: Phone Input, Step 2: OTP Input, Step 3: Signup Details
@@ -28,7 +35,6 @@ const AuthModal = ({ isOpen, close }) => {
   const { setUserDetails } = useContext(UserContext);
   const navigate = useNavigate();
 
-  // Check if the user exists
   async function checkIfUserExists(phoneNumber) {
     try {
       const usersCollection = collection(db, "users");
@@ -54,15 +60,13 @@ const AuthModal = ({ isOpen, close }) => {
     }
   }
 
-  // Handle phone number submission
   async function onPhoneSubmit() {
     setLoading(true);
-    
+
     const userExists = await checkIfUserExists(ph);
     const formatPh = "+" + ph;
 
     if (userExists) {
-      // If user exists, proceed with OTP for login
       onCaptchVerify();
       signInWithPhoneNumber(auth, formatPh, window.recaptchaVerifier)
         .then((confirmationResult) => {
@@ -77,7 +81,6 @@ const AuthModal = ({ isOpen, close }) => {
           toast.error("Failed to send OTP. Please try again.");
         });
     } else {
-      // If user does not exist, proceed with OTP for signup
       onCaptchVerify();
       signInWithPhoneNumber(auth, formatPh, window.recaptchaVerifier)
         .then((confirmationResult) => {
@@ -94,7 +97,6 @@ const AuthModal = ({ isOpen, close }) => {
     }
   }
 
-  // Handle OTP verification
   async function onOTPVerify() {
     setLoading(true);
     try {
@@ -102,11 +104,9 @@ const AuthModal = ({ isOpen, close }) => {
       const uid = res.user.uid;
       setUser(res.user); // Save the user to state
 
-      // Check if the user exists in Firestore
       const userExists = await checkIfUserExists(ph);
 
       if (userExists) {
-        // Fetch user data from Firestore
         const userDocRef = doc(db, "users", uid);
         const userDoc = await getDoc(userDocRef);
 
@@ -131,7 +131,6 @@ const AuthModal = ({ isOpen, close }) => {
     }
   }
 
-  // Handle user details submission for new user
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
@@ -154,7 +153,7 @@ const AuthModal = ({ isOpen, close }) => {
       });
 
       toast.success("Details submitted successfully!");
-      close(); // Close modal after successful signup
+      close();
       navigate("/home");
     } catch (error) {
       console.error("Error saving user data:", error);
@@ -170,130 +169,186 @@ const AuthModal = ({ isOpen, close }) => {
     });
   };
 
+  if (!isOpen) return null;
+
   return (
-    <Dialog isOpen={isOpen} className="auth-modal flex justify-center items-center h-screen">
+    <div className="auth-modal">
       <Toaster toastOptions={{ duration: 4000 }} />
-      <div className="hidden" id="recaptcha-container"></div>
+      <div className="modal-content">
+        <div className="hidden" id="recaptcha-container"></div>
 
-      {step === 1 && (
-        <div className="flex flex-col gap-3 sm:p-6">
-          <h1 className="text-center text-black font-semibold text-3xl sm:text-5xl">LOGIN / SIGNUP</h1>
-          <div className="custom-phone-input">
-            <PhoneInput
-              country={"in"}
-              value={ph}
-              onChange={setPh}
-              buttonStyle={{
-                backgroundColor: "#FFEA35",
-                border: "2px solid black",
-                borderRight: "transparent",
-                borderEndStartRadius: "8px",
-                borderTopLeftRadius: "8px",
-                color: "black",
-                cursor: "default",
-              }}
-              inputStyle={{
-                border: "2px solid black",
-                backgroundColor: "#FFEA35",
-                width: "100%",
-                borderRadius: "8px",
-                height: "3rem",
-                fontSize: "1rem",
-                color: "black",
-              }}
-              containerStyle={{
-                backgroundColor: "#FFEA35",
-              }}
-            />
+        {step === 1 && (
+          <div className="login-signUp-div">
+            <div className="login-signUp-text-div">
+              <div>
+                <h1>Get Started</h1>
+              </div>
+              <div className="login-signUp-text-para-div">
+                <p>saving cannot get anymore easier</p>
+                <p>Sign Up and start saving right now</p>
+              </div>
+            </div>
+
+            <div className="divider-div"></div>
+
+            <div className="login-signUp-function-div">
+              <h1 className="">LOGIN / SIGNUP</h1>
+              <div>
+                <div className="phone-input-container">
+                  <input
+                    type="tel"
+                    value={ph}
+                    onChange={(e) => setPh(e.target.value)}
+                    style={{}}
+                    placeholder="Mobile No"
+                    required
+                    maxLength={10}
+                  />
+                </div>
+                <div className="login-signUp-signin-div">
+                  <span>Already have an account ?</span>
+                  <a>sign in</a>
+                </div>
+              </div>
+              <div className="login-signUp-otp-div">
+                <button
+                  onClick={onPhoneSubmit}
+                  className="submit-button flex gap-1 items-center justify-center mt-10 py-2.5"
+                >
+                  {loading && (
+                    <CgSpinner size={20} className="mt-1 animate-spin" />
+                  )}
+                  <span>Request OTP</span>
+                </button>
+              </div>
+            </div>
           </div>
-          <button onClick={onPhoneSubmit} className="bg-black w-full flex gap-1 items-center justify-center mt-10 py-2.5 text-white rounded">
-            {loading && <CgSpinner size={20} className="mt-1 animate-spin" />}
-            <span>Request OTP</span>
-          </button>
-        </div>
-      )}
+        )}
 
-      {step === 2 && (
-        <div className="flex flex-col gap-3 sm:p-6">
-          <h1 className="text-center text-black font-semibold text-3xl sm:text-5xl">VERIFY OTP</h1>
-          <OtpInput
-            value={otp}
-            onChange={setOtp}
-            OTPLength={6}
-            otpType="number"
-            disabled={false}
-            autoFocus
-            inputStyles={{
-              borderRadius: "4px",
-              color: "black",
-              width: "32px",
-              height: "32px",
-              textAlign: "center",
-              marginRight: "8px",
-              backgroundColor: "#FFEA35",
-              border: "2px solid black",
-            }}
-          />
-          <button onClick={onOTPVerify} className="bg-black w-full flex mt-10 gap-1 items-center justify-center py-2.5 text-white rounded">
-            {loading && <CgSpinner size={20} className="mt-1 animate-spin" />}
-            <span>Verify OTP</span>
-          </button>
-        </div>
-      )}
+        {step === 2 && (
+          <div className=" step2 ">
+            <h1 className="text-center text-black font-semibold text-3xl">
+              VERIFY OTP
+            </h1>
+            <input
+              type="number"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              maxLength={6}
+              autoFocus
+              style={{}}
+              disabled={false}
+              required
+              placeholder="enter your OTP"
+            />
 
-      {step === 3 && (
-        <form onSubmit={handleFormSubmit} className="flex flex-col gap-3 sm:p-6">
-          <h2 className="text-center font-semibold text-black text-2xl">Complete Your Profile</h2>
-          <label htmlFor="name" className="font-bold text-lg text-black">Name</label>
-          <input
-            placeholder="Name"
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-            className="border-2 text-black border-black bg-[#FFEA35] placeholder:text-[#55501cbb] p-2 rounded-md focus:outline-none focus:border-yellow-500 w-full"
-          />
-          <label htmlFor="age" className="font-bold text-lg text-black">Age</label>
-          <input
-            placeholder="10"
-            type="number"
-            id="age"
-            name="age"
-            value={formData.age}
-            onChange={handleInputChange}
-            required
-            className="border-2 text-black border-black bg-[#FFEA35] placeholder:text-[#55501cbb] p-2 rounded-md focus:outline-none focus:border-yellow-500 w-full"
-          />
-          <label htmlFor="email" className="font-bold text-lg text-black">Email</label>
-          <input
-            placeholder="email@gmail.com"
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-            className="border-2 text-black border-black bg-[#FFEA35] placeholder:text-[#55501cbb] p-2 rounded-md focus:outline-none focus:border-yellow-500 w-full"
-          />
-          <label htmlFor="state" className="font-bold text-lg text-black">State</label>
-          <input
-            placeholder="Andhra Pradesh"
-            type="text"
-            id="state"
-            name="state"
-            value={formData.state}
-            onChange={handleInputChange}
-            required
-            className="border-2 text-black border-black bg-[#FFEA35] placeholder:text-[#55501cbb] p-2 rounded-md focus:outline-none focus:border-yellow-500 w-full"
-          />
-          <button type="submit" className="bg-black w-full py-3 text-[#FFEA35] rounded-md mt-4" disabled={loading}>
-            {loading ? <CgSpinner size={20} className="animate-spin" /> : "Submit"}
-          </button>
-        </form>
-      )}
-    </Dialog>
+            <button
+              onClick={onOTPVerify}
+              className="submit-button flex mt-10 gap-1 items-center justify-center py-2.5"
+            >
+              {loading && <CgSpinner size={20} className="mt-1 animate-spin" />}
+              <span>Verify OTP</span>
+            </button>
+          </div>
+        )}
+
+        {step === 3 && (
+          <div className="step3">
+            <div className="signup-text-div">
+              <div>
+                <h1>Get Started</h1>
+              </div>
+              <div>
+                <p>saving cannot get anymore easier</p>
+                <p>Sign Up and start saving right now</p>
+              </div>
+            </div>
+
+            <div className="divider-div"></div>
+
+            <form onSubmit={handleFormSubmit} className="signup-form-div">
+              <div className="signup-caption-div">
+                <h2 className="text-center font-semibold text-black text-2xl">
+                  Complete Your Profile
+                </h2>
+              </div>
+              <div className="signup-input-div">
+                <input
+                  placeholder="Name"
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  minLength={3} // Minimum 3 characters for name
+                  className="form-input"
+                />
+                <input
+                  placeholder="Age"
+                  type="number"
+                  id="age"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleInputChange}
+                  required
+                  min={1}
+                  max={100} // Age limit of 100
+                  className="form-input"
+                />
+                <input
+                  placeholder="Email"
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="form-input"
+                />
+                <input
+                  placeholder="State"
+                  type="text"
+                  id="state"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleInputChange}
+                  required
+                  className="form-input"
+                />
+                <div className="terms-conditions">
+                  <label htmlFor="termsAccepted">agreeing to all T&C*</label>
+                  <input
+                    type="checkbox"
+                    id="termsAccepted"
+                    name="termsAccepted"
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="signup-button-div">
+                <button
+                  type="submit"
+                  className="signup-submit-button"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <CgSpinner size={20} className="animate-spin" />
+                  ) : (
+                    "Submit"
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        <button onClick={close} className="close-button">
+          X
+        </button>
+      </div>
+    </div>
   );
 };
 

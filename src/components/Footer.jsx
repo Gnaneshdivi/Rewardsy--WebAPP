@@ -45,8 +45,7 @@ const Footer = () => {
         </div>
         {!userDetails ? (
         <div className="footer-buttons">
-          <button className="register-button" onClick={() => openAuthModal("signup")}>Register</button>
-          <button className="login-button" onClick={() => openAuthModal("login")}>Log in</button>
+          <button className="login-button" onClick={() => openAuthModal("login")}>Login / Signup</button>
         </div>) : <></>}
 
       </div>
