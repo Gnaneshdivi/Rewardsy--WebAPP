@@ -26,7 +26,7 @@ const AppContent = () => {
 
   // Show a loading indicator while checking authentication
   if (loading) {
-    return <div>Loading...</div>; // You can replace this with a spinner or loader component
+    return<></>; // You can replace this with a spinner or loader component
   }
 
   return (
