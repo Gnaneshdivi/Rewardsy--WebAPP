@@ -17,7 +17,7 @@ import {
 import UserContext from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { CgSpinner } from "react-icons/cg";
-import "./authmodel.css"; // Import the CSS file
+import "./AuthModel.css"; // Import the CSS file
 
 const AuthModal = ({ isOpen, close }) => {
   const [step, setStep] = useState(1); // Step 1: Phone Input, Step 2: OTP Input, Step 3: Signup Details
