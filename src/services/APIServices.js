@@ -1,6 +1,5 @@
 export const getBaseURL = ()=>{
-    return "https://rewardsy-dev-backend-api-duhwf8eue9a0a9gk.centralindia-01.azurewebsites.net";
-    //  return "http://localhost:3000";
+    return (import.meta.env.VITE_BACKEND_URL);
 }
 
 export const APICallHandler = async ( url, method,  header, token=undefined, body=undefined) => {
