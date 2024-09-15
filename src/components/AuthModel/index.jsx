@@ -64,7 +64,7 @@ const AuthModal = ({ isOpen, close }) => {
     setLoading(true);
 
     const userExists = await checkIfUserExists(ph);
-    const formatPh = "+" + ph;
+    const formatPh = "+91" + ph;
 
     if (userExists) {
       onCaptchVerify();
