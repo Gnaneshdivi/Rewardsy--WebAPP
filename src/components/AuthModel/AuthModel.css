@@ -1,41 +1,486 @@
+
 .auth-modal {
-  position: fixed; /* Positioning relative to the viewport */
-  top: 42%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Center the dialog */
-  /* max-width: 800px; Increase the max width of the modal */
-  width: 100%; /* Slightly reduced width for better responsiveness on larger screens */
-  /* padding: 30px; Increase padding for more content space */
-  box-shadow: 0 6px 12px rgb(0, 0, 0); /* Slightly enhanced shadow for better depth */
-  backdrop-filter: blur(10px);
-  border-radius: 10px; /* Increase border-radius for a smoother look */
-  background-color: transparent; /* Background color */
-  z-index: 1000; /* Ensure it sits on top of other content */
-  overflow-y: auto; /* Allow scrolling if content overflows */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(15px);
 }
 
-/* Responsive Media Query for small devices */
-@media (max-width: 768px) {
-  .auth-modal {
-    width: 95%; /* Slightly reduce the width on tablets and small desktops */
-    padding: 20px; /* Adjust padding for smaller screens */
-    margin-top: 30px; /* Adjust top margin for better spacing */
-  }
+.modal-content {
+  background: #ffde00; 
+  border-radius: 10px;
+  padding: 40px;
+  max-width: 50vw;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 
-@media (max-width: 480px) {
-  .auth-modal {
-    width: 95%; /* Maintain a close to full-screen width on mobile devices */
-    padding: 20px; /* Maintain a comfortable padding */
-    margin-top: 60px; /* Adjust top margin for better spacing on small screens */
+.login-signUp-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.login-signUp-text-div {
+  flex: 1;
+  padding-right: 10px;
+  color: black;
+  margin-right: 2vw;
+  height: 40vh;
+  display: flex;
+  flex-direction: column ;
+  justify-content: center;
+  align-items: left;
+  text-align: left;
+}
+
+.login-signUp-text-div h1 {
+  font-size: 70px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.login-signUp-text-div p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 5px 0;
+  color: #000;
+}
+
+.divider-div{
+  height: 40vh;
+  width: 0.3vw;
+  background-color: rgb(0, 0, 0);
+  border-radius: 10px;
+}
+
+.login-signUp-function-div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 30vh;
+}
+
+.login-signUp-function-div h1{
+  color: black;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.phone-input-container {
+  width: 100%;
+}
+
+.phone-input-container .react-tel-input .form-control {
+  width: 20vw;
+  font-size: 18px;
+  background-color: transparent;
+  border: 2px solid black;
+  padding-left: 50px;
+}
+
+.login-signUp-signin-div {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+  color: #000;
+}
+
+.login-signUp-signin-div span {
+  font-size: 16px;
+  margin-right:0.5vw ;
+}
+
+.login-signUp-signin-div a {
+  color: #000;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.submit-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 15px;
+  width: 15vw;
+  font-size: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #333;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+.phone-input-container input{
+  background-color: transparent;
+  border: 3px solid rgba(0, 0, 0, 0.674);
+  color: black;
+  font-size: 20px;
+  font-weight:500;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.phone-input-container input::placeholder{
+  color: black;
+  font-size: 20px;
+  font-weight:500;
+}
+
+.form-label {
+  margin-top: 10px;
+  font-size: 14px;
+  color: black;
+}
+
+.step2{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  color: #000;
+}
+
+.step2 input{
+  background-color: transparent;
+  color: black;
+  padding: 5px 10px;
+  border: 2px solid rgba(0, 0, 0, 0.766);
+  border-radius: 10px;
+}
+
+.step2 input::placeholder{
+  color: black;
+}
+
+/* .otp-input {
+  width: 100%;
+}
+
+.otp-input input {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+  margin: 0 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+} */
+.step3{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.signup-text-div {
+  flex: 1;
+  max-width: 21vw;
+  min-width: 21vw;
+  padding-right: 10px;
+  padding-left: 20px;
+  color: black;
+  border-radius: 1.1%;
+  margin-right: 2vw;
+  height: 50vh;
+  display: flex;
+  flex-direction: column ;
+  justify-content: center;
+  align-items: left;
+  /* text-align: left; */
+}
+
+.signup-text-div h1 {
+  font-size: 70px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #000;
+  padding-right: 40px;
+}
+
+.signup-text-div p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 5px 0px;
+  color: #000;
+}
+
+.signup-form-div{
+  display: flex;
+  flex-direction: column;
+  max-width: 21vw;
+  min-width: 21vw;
+  height: 100%;
+  padding: 30px;
+}
+
+.signup-input-div input{
+  background-color: transparent;
+  border: 3px solid rgba(0, 0, 0, 0.674);
+  color: black;
+  font-size: 20px;
+  font-weight:500;
+  border-radius: 10px;
+}
+
+.signup-input-div input::placeholder{
+  color: black;
+  font-weight:500;
+}
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+.signup-submit-button{
+  background-color: transparent;
+  border: 3px solid rgba(0, 0, 0, 0.674);
+  color: black;
+  padding: 5px 15px 5px 15px;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.terms-conditions{
+  margin-top: 1vh;
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+}
+
+.terms-conditions input{
+  margin-left: 0.5vw;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+}
+
+@media (max-width: 1450px) {
+  .modal-content {
+    background: #ffde00; 
+    border-radius: 10px;
+    padding: 40px;
+    max-width: 65vw;
+    width: 100%;;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+  .login-signUp-text-div h1 {
+    font-size: 75px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #000;
+  }
+  
+  .login-signUp-text-div p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 5px 0;
+    color: #000;
   }
 
-  .auth-modal h2 {
-    font-size: 20px; /* Slightly larger font size for headers on small screens */
+  .signup-text-div {
+    max-width: 24vw;
+    min-width: 24vw;
+    padding-right: 15px;
+    padding-left: 0px;
+    margin-right: 2vw;
+    height: 50vh;
   }
 
-  .auth-modal .submit-button {
-    padding: 12px;
-    font-size: 16px; /* Slightly larger button size for small screens */
+  .signup-text-div h1 {
+    font-size: 65px;
+    padding-right: 30px;
+  }
+
+  .signup-form-div{
+    max-width: 24vw;
+    min-width: 24vw;
+    height: 100%;
+    padding: 30px;
+  }
+
+  .signup-input-div input{
+    font-size: 20px;
+    font-weight:500;
+    border-radius: 10px;
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .modal-content {
+    max-height: 90vh;
+    border-radius: 10px;
+    max-width: 90vw;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-signUp-div {
+    flex-direction: column;
+    gap: 0px;
+    }
+
+  .login-signUp-text-div {
+    border-right: 0px;
+    align-items: center;
+    padding-right: 0px;
+    padding-bottom: 40px;
+  }
+
+  .divider-div{
+    height: 0.5vh;
+    min-height: 3px;
+    width: 70vw;
+    margin-bottom: 4vh;
+  }
+
+  .login-signUp-text-div h1{
+    text-align: center;
+    font-size: 40px;
+    font-weight: 600;
+    margin-top: 2vh;
+  }
+
+  .login-signUp-signin-div span {
+    font-size: 15px;
+    margin-right: 0vw;
+  }
+  
+
+  .login-signUp-text-div p {
+    text-align: center;
+    font-size: 14px;
+    margin: 0px;
+  }
+
+.login-signUp-text-para-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-signUp-function-div h1{
+  font-size: 24px;
+}
+
+  .phone-input-container .react-tel-input .form-control{
+    width: 60vw;
+    padding-left: 0px;
+  }
+
+  .step3 {
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    flex-direction: column;
+    max-height: 80vh;
+  }
+
+  .signup-text-div{
+    border-right: 0px;
+    align-items:center;
+    text-align: center;
+    padding-right: 0px;
+    padding-bottom: 40px;
+    max-width: 90vw;
+    width: 100%;
+  }
+
+  .signup-text-div h1 {
+    font-size: 36px;
+    font-weight: 600;
+    color: #000;
+    text-align: center;
+    padding-right: 0px;
+  }
+
+.signup-text-div p {
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0px 0px;
+  color: #000;
+}
+
+.signup-caption-div h2{
+  font-size: 22px;
+  margin-top: 2vh;
+  width: 100%;
+}
+
+.signup-form-div{
+  max-width: 90vw;
+  height: 100%;
+  padding: 5px;
+}
+
+.signup-input-div input{
+  border: 2px solid rgba(0, 0, 0, 0.674);
+  font-size: 15px;
+  font-weight:500;
+  height: 6vh;
+  border-radius: 5px;
+}
+
+.terms-conditions{
+  align-items: center;
+}
+
+.signup-submit-button{
+  background-color: rgba(0, 0, 0, 0.917);
+  color: #ffde00;
+  font-weight: 300;
+}
+
+  .submit-button {
+    width: 55vw;
+    padding: 5px 15px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.834);
   }
 }

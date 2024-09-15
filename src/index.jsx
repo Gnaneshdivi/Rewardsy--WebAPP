@@ -9,6 +9,6 @@ const root = createRoot(container);
 
 root.render(
     <UserProvider>
-      <App />
+    <App />
     </UserProvider>
 );
