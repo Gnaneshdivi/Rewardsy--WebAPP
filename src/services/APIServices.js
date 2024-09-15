@@ -2,7 +2,7 @@ export const getBaseURL = ()=>{
     return (import.meta.env.VITE_BACKEND_URL);
 }
 
-export const APICallHandler = async ( url, method,  header, token=undefined, body=undefined) => {
+export const APICallHandler = async ( url, method, token=undefined,header, body=undefined) => {
     try {
       const headers = {
         'Content-Type': 'application/json',
