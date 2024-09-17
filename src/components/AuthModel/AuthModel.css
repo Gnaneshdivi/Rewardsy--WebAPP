@@ -1,6 +1,10 @@
 
 .auth-modal {
   position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   top: 0;
   left: 0;
   width: 100%;
@@ -11,6 +15,7 @@
   align-items: center;
   z-index: 1000;
   backdrop-filter: blur(15px);
+  background-color: #000;
 }
 
 .modal-content {
@@ -21,76 +26,84 @@
   width: 100%;
   position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .login-signUp-div {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 40px;
+  width: 100%; 
+  max-width: 80vw;
+  margin: 0 auto;
+}
+
+.login-signUp-text-div, .login-signUp-function-div {
+  flex: 1;
 }
 
 .login-signUp-text-div {
-  flex: 1;
-  padding-right: 10px;
   color: black;
-  margin-right: 2vw;
   height: 40vh;
   display: flex;
-  flex-direction: column ;
+  flex-direction: column;
   justify-content: center;
-  align-items: left;
-  text-align: left;
+  align-items: flex-start;
 }
 
 .login-signUp-text-div h1 {
-  font-size: 70px;
+  font-size: 68px;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin: 0;
   color: #000;
+  text-align: left;
 }
 
 .login-signUp-text-div p {
   font-size: 18px;
   line-height: 1.5;
-  margin: 5px 0;
-  color: #000;
+  margin: 0;
+  text-align: center;
 }
 
-.divider-div{
+.divider-div {
   height: 40vh;
-  width: 0.3vw;
+  width: 4px;
   background-color: rgb(0, 0, 0);
   border-radius: 10px;
+  margin-right: 1vw; 
 }
 
 .login-signUp-function-div {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  height: 30vh;
+  height: 25vh;
 }
 
-.login-signUp-function-div h1{
+.login-signUp-function-div h1 {
   color: black;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
+  text-align: center;
 }
 
 .phone-input-container {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.phone-input-container .react-tel-input .form-control {
+.phone-input-container input {
   width: 20vw;
   font-size: 18px;
-  background-color: transparent;
   border: 2px solid black;
-  padding-left: 50px;
+  padding: 10px;
+  margin-top: 1vh;
+  text-align: center;
 }
+
 
 .login-signUp-signin-div {
   display: flex;
@@ -113,14 +126,14 @@
 
 .submit-button {
   background-color: black;
-  color: white;
+  color: rgba(255, 255, 255, 0.908);
   border: none;
-  padding: 15px;
-  width: 15vw;
-  font-size: 20px;
+  padding: 10px 15px;
+  width: 20vw;
+  font-size: 16px;
   margin-top: 20px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 10px;
   transition: background-color 0.3s ease;
 }
 
@@ -213,7 +226,6 @@
   flex-direction: column ;
   justify-content: center;
   align-items: left;
-  /* text-align: left; */
 }
 
 .signup-text-div h1 {
@@ -300,39 +312,31 @@ textarea:focus, input:focus{
   .modal-content {
     background: #ffde00; 
     border-radius: 10px;
-    padding: 40px;
-    max-width: 65vw;
-    width: 100%;;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
+    max-width: 60vw;
+    justify-content: center;
+    align-items: center;
   }
+
   .login-signUp-text-div h1 {
-    font-size: 75px;
+    font-size: 60px;
     font-weight: 600;
     margin-bottom: 10px;
     color: #000;
   }
   
   .login-signUp-text-div p {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.5;
     margin: 5px 0;
     color: #000;
   }
 
-  .signup-text-div {
-    max-width: 24vw;
-    min-width: 24vw;
-    padding-right: 15px;
-    padding-left: 0px;
-    margin-right: 2vw;
-    height: 50vh;
-  }
-
-  .signup-text-div h1 {
-    font-size: 65px;
-    padding-right: 30px;
+  .signup-caption-div h1{
+    font-size: 26px;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+    color: #000;
   }
 
   .signup-form-div{
@@ -346,57 +350,59 @@ textarea:focus, input:focus{
     font-size: 20px;
     font-weight:500;
     border-radius: 10px;
+    padding: 5px 10px;
   }
 
+  .signup-input-div input[type = "text"],
+  .signup-input-div input[type = "number"],
+  .signup-input-div input[type = "email"],
+  .signup-submit-button
+  {
+    min-width: 200px;
+  }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
 
   .modal-content {
-    max-height: 90vh;
-    border-radius: 10px;
-    max-width: 90vw;
-    flex-direction: column;
+    height: auto;
+    min-height: 70vh;
+    border-radius: 5px;
+    max-width: auto;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .login-signUp-div {
     flex-direction: column;
     gap: 0px;
+    max-width: 400px;
+    height: 40vh;
+    /* background-color: #ccc; */
     }
 
   .login-signUp-text-div {
     border-right: 0px;
     align-items: center;
     padding-right: 0px;
-    padding-bottom: 40px;
-  }
-
-  .divider-div{
-    height: 0.5vh;
-    min-height: 3px;
-    width: 70vw;
-    margin-bottom: 4vh;
   }
 
   .login-signUp-text-div h1{
     text-align: center;
-    font-size: 40px;
+    font-size:30px;
     font-weight: 600;
-    margin-top: 2vh;
+    width: 60vw;
   }
 
-  .login-signUp-signin-div span {
-    font-size: 15px;
-    margin-right: 0vw;
+  .login-signUp-text-div h1 br{
+    display: none;
   }
-  
 
   .login-signUp-text-div p {
-    text-align: center;
-    font-size: 14px;
+    font-size: 100px;
     margin: 0px;
+    color: #000;
+    width: 60vw;
   }
 
 .login-signUp-text-para-div{
@@ -406,23 +412,74 @@ textarea:focus, input:focus{
   align-items: center;
 }
 
-.login-signUp-function-div h1{
-  font-size: 24px;
+.login-signUp-text-div p {
+  text-align: center;
+  font-size: 14px;
+  margin: 0px;
 }
 
-  .phone-input-container .react-tel-input .form-control{
-    width: 60vw;
-    padding-left: 0px;
+.phone-input-container input{
+  margin-top: 2vh;
+  width: 55vw;
+  max-width: 250px;
+  min-width: 50px;
+  /* padding-left: 20px; */
+  border: 2px solid rgba(0, 0, 0, 0.674);
+  font-size: 15px;
+  font-weight:500;
+  height: 4vh;
+  border-radius: 5px;
+}
+
+.phone-input-container input::placeholder{
+  font-size: 15px;
+}
+
+  .divider-div{
+    height: 0.5vh;
+    min-height: 3px;
+    min-width: 200px;
+    max-width: 450px;
+    margin: 10px 0px;
   }
 
-  .step3 {
+
+  .login-signUp-function-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 2vh;
+    width: 90%;
+  }
+
+
+.login-signUp-function-div h1{
+  font-size: 15px;
+  text-align: center;
+}
+
+.submit-button {
+  width: 55vw;
+  max-width: 250px;
+  padding: 5px 15px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.834);
+}
+
+  .login-signUp-signin-div span {
+    font-size: 15px;
+    margin-right: 0vw;
+  }
+
+  /* .step3 {
     padding-top: 4vh;
     padding-bottom: 4vh;
     flex-direction: column;
     max-height: 80vh;
-  }
+  } */
 
-  .signup-text-div{
+  /* .signup-text-div{
     border-right: 0px;
     align-items:center;
     text-align: center;
@@ -430,8 +487,8 @@ textarea:focus, input:focus{
     padding-bottom: 40px;
     max-width: 90vw;
     width: 100%;
-  }
-
+  } */
+/* 
   .signup-text-div h1 {
     font-size: 36px;
     font-weight: 600;
@@ -445,12 +502,14 @@ textarea:focus, input:focus{
   line-height: 1.5;
   margin: 0px 0px;
   color: #000;
-}
+} */
 
-.signup-caption-div h2{
-  font-size: 22px;
+.signup-caption-div h1{
+  font-size: 18px;
+  font-weight: 700;
   margin-top: 2vh;
   width: 100%;
+  color: #000;
 }
 
 .signup-form-div{
@@ -463,7 +522,7 @@ textarea:focus, input:focus{
   border: 2px solid rgba(0, 0, 0, 0.674);
   font-size: 15px;
   font-weight:500;
-  height: 6vh;
+  height: 4vh;
   border-radius: 5px;
 }
 
@@ -475,12 +534,12 @@ textarea:focus, input:focus{
   background-color: rgba(0, 0, 0, 0.917);
   color: #ffde00;
   font-weight: 300;
+  padding: 0px;
 }
 
-  .submit-button {
-    width: 55vw;
-    padding: 5px 15px;
-    font-size: 15px;
-    color: rgba(255, 255, 255, 0.834);
-  }
+.close-button{
+  font-size: 16px;
+  top: 10px;
+  right: 15px;
+}
 }

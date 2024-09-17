@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+// import PhoneInput from "react-phone-input-2";
+// import "react-phone-input-2/lib/style.css";
 import OtpInput from "otp-input-react";
 import { auth, db } from "../../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
+import { Skeleton } from 'antd';
+
 import {
   doc,
   getDoc,
@@ -72,7 +74,7 @@ const AuthModal = ({ isOpen, close }) => {
         .then((confirmationResult) => {
           window.confirmationResult = confirmationResult;
           setLoading(false);
-          setStep(2); // Move to OTP Input step
+          setStep(2); 
           toast.success("OTP sent successfully!");
         })
         .catch((error) => {
@@ -86,7 +88,7 @@ const AuthModal = ({ isOpen, close }) => {
         .then((confirmationResult) => {
           window.confirmationResult = confirmationResult;
           setLoading(false);
-          setStep(2); // Move to OTP Input step
+          setStep(2); 
           toast.success("OTP sent successfully!");
         })
         .catch((error) => {
@@ -102,7 +104,7 @@ const AuthModal = ({ isOpen, close }) => {
     try {
       const res = await window.confirmationResult.confirm(otp);
       const uid = res.user.uid;
-      setUser(res.user); // Save the user to state
+      setUser(res.user); 
 
       const userExists = await checkIfUserExists(ph);
 
@@ -113,15 +115,15 @@ const AuthModal = ({ isOpen, close }) => {
         if (userDoc.exists()) {
           const userData = userDoc.data();
           userData.token = await auth.currentUser.getIdToken();
-          setUserDetails(userData); // Set user data in context
+          setUserDetails(userData);
         }
 
         setLoading(false);
         toast.success("Login successful!");
-        close(); // Close modal if the user exists
+        close(); 
         navigate("/home");
       } else {
-        setStep(3); // Move to Signup Details step
+        setStep(3); 
         setLoading(false);
       }
     } catch (err) {
@@ -173,7 +175,7 @@ const AuthModal = ({ isOpen, close }) => {
 
   return (
     <div className="auth-modal">
-      <Toaster toastOptions={{ duration: 4000 }} />
+      <Skeleton toastOptions={{ duration: 4000 }} />
       <div className="modal-content">
         <div className="hidden" id="recaptcha-container"></div>
 
@@ -181,7 +183,7 @@ const AuthModal = ({ isOpen, close }) => {
           <div className="login-signUp-div">
             <div className="login-signUp-text-div">
               <div>
-                <h1>Get Started</h1>
+                <h1>Get <br></br> Started</h1>
               </div>
               <div className="login-signUp-text-para-div">
                 <p>saving cannot get anymore easier</p>
@@ -205,10 +207,10 @@ const AuthModal = ({ isOpen, close }) => {
                     maxLength={10}
                   />
                 </div>
-                <div className="login-signUp-signin-div">
+                {/* <div className="login-signUp-signin-div">
                   <span>Already have an account ?</span>
                   <a>sign in</a>
-                </div>
+                </div> */}
               </div>
               <div className="login-signUp-otp-div">
                 <button
@@ -253,24 +255,24 @@ const AuthModal = ({ isOpen, close }) => {
         )}
 
         {step === 3 && (
-          <div className="step3">
-            <div className="signup-text-div">
-              <div>
-                <h1>Get Started</h1>
-              </div>
-              <div>
-                <p>saving cannot get anymore easier</p>
-                <p>Sign Up and start saving right now</p>
-              </div>
+          <div className="login-signUp-div">
+          <div className="login-signUp-text-div">
+            <div>
+              <h1>Get <br></br> Started</h1>
             </div>
+            <div className="login-signUp-text-para-div">
+              <p>saving cannot get anymore easier</p>
+              <p>Sign Up and start saving right now</p>
+            </div>
+          </div>
 
-            <div className="divider-div"></div>
+          <div className="divider-div divider-signup-div"></div>
 
             <form onSubmit={handleFormSubmit} className="signup-form-div">
               <div className="signup-caption-div">
-                <h2 className="text-center font-semibold text-black text-2xl">
+                <h1>
                   Complete Your Profile
-                </h2>
+                </h1>
               </div>
               <div className="signup-input-div">
                 <input
@@ -281,7 +283,7 @@ const AuthModal = ({ isOpen, close }) => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  minLength={3} // Minimum 3 characters for name
+                  minLength={3} 
                   className="form-input"
                 />
                 <input
@@ -293,7 +295,7 @@ const AuthModal = ({ isOpen, close }) => {
                   onChange={handleInputChange}
                   required
                   min={1}
-                  max={100} // Age limit of 100
+                  max={100} 
                   className="form-input"
                 />
                 <input

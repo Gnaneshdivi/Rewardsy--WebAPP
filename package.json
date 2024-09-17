@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@reach/dialog": "^0.18.0",
+    "@ant-design/icons": "^5.4.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "antd": "^5.20.6",
+    "antd-style": "^3.6.3",
     "bootstrap": "^5.3.3",
     "firebase": "^10.12.5",
     "otp-input-react": "^0.3.0",

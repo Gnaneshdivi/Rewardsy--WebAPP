@@ -1,14 +1,16 @@
 import React from "react";
 import StoreCard from "./StoreCard";
 import "./StoresTab.css";
-import ClipLoader from "react-spinners/ClipLoader";
+// import ClipLoader from "react-spinners/ClipLoader";
+import { LoadingOutlined } from '@ant-design/icons';
 
 const StoresTab = ({ stores, context, isLoading }) => {
   console.log(stores);
   return (
     <div className="store-tab-container">
       {isLoading ? (
-        <ClipLoader loading={isLoading} color="white" />
+        <LoadingOutlined loading={isLoading} color="white"/>
+        // <ClipLoader loading={isLoading} color="white" />
       ) : (
         <>
           {stores.length === 0 ? (
