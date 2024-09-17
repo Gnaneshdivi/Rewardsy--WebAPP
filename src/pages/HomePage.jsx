@@ -6,6 +6,7 @@ import "./HomePage.css";
 import { getOffers } from "../services/OffersService";
 import { getReels } from "../services/ReelsServices";
 import { getStoreByLocation } from "../services/StoreServices";
+import SearchInput from "../components/searchInput";
 // import Navbar from "../components/Navbar";
 
 const HomePage = () => {
@@ -68,6 +69,7 @@ const HomePage = () => {
 
   return (
     <div className="homepage">
+      <SearchInput/>
       {/* <Navbar /> */}
       <CarouselComponent images={bannerImages} />
       <Categories
