@@ -24,7 +24,7 @@ export const redeemOffers = async (offerId, userId, token) => {
   const url = getBaseURL() + `/offers/${offerId}/apply`;
   const body = { userId, offerId };
   try {
-    const data = await APICallHandler(url, "POST", token, body);
+    const data = await APICallHandler(url, "POST", token,{}, body);
     return data.redemption.code;
   } catch (error) {
     throw error;

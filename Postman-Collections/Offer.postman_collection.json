@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "b1e94a09-4f4b-40de-a628-39aa7dbba799",
+		"name": "Offer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14389304",
+		"_collection_link": "https://interstellar-robot-560330.postman.co/workspace/New-Team-Workspace~bade7003-4f1d-4e0d-8557-d0bc16362f33/collection/14389304-b1e94a09-4f4b-40de-a628-39aa7dbba799?action=share&source=collection_link&creator=14389304"
+	},
+	"item": [
+		{
+			"name": "Create offers",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjExYzhiMmRmNGM1NTlkMjhjOWRlNWQ0MTAxNDFiMzBkOWUyYmNlM2IiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcmV3YXJkc3ktYXBwIiwiYXVkIjoicmV3YXJkc3ktYXBwIiwiYXV0aF90aW1lIjoxNzI0ODU0NjQ1LCJ1c2VyX2lkIjoiYWJjZCIsInN1YiI6ImFiY2QiLCJpYXQiOjE3MjQ4NTQ2NDUsImV4cCI6MTcyNDg1ODI0NSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6e30sInNpZ25faW5fcHJvdmlkZXIiOiJjdXN0b20ifX0.Vs72z54l_rnYFJRGReOQ0TgtB7psJJgE4IMUH6D1hb1Cfl0-14Hqd5CAueOK47jHMrdU7A9CQQOB_zDWeQX3e6N8SHWcGu7D9iuaWChWGG0S4MI8DPJcVw-ox4OxDhnqOEB68le53B4Q6v1CfcK8crzRclPq8arebiDj1uaCgFdGzQBrNz1aNVM9EpTg_Eehc0FlFlr3pi2sBKP_1vyVJmvU9Cw6V8C19TkN2BMSHii5Cdw_69d9ADE1CbLqNHLO5t-gtbaraRjRmW-ZWtVkLJVSIsXCFMKpFJR7sF0SV8e88v7fzTeYxfsZVueBgMktoJL4lfzKhUUiks3pi8DUSg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n           \"title\": \"Summer Sale\",\n           \"description\": \"Get up to 50% off\",\n           \"startDate\": \"2024-09-01\",\n           \"endDate\": \"2024-09-30\",\n           \"image\": \"http://example.com/image.png\",\n           \"store\": \"store123\",\n           \"active\": false,\n           \"numberOfOffers\": 100,\n           \"tags\": [\"discount\", \"summer\"]\n         }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/offers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"offers"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:3000/offers \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n           \"title\": \"Summer Sale\",\n           \"description\": \"Get up to 50% off\",\n           \"startDate\": \"2024-09-01\",\n           \"endDate\": \"2024-09-30\",\n           \"image\": \"http://example.com/image.png\",\n           \"store\": \"store123\",\n           \"active\": false,\n           \"numberOfOffers\": 100,\n           \"tags\": [\"discount\", \"summer\"]\n         }'\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Offer By ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjExYzhiMmRmNGM1NTlkMjhjOWRlNWQ0MTAxNDFiMzBkOWUyYmNlM2IiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcmV3YXJkc3ktYXBwIiwiYXVkIjoicmV3YXJkc3ktYXBwIiwiYXV0aF90aW1lIjoxNzI0ODU0NjQ1LCJ1c2VyX2lkIjoiYWJjZCIsInN1YiI6ImFiY2QiLCJpYXQiOjE3MjQ4NTQ2NDUsImV4cCI6MTcyNDg1ODI0NSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6e30sInNpZ25faW5fcHJvdmlkZXIiOiJjdXN0b20ifX0.Vs72z54l_rnYFJRGReOQ0TgtB7psJJgE4IMUH6D1hb1Cfl0-14Hqd5CAueOK47jHMrdU7A9CQQOB_zDWeQX3e6N8SHWcGu7D9iuaWChWGG0S4MI8DPJcVw-ox4OxDhnqOEB68le53B4Q6v1CfcK8crzRclPq8arebiDj1uaCgFdGzQBrNz1aNVM9EpTg_Eehc0FlFlr3pi2sBKP_1vyVJmvU9Cw6V8C19TkN2BMSHii5Cdw_69d9ADE1CbLqNHLO5t-gtbaraRjRmW-ZWtVkLJVSIsXCFMKpFJR7sF0SV8e88v7fzTeYxfsZVueBgMktoJL4lfzKhUUiks3pi8DUSg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/offers/PMbxIC7g54vqVbHKVOVN",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"offers",
+						"PMbxIC7g54vqVbHKVOVN"
+					]
+				},
+				"description": "Generated from cURL: curl -X GET http://localhost:3000/offers/<offer_id>\n"
+			},
+			"response": []
+		},
+		{
+			"name": "get offers with filters",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjExYzhiMmRmNGM1NTlkMjhjOWRlNWQ0MTAxNDFiMzBkOWUyYmNlM2IiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcmV3YXJkc3ktYXBwIiwiYXVkIjoicmV3YXJkc3ktYXBwIiwiYXV0aF90aW1lIjoxNzI0ODU1ODYzLCJ1c2VyX2lkIjoiYWJjZCIsInN1YiI6ImFiY2QiLCJpYXQiOjE3MjQ4NTU4NjMsImV4cCI6MTcyNDg1OTQ2MywiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6e30sInNpZ25faW5fcHJvdmlkZXIiOiJjdXN0b20ifX0.eCJpunPxWujHx3RmOQuZUZwts_b3iEFk0YpNk_jg40A1RdXMJDXjf_VMI5fNo2pBCKeOsKlG2TjAGIlvuviEt9Fx5kU5lWJJkuQC7PCxUwV93qFzs8BPNej7medLMQBzhs14sy6Aphmlk7oboXZ4ciOoT9G0ZWfgU4YRt7nO1N0u16ZHW6OfUG-kBciIJYQFthPigpDZuAHeRC5Zo6bG1i-FkiyqZGzwqg-eb3HmXe3STzUgTFXlZuYboczB421RN2AucGQFt0QxDZVGmTzb8TR9VNwCxmXFYEJPQcZ8hyOIKJVnpOIehZZWX9jWMwpjY4-_z_-1xLwafmmZ2zZagg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/offers?tags=summer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"offers"
+					],
+					"query": [
+						{
+							"key": "tags",
+							"value": "summer"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update offer By ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjExYzhiMmRmNGM1NTlkMjhjOWRlNWQ0MTAxNDFiMzBkOWUyYmNlM2IiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcmV3YXJkc3ktYXBwIiwiYXVkIjoicmV3YXJkc3ktYXBwIiwiYXV0aF90aW1lIjoxNzI0ODU0NjQ1LCJ1c2VyX2lkIjoiYWJjZCIsInN1YiI6ImFiY2QiLCJpYXQiOjE3MjQ4NTQ2NDUsImV4cCI6MTcyNDg1ODI0NSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6e30sInNpZ25faW5fcHJvdmlkZXIiOiJjdXN0b20ifX0.Vs72z54l_rnYFJRGReOQ0TgtB7psJJgE4IMUH6D1hb1Cfl0-14Hqd5CAueOK47jHMrdU7A9CQQOB_zDWeQX3e6N8SHWcGu7D9iuaWChWGG0S4MI8DPJcVw-ox4OxDhnqOEB68le53B4Q6v1CfcK8crzRclPq8arebiDj1uaCgFdGzQBrNz1aNVM9EpTg_Eehc0FlFlr3pi2sBKP_1vyVJmvU9Cw6V8C19TkN2BMSHii5Cdw_69d9ADE1CbLqNHLO5t-gtbaraRjRmW-ZWtVkLJVSIsXCFMKpFJR7sF0SV8e88v7fzTeYxfsZVueBgMktoJL4lfzKhUUiks3pi8DUSg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n           \"description\": \"Updated Summer Sale description\",\n           \"numberOfOffers\": 200\n         }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/offers/PMbxIC7g54vqVbHKVOVN",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"offers",
+						"PMbxIC7g54vqVbHKVOVN"
+					]
+				},
+				"description": "Generated from cURL: curl -X PUT http://localhost:3000/offers/<offer_id> \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n           \"description\": \"Updated Summer Sale description\",\n           \"numberOfOffers\": 200\n         }'\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Offer",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjExYzhiMmRmNGM1NTlkMjhjOWRlNWQ0MTAxNDFiMzBkOWUyYmNlM2IiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcmV3YXJkc3ktYXBwIiwiYXVkIjoicmV3YXJkc3ktYXBwIiwiYXV0aF90aW1lIjoxNzI0ODU0NjQ1LCJ1c2VyX2lkIjoiYWJjZCIsInN1YiI6ImFiY2QiLCJpYXQiOjE3MjQ4NTQ2NDUsImV4cCI6MTcyNDg1ODI0NSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6e30sInNpZ25faW5fcHJvdmlkZXIiOiJjdXN0b20ifX0.Vs72z54l_rnYFJRGReOQ0TgtB7psJJgE4IMUH6D1hb1Cfl0-14Hqd5CAueOK47jHMrdU7A9CQQOB_zDWeQX3e6N8SHWcGu7D9iuaWChWGG0S4MI8DPJcVw-ox4OxDhnqOEB68le53B4Q6v1CfcK8crzRclPq8arebiDj1uaCgFdGzQBrNz1aNVM9EpTg_Eehc0FlFlr3pi2sBKP_1vyVJmvU9Cw6V8C19TkN2BMSHii5Cdw_69d9ADE1CbLqNHLO5t-gtbaraRjRmW-ZWtVkLJVSIsXCFMKpFJR7sF0SV8e88v7fzTeYxfsZVueBgMktoJL4lfzKhUUiks3pi8DUSg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/offers/PMbxIC7g54vqVbHKVOVN",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"offers",
+						"PMbxIC7g54vqVbHKVOVN"
+					]
+				},
+				"description": "Generated from cURL: curl -X DELETE http://localhost:3000/offers/<offer_id>\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Apply offer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjExYzhiMmRmNGM1NTlkMjhjOWRlNWQ0MTAxNDFiMzBkOWUyYmNlM2IiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcmV3YXJkc3ktYXBwIiwiYXVkIjoicmV3YXJkc3ktYXBwIiwiYXV0aF90aW1lIjoxNzI0ODU0NjQ1LCJ1c2VyX2lkIjoiYWJjZCIsInN1YiI6ImFiY2QiLCJpYXQiOjE3MjQ4NTQ2NDUsImV4cCI6MTcyNDg1ODI0NSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6e30sInNpZ25faW5fcHJvdmlkZXIiOiJjdXN0b20ifX0.Vs72z54l_rnYFJRGReOQ0TgtB7psJJgE4IMUH6D1hb1Cfl0-14Hqd5CAueOK47jHMrdU7A9CQQOB_zDWeQX3e6N8SHWcGu7D9iuaWChWGG0S4MI8DPJcVw-ox4OxDhnqOEB68le53B4Q6v1CfcK8crzRclPq8arebiDj1uaCgFdGzQBrNz1aNVM9EpTg_Eehc0FlFlr3pi2sBKP_1vyVJmvU9Cw6V8C19TkN2BMSHii5Cdw_69d9ADE1CbLqNHLO5t-gtbaraRjRmW-ZWtVkLJVSIsXCFMKpFJR7sF0SV8e88v7fzTeYxfsZVueBgMktoJL4lfzKhUUiks3pi8DUSg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/offers/PMbxIC7g54vqVbHKVOVN/apply",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"offers",
+						"PMbxIC7g54vqVbHKVOVN",
+						"apply"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:3000/offers/<offer_id>/apply \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: Bearer <your_token>\"\n"
+			},
+			"response": []
+		}
+	]
+}
