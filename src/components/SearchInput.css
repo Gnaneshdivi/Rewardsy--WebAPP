@@ -32,6 +32,7 @@
   width: 100%;
   min-width: 0;
   outline: none;
+  text-overflow: ellipsis;
 }
 .divider {
   width: 1px;
