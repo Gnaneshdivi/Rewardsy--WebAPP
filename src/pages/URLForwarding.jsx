@@ -18,7 +18,7 @@ const URLForwarding = () => {
           const data = docSnap.data();
           const link = data.link;
           const img = data.ads_link;
-          navigate(`${link}`+`?showAd=${data.link.ads}&img=${encodeURI(img)}`, { replace: true });
+          navigate(`${link}`+`?showAd=${data.ads}&img=${encodeURI(img)}`, { replace: true });
         } else {
           navigate("/home", { replace: true });
         }
