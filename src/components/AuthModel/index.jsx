@@ -5,7 +5,7 @@ import OtpInput from "otp-input-react";
 import { auth, db } from "../../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
-import { Skeleton } from 'antd';
+import { Skeleton,LoadingOutlined } from 'antd';
 
 import {
   doc,
@@ -19,10 +19,10 @@ import {
 import UserContext from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { CgSpinner } from "react-icons/cg";
-import "./AuthModel.css"; // Import the CSS file
+import "./AuthModel.css"; 
 
 const AuthModal = ({ isOpen, close }) => {
-  const [step, setStep] = useState(1); // Step 1: Phone Input, Step 2: OTP Input, Step 3: Signup Details
+  const [step, setStep] = useState(1); 
   const [ph, setPh] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
@@ -175,7 +175,7 @@ const AuthModal = ({ isOpen, close }) => {
 
   return (
     <div className="auth-modal">
-      <Skeleton toastOptions={{ duration: 4000 }} />
+        <Toaster  toastOptions={{ duration: 4000 }} />
       <div className="modal-content">
         <div className="hidden" id="recaptcha-container"></div>
 
@@ -198,7 +198,7 @@ const AuthModal = ({ isOpen, close }) => {
               <div>
                 <div className="phone-input-container">
                   <input
-                    type="tel"
+                    type="number"
                     value={ph}
                     onChange={(e) => setPh(e.target.value)}
                     style={{}}
@@ -207,10 +207,6 @@ const AuthModal = ({ isOpen, close }) => {
                     maxLength={10}
                   />
                 </div>
-                {/* <div className="login-signUp-signin-div">
-                  <span>Already have an account ?</span>
-                  <a>sign in</a>
-                </div> */}
               </div>
               <div className="login-signUp-otp-div">
                 <button
@@ -218,7 +214,8 @@ const AuthModal = ({ isOpen, close }) => {
                   className="submit-button flex gap-1 items-center justify-center mt-10 py-2.5"
                 >
                   {loading && (
-                    <CgSpinner size={20} className="mt-1 animate-spin" />
+                    <LoadingOutlined size={20} className="mt-1 animate-spin" />
+                    // <CgSpinner size={20} className="mt-1 animate-spin" />
                   )}
                   <span>Request OTP</span>
                 </button>
@@ -248,7 +245,10 @@ const AuthModal = ({ isOpen, close }) => {
               onClick={onOTPVerify}
               className="submit-button flex mt-10 gap-1 items-center justify-center py-2.5"
             >
-              {loading && <CgSpinner size={20} className="mt-1 animate-spin" />}
+              {loading && 
+              <LoadingOutlined size={20} className="mt-1 animate-spin" />
+              // <CgSpinner size={20} className="mt-1 animate-spin" />
+              }
               <span>Verify OTP</span>
             </button>
           </div>
@@ -336,7 +336,8 @@ const AuthModal = ({ isOpen, close }) => {
                   disabled={loading}
                 >
                   {loading ? (
-                    <CgSpinner size={20} className="animate-spin" />
+                    <LoadingOutlined size={20} className="mt-1 animate-spin" />
+                    // <CgSpinner size={20} className="animate-spin" />
                   ) : (
                     "Submit"
                   )}

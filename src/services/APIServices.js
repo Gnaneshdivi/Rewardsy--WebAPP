@@ -15,7 +15,6 @@ export const APICallHandler = async ( url, method, token=undefined,header, body=
         headers,
         body : JSON.stringify(body)
       });
-      // console.log(body)
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
