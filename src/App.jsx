@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import ReelsPage from "./pages/ReelsPage";
 import UserContext from "./context/UserContext"; // Import the UserContext
 import AdPopup from "./components/AdPop";
+import Payment from "./pages/Payment"
 import "./App.css"; // Include your global styles here
 
 const App = () => {
@@ -65,6 +66,7 @@ const AppContent = () => {
           <Route path="/SignUp" element={<HomePage />} />
           {/* Update the route pattern to catch both /reelID and /reel1, /reel2, etc. */}
           <Route path="/reels/:reelId" element={<ReelsPage />} />
+          <Route path="/payment" element={<Payment />} />
         </Routes>
         {/* Conditionally render Footer */}
         {!location.pathname.startsWith("/reels") && !location.pathname.startsWith("/qr") && <Footer />}
