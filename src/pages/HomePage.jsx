@@ -6,7 +6,7 @@ import "./HomePage.css";
 import { getOffers } from "../services/OffersService";
 import { getReels } from "../services/ReelsServices";
 import { getStoreByLocation } from "../services/StoreServices";
-import SearchInput from "../components/searchInput";
+import SearchInput from "../components/SearchInput";
 // import Navbar from "../components/Navbar";
 
 const HomePage = () => {
