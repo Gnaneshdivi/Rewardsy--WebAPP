@@ -26,9 +26,9 @@ function SearchInput({ word }) {
                 data.address.town ||
                 data.address.village ||
                 data.address.state;
-              setLocation(area);
+              setLocation("📍 "+area);
             } else {
-              setLocation("Unknown area");
+              setLocation("📍 Unknown area");
             }
           } catch (error) {
             console.error("Error fetching location details:", error);
@@ -78,13 +78,13 @@ function SearchInput({ word }) {
             type="text"
             value={searchTerm}
             onChange={handleSearchChange}
-            placeholder="🔍 Search items"
+            placeholder="Search"
             className="input-search"
           />
         </div>
       </div>
       <button type="submit" className="search-button">
-        Search
+      🔍
       </button>
       {error && <p className="error-message">{error}</p>}
     </form>

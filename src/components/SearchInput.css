@@ -5,15 +5,15 @@
   flex-wrap: wrap;
   /* max-width: 600px; */
   margin: 20px auto;
-  /* border: 1px solid black; */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border: 1px solid black;
+  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+  border-radius: 15px;
   overflow: hidden;
   color: black;
   padding: 10px;
   backdrop-filter: blur(10px);
-  background-color: transparent;
-  /* background-color: #06f229; */
+  background-color: #333333;
+  /* background-color: rgba(255, 255, 255, 0.471); */
 }
 .input-container {
   display: flex;
@@ -45,7 +45,7 @@
   /* width: 30vw; */
   min-width: 0;
   outline: none;
-  color: #f2b706;
+  color: white;
   text-overflow: ellipsis;
   background-color: transparent;
   /* border-bottom: 1px solid #f2b706; */
@@ -56,14 +56,14 @@
   width: 30vw;
   min-width: 0;
   outline: none;
-  color: #f2b706;
+  color: white;
   text-overflow: ellipsis;
   background-color: transparent;
-  border-bottom: 1px solid #f2b706;
+  /* border-bottom: 1px solid white; */
 }
 
  input::placeholder{
-  color: #f2b706;
+  color: white;
 }
 
 .divider {
@@ -74,19 +74,21 @@
 .search-button {
   padding: 0px 10px;
   width: 100px;
-  background-color: #f2b706;
+  /* background-color: black; */
   height: 40px;
   color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s ease-in;
   white-space: nowrap;
 }
+
 .search-button:hover {
-  background-color: #ffc107;
+  /* background-color: rgba(0, 0, 0, 0.691); */
 }
+
 .error-message {
   width: 100%;
   color: #ff0000;
