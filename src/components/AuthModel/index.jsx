@@ -5,7 +5,7 @@ import OtpInput from "otp-input-react";
 import { auth, db } from "../../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
-import { Skeleton,LoadingOutlined } from 'antd';
+// import { Skeleton, LoadingOutlined } from 'antd';
 
 import {
   doc,
@@ -214,8 +214,8 @@ const AuthModal = ({ isOpen, close }) => {
                   className="submit-button flex gap-1 items-center justify-center mt-10 py-2.5"
                 >
                   {loading && (
-                    <LoadingOutlined size={20} className="mt-1 animate-spin" />
-                    // <CgSpinner size={20} className="mt-1 animate-spin" />
+                    // <LoadingOutlined size={20} className="mt-1 animate-spin" />
+                    <CgSpinner size={20} className="mt-1 animate-spin" />
                   )}
                   <span>Request OTP</span>
                 </button>
@@ -246,8 +246,8 @@ const AuthModal = ({ isOpen, close }) => {
               className="submit-button flex mt-10 gap-1 items-center justify-center py-2.5"
             >
               {loading && 
-              <LoadingOutlined size={20} className="mt-1 animate-spin" />
-              // <CgSpinner size={20} className="mt-1 animate-spin" />
+              // <LoadingOutlined size={20} className="mt-1 animate-spin" />
+              <CgSpinner size={20} className="mt-1 animate-spin" />
               }
               <span>Verify OTP</span>
             </button>
@@ -336,8 +336,8 @@ const AuthModal = ({ isOpen, close }) => {
                   disabled={loading}
                 >
                   {loading ? (
-                    <LoadingOutlined size={20} className="mt-1 animate-spin" />
-                    // <CgSpinner size={20} className="animate-spin" />
+                    // <LoadingOutlined size={20} className="mt-1 animate-spin" />
+                    <CgSpinner size={20} className="animate-spin" />
                   ) : (
                     "Submit"
                   )}

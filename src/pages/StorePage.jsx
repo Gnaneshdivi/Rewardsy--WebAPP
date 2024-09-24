@@ -25,6 +25,8 @@ const StorePage = () => {
     updateStore();
   }, []);
 
+  // console.log(store.area)
+
   return (
     <>
       {isStoreLoading ? (
