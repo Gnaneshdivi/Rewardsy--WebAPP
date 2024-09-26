@@ -47,7 +47,7 @@ const StoreCard = ({ store, context }) => {
             ))}
           </div>
           <h3 className="store-title">{store.name}</h3>
-          {/* <p className="store-description">{store.desc}</p> */}
+          <p className="store-description">{store.desc}</p>
           {context === "store" && redeemedCode ? (
             <div className="redeemed-section" onClick={handleCopyClick}>
               <p className="redeemed-code">Redeem Code: {redeemedCode}</p>
