@@ -40,12 +40,18 @@ const StorePage = () => {
         if (data && data.address) {
           // Fallback if some parts of the address are missing
           const road = data.address.road || "";
-          const city = data.address.city || data.address.town || data.address.village || "";
+          const city =
+            data.address.city ||
+            data.address.town ||
+            data.address.village ||
+            "";
           const state = data.address.state || "";
           const country = data.address.country || "";
 
           // Construct the area name based on available fields
-          const locationName = [road, city, state, country].filter(Boolean).join(", ");
+          const locationName = [road, city, state, country]
+            .filter(Boolean)
+            .join(", ");
           setArea(locationName);
         } else {
           setArea("Unknown Location");
@@ -81,9 +87,11 @@ const StorePage = () => {
               />
               <div className="store-details">
                 <h1>{store.name}</h1>
-                {/* Instead of latitude and longitude, show the area name */}
-                <p>{area}</p>
+                <p>📍 {area}</p>
                 <p>{store.category}</p>
+                <br></br>
+                  <p>{store.desc}</p>
+                  {/* <p id="read-more">read more</p> */}
               </div>
             </div>
           </div>

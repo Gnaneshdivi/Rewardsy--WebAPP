@@ -32,7 +32,7 @@ function SearchInput({ word }) {
             }
           } catch (error) {
             console.error("Error fetching location details:", error);
-            setLocation("Unknown area");
+            setLocation("📍 yeshanthpur");
           }
         },
         (error) => {
