@@ -66,6 +66,10 @@
   margin: 5px 0;
 }
 
+#read-more{
+  display: none;
+}
+
 .store-social-links {
   display: flex;
   gap: 15px;
@@ -80,3 +84,24 @@
 .store-social-links a:hover {
   color: #ffc107;
 }
+
+/* @media (max-width: 1450px) {
+
+  .store-details p {
+      white-space: nowrap;       
+      overflow: hidden;          
+      text-overflow: ellipsis;   
+      width: 70vw;              
+  }
+
+  .store-details
+
+  .store-details br{
+    display: block;
+  }
+}
+@media (max-width: 600px) {
+  #read-more{
+    display:block;
+  }
+} */
