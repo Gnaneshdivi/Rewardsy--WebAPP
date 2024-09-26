@@ -84,6 +84,8 @@ const StorePage = () => {
                 {/* Instead of latitude and longitude, show the area name */}
                 <p>{area}</p>
                 <p>{store.category}</p>
+                <br></br>
+                <p>{store.desc}</p>
               </div>
             </div>
           </div>
