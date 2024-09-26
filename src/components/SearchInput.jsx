@@ -15,7 +15,7 @@ function SearchInput({ word }) {
             const api_key = import.meta.env.VITE_GEOLOCATION_API_KEY;
             // Fetch geolocation data
             const response = await fetch(
-              `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`
+              `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=${api_key}`
             );
             const data = await response.json();
 
