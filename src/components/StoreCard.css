@@ -53,8 +53,13 @@
 }
 
 .store-description {
-  font-size: 1em;
-  margin: 5px 0;
+  display: -webkit-box;         
+  -webkit-box-orient: vertical; 
+  overflow: hidden;             
+  text-overflow: ellipsis;      
+  -webkit-line-clamp: 3;        
+  line-height: 1.5em;           
+  max-height: 4.5em;           
 }
 .redeemed-code{
   font-size: 0.8em;
@@ -88,6 +93,6 @@
 
 
 
-@media screen and (max-width: 645px) {
+@media screen and (max-width: 1000px) {
   
 }

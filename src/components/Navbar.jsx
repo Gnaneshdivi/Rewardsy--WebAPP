@@ -1,11 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
 import AuthModal from "./AuthModel";
-import { Link } from "react-router-dom";
-import { HiMenu } from "react-icons/hi";
+// import { Link } from "react-router-dom";
+// import { HiMenu } from "react-icons/hi";
 import { useLocation, useNavigate } from "react-router-dom";
-import UserContext from "../context/UserContext"; // Import UserContext
+import UserContext from "../context/UserContext"; 
+import { Button } from 'antd';
+import { MenuOutlined} from '@ant-design/icons';
 
 import "./Navbar.css";
+
+import { createStyles } from 'antd-style';
 
 const Navbar = () => {
   const location = useLocation();
@@ -13,6 +17,23 @@ const Navbar = () => {
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
   const { userDetails, clearUserDetails } = useContext(UserContext); // Access user details from context
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const useStyle = createStyles(({ prefixCls, css }) => ({
+    linearGradientButton: css`
+  
+        &::hover {
+          background-color: gold;
+        }
+  
+        $::active{
+          background-color: darkgoldenrod;
+        }
+  
+      }
+    `,
+  }));
+  
+  const { styles } = useStyle();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -48,9 +69,11 @@ const Navbar = () => {
     <>
       <div className="flex justify-between items-center p-3 bg-black" id="nav">
         <div className="flex-shrink-0" id="logoDiv">
-          <Link to="/home">
+
+        <Button type="link" href="/home"><img id="logo" src="/Logo.png" alt="Logo" className="h-10 ml-5 " /></Button>
+          {/* <Link to="/home">
             <img id="logo" src="/Logo.png" alt="Logo" className="h-10 ml-5 " />
-          </Link>
+          </Link> */}
         </div>
 
         <div className="hidden sm:flex gap-2">
@@ -66,20 +89,16 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <button
-                className="bg-yellow-500 text-black font-bold py-2 px-5 rounded"
-                onClick={openAuthModal}
-              >
-                Login / Signup
-              </button>
+            <Button className='bg-yellow-500 text-black font-bold py-2 px-5 rounded' classNames={styles.linearGradientButton} id="login-nav" type="primary" onClick={openAuthModal}>Login / Signup</Button>
             </>
           )}
         </div>
         <div className="sm:hidden flex items-center">
-          <HiMenu
+          {/* <HiMenu
             className="text-white text-2xl cursor-pointer"
             onClick={toggleMenu}
-          />
+          /> */}
+          <MenuOutlined onClick={toggleMenu} className="text-white text-2xl cursor-pointer"/>
         </div>
 
         {menuOpen && (
@@ -87,7 +106,7 @@ const Navbar = () => {
             {userDetails ? (
               <>
                 <span className="text-white mb-2">{userDetails.name}</span>
-                <button
+                <Button
                   className="bg-red-500 text-white font-bold py-2 px-5 rounded mb-2"
                   onClick={() => {
                     handleSignOut();
@@ -95,11 +114,11 @@ const Navbar = () => {
                   }}
                 >
                   Sign Out
-                </button>
+                </Button>
               </>
             ) : (
               <>
-                <button
+                <Button
                   className="bg-yellow-500 text-black font-bold py-2 px-5 rounded mb-2"
                   onClick={() => {
                     openAuthModal();
@@ -107,7 +126,7 @@ const Navbar = () => {
                   }}
                 >
                   Login / Signup
-                </button>
+                </Button>
               </>
             )}
           </div>

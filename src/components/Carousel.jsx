@@ -1,5 +1,8 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
+// import React, { useState } from 'react';
+// import type { CarouselProps, RadioChangeEvent } from 'antd';
+import { Carousel, Radio } from 'antd';
 import './Carousel.css';
 
 const CarouselComponent = ({ images }) => {

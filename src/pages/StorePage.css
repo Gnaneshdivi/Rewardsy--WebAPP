@@ -63,7 +63,18 @@
 }
 
 .store-details p {
-  margin: 5px 0;
+  /* margin: 5px 0; */
+  display: -webkit-box;         
+  -webkit-box-orient: vertical; 
+  overflow: hidden;             
+  text-overflow: ellipsis;      
+  -webkit-line-clamp: 3;        
+  line-height: 1.5em;           
+  max-height: 4.5em;    
+}
+
+#read-more{
+  display: none;
 }
 
 .store-social-links {
@@ -79,4 +90,21 @@
 
 .store-social-links a:hover {
   color: #ffc107;
+}
+
+@media (max-width: 1450px) {
+
+  .store-details p {
+      max-width: 70vw;         
+  }
+
+  .store-details br{
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  #desc{
+    display: none;
+  }
 }
