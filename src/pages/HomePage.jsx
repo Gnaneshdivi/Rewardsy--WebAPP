@@ -28,9 +28,10 @@ const HomePage = () => {
           getStoreByLocation(""),
         ]);
         setOffers(offersData); // Save original Offers
-        setStores(storeData);  // Save original Stores
+        setStores(storeData); // Save original Stores
+        setReels(reelsData);
         setFilteredOffers(offersData); // Initialize filtered Offers with original
-        setFilteredStores(storeData);  // Initialize filtered Stores with original
+        setFilteredStores(storeData); // Initialize filtered Stores with original
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -67,9 +68,10 @@ const HomePage = () => {
   const searchOffersAndStores = () => {
     const lowerSearchKey = searchKey.toLowerCase();
 
-    const filteredOffers = Offers.filter((offer) =>
-      offer.title.toLowerCase().includes(lowerSearchKey) ||
-      offer.tags.some(tag => tag.toLowerCase().includes(lowerSearchKey)) // Search by tags
+    const filteredOffers = Offers.filter(
+      (offer) =>
+        offer.title.toLowerCase().includes(lowerSearchKey) ||
+        offer.tags.some((tag) => tag.toLowerCase().includes(lowerSearchKey)) // Search by tags
     );
 
     const filteredStores = Stores.filter((store) =>
@@ -83,11 +85,12 @@ const HomePage = () => {
     const areOffersOrStoresAvailable =
       filteredOffers.length > 0 || filteredStores.length > 0;
 
-    const categoryResult = !areOffersOrStoresAvailable && filteredCategories.length > 0
-      ? filteredCategories
-      : areOffersOrStoresAvailable
-      ? filteredCategories
-      : "All";
+    const categoryResult =
+      !areOffersOrStoresAvailable && filteredCategories.length > 0
+        ? filteredCategories
+        : areOffersOrStoresAvailable
+        ? filteredCategories
+        : "All";
 
     return {
       offers: filteredOffers.length > 0 ? filteredOffers : [],
@@ -114,8 +117,12 @@ const HomePage = () => {
 
   // Conditionally render Carousel and Categories based on filtered data
   const shouldShowCarouselAndCategories =
-    searchKey === "" || searchKey === "All" || (FilteredOffers.length === 0 && FilteredStores.length === 0);
+    searchKey === "" ||
+    searchKey === "All" ||
+    (FilteredOffers.length === 0 && FilteredStores.length === 0);
 
+  // console.log(Reels);
+  // console.log("Reels");
   return (
     <div className="homepage">
       <SearchInput word={updateSearchKey} />

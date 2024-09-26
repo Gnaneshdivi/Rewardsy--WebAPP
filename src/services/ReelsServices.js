@@ -9,6 +9,7 @@ export const getReels = async() => {
     throw error;
   }
 };
+
 export const getReelById = async(reelId) => {
   const url = getBaseURL() + `/reels/${reelId}`;
   try {
