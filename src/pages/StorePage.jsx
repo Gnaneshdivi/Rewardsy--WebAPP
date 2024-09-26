@@ -90,7 +90,7 @@ const StorePage = () => {
                 <p>📍 {area}</p>
                 <p>{store.category}</p>
                 <br></br>
-                  <p>{store.desc}</p>
+                  <p id="desc">{store.desc}</p>
                   {/* <p id="read-more">read more</p> */}
               </div>
             </div>
