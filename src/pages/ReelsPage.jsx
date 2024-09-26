@@ -119,6 +119,7 @@ const ReelsPage = () => {
     navigate(`/store/${storeId}`); // Navigate to the store page using the store ID
   };
 
+
   return (
     <div className="reels-page">
       {isReelsLoading ? (
