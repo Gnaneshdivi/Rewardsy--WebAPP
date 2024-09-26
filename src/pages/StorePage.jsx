@@ -1,4 +1,3 @@
-// src/pages/StorePage.js
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Tabs from "../components/Tabs";
@@ -12,6 +11,7 @@ const StorePage = () => {
   const [offers, setOffer] = useState([]);
   const [content, setContent] = useState([]);
   const [isStoreLoading, setIsStoreLoading] = useState(true);
+  const [area, setArea] = useState(""); // State for the area name
 
   useEffect(() => {
     const updateStore = async () => {
@@ -21,9 +21,43 @@ const StorePage = () => {
       setOffer(storeData.offers);
       setContent(storeData.content);
       setIsStoreLoading(false);
+
+      // Call reverse geocoding to get area name from coordinates
+      if (storeData.store && storeData.store.location) {
+        const [latitude, longitude] = storeData.store.location.split(",");
+        fetchAreaName(latitude, longitude);
+      }
     };
+
+    // Function to fetch the area name using OpenStreetMap (Nominatim)
+    const fetchAreaName = async (lat, lon) => {
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
+        );
+        const data = await response.json();
+
+        if (data && data.address) {
+          // Fallback if some parts of the address are missing
+          const road = data.address.road || "";
+          const city = data.address.city || data.address.town || data.address.village || "";
+          const state = data.address.state || "";
+          const country = data.address.country || "";
+
+          // Construct the area name based on available fields
+          const locationName = [road, city, state, country].filter(Boolean).join(", ");
+          setArea(locationName);
+        } else {
+          setArea("Unknown Location");
+        }
+      } catch (error) {
+        console.error("Error fetching area name:", error);
+        setArea("Unknown Location");
+      }
+    };
+
     updateStore();
-  }, []);
+  }, [storeId]);
 
   return (
     <>
@@ -47,7 +81,8 @@ const StorePage = () => {
               />
               <div className="store-details">
                 <h1>{store.name}</h1>
-                <p>{store.location}</p>
+                {/* Instead of latitude and longitude, show the area name */}
+                <p>{area}</p>
                 <p>{store.category}</p>
               </div>
             </div>

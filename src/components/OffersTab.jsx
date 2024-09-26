@@ -2,13 +2,15 @@ import React from "react";
 import OfferCard from "./OfferCard";
 import "./OffersTab.css";
 import ClipLoader from "react-spinners/ClipLoader";
+import { LoadingOutlined } from '@ant-design/icons';
 
 const OffersTab = ({ offers, context, isLoading }) => {
   return (
     <>
       <div className="offers-tab-container">
         {isLoading ? (
-          <ClipLoader loading={isLoading} color="white" />
+          <LoadingOutlined loading={isLoading} color="white"/>
+          // <ClipLoader loading={isLoading} color="white" />
         ) : (
           <>
             {offers.length === 0 ? (

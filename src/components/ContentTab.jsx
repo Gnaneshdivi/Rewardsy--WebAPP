@@ -2,12 +2,14 @@ import React from "react";
 import ContentCard from "./ContentCard";
 import "./ContentTab.css";
 import ClipLoader from "react-spinners/ClipLoader";
+import { LoadingOutlined } from '@ant-design/icons';
 
 const ContentTab = ({ contents, isLoading }) => {
   return (
     <div className="content-tab-container">
       {isLoading ? (
-        <ClipLoader loading={isLoading} color="white" />
+        <LoadingOutlined loading={isLoading} color="white"/>
+        // <ClipLoader loading={isLoading} color="white" />
       ) : (
         <>
           {contents.length > 0 && (

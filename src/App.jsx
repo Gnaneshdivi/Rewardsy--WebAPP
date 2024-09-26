@@ -35,8 +35,8 @@ const AppContent = () => {
   const imgLink = searchParams.get("img");
 
   useEffect(() => {
-    console.log(showAdParam);
-    console.log(imgLink);
+    // console.log(showAdParam);
+    // console.log(imgLink);
     if (showAdParam === "true") {
       setShowAd(true);
       setImg(imgLink);

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "./SearchInput.css";
 
-function SearchInput() {
-  const [location, setLocation] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
+function SearchInput({ word }) {
+  const [location, setLocation] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -12,17 +12,27 @@ function SearchInput() {
         async (position) => {
           const { latitude, longitude } = position.coords;
           try {
-            const api_key=import.meta.env.VITE_GEOLOCATION_API_KEY;
-            const response = await fetch(`https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=${api_key}`);
+            const api_key = import.meta.env.VITE_GEOLOCATION_API_KEY;
+            // Fetch geolocation data
+            const response = await fetch(
+              `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`
+            );
             const data = await response.json();
-            if (data.display_name && data.display_name.length > 0) {
-              setLocation(data.display_name);
+
+            // Extract area or city name from the response
+            if (data.address) {
+              const area =
+                data.address.city ||
+                data.address.town ||
+                data.address.village ||
+                data.address.state;
+              setLocation("📍 "+area);
             } else {
-              setLocation(`Lat: ${latitude.toFixed(2)}, Long: ${longitude.toFixed(2)}`);
+              setLocation("📍 Unknown area");
             }
           } catch (error) {
             console.error("Error fetching location details:", error);
-            setLocation(`Lat: ${latitude.toFixed(2)}, Long: ${longitude.toFixed(2)}`);
+            setLocation("Unknown area");
           }
         },
         (error) => {
@@ -40,41 +50,41 @@ function SearchInput() {
   };
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
+    const value = e.target.value;
+    setSearchTerm(value);
+    word(value);
+    // console.log(value)
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Searching for', searchTerm, 'in', location);
+    console.log("Searching for", searchTerm, "in", location);
   };
 
   return (
     <form onSubmit={handleSubmit} className="search-form">
       <div className="input-container">
         <div className="input-wrapper">
-          <span className="icon">📍</span>
           <input
             type="text"
             value={location}
             onChange={handleLocationChange}
-            placeholder="Location"
-            className="input"
+            placeholder="📍 Location"
+            className="input-location"
           />
         </div>
-        <div className="divider"></div>
         <div className="input-wrapper">
-          <span className="icon">🔍</span>
           <input
             type="text"
             value={searchTerm}
             onChange={handleSearchChange}
-            placeholder="Search items"
-            className="input"
+            placeholder="Search"
+            className="input-search"
           />
         </div>
       </div>
       <button type="submit" className="search-button">
-        Search
+      🔍
       </button>
       {error && <p className="error-message">{error}</p>}
     </form>
