@@ -121,8 +121,7 @@ const HomePage = () => {
     searchKey === "All" ||
     (FilteredOffers.length === 0 && FilteredStores.length === 0);
 
-  // console.log(Reels);
-  // console.log("Reels");
+
   return (
     <div className="homepage">
       <SearchInput word={updateSearchKey} />
