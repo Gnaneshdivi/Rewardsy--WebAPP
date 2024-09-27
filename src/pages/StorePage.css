@@ -1,5 +1,3 @@
-/* src/pages/StorePage.css */
-
 .store-page {
   background-color: #121212;
   color: #fff;
@@ -32,7 +30,7 @@
 
 .store-info {
   position: absolute;
-  bottom: 0px; /* Adjust to center vertically on the banner */
+  bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #1c1c1c;
@@ -73,6 +71,11 @@
   max-height: 4.5em;    
 }
 
+.name-location-div{
+  display: flex;
+  justify-content: space-between;
+}
+
 #read-more{
   display: none;
 }
@@ -104,6 +107,22 @@
 }
 
 @media (max-width: 600px) {
+  .store-details h1{
+    font-size: 18px;
+  }
+
+  .name-location-div p{
+    max-width: 20vw;
+    font-size: 8px;
+  }
+
+  .store-logo {
+    width: 70px;
+    height: 70px;
+    border: 1px solid #fff;
+    margin-right: 0px;
+  }
+
   #desc{
     display: none;
   }

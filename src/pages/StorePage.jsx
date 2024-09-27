@@ -12,6 +12,8 @@ const StorePage = () => {
   const [content, setContent] = useState([]);
   const [isStoreLoading, setIsStoreLoading] = useState(true);
   const [area, setArea] = useState(""); // State for the area name
+  const [latitude, setLatitude] = useState(null); // Store latitude
+  const [longitude, setLongitude] = useState(null); // Store longitude
 
   useEffect(() => {
     const updateStore = async () => {
@@ -24,8 +26,10 @@ const StorePage = () => {
 
       // Call reverse geocoding to get area name from coordinates
       if (storeData.store && storeData.store.location) {
-        const [latitude, longitude] = storeData.store.location.split(",");
-        fetchAreaName(latitude, longitude);
+        const [lat, lon] = storeData.store.location.split(",");
+        setLatitude(lat);
+        setLongitude(lon);
+        fetchAreaName(lat, lon);
       }
     };
 
@@ -52,7 +56,10 @@ const StorePage = () => {
           const locationName = [road, city, state, country]
             .filter(Boolean)
             .join(", ");
-          setArea(locationName);
+
+          // Show only the portion before the first comma
+          const firstPart = locationName.split(",")[0].trim();
+          setArea(firstPart);
         } else {
           setArea("Unknown Location");
         }
@@ -64,6 +71,8 @@ const StorePage = () => {
 
     updateStore();
   }, [storeId]);
+
+  const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
 
   return (
     <>
@@ -86,12 +95,28 @@ const StorePage = () => {
                 className="store-logo"
               />
               <div className="store-details">
-                <h1>{store.name}</h1>
-                <p>📍 {area}</p>
-                <p>{store.category}</p>
+                <div className="name-location-div">
+                  <h1>{store.name}</h1>
+                  <p>
+                    <a
+                      href={googleMapsLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="area-link"
+                    >
+                      {area} 📍
+                    </a>
+                  </p>
+                </div>
+                <p>
+                  {store.category.map((tag, index) => (
+                    <span key={index} className="store-tag">
+                      {tag}
+                    </span>
+                  ))}
+                </p>
                 <br></br>
-                  <p id="desc">{store.desc}</p>
-                  {/* <p id="read-more">read more</p> */}
+                <p id="desc">{store.desc}</p>
               </div>
             </div>
           </div>
