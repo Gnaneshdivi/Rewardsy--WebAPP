@@ -6,6 +6,7 @@ import { auth, db } from "../../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
 // import { Skeleton, LoadingOutlined } from 'antd';
+import { Flex, Input, Typography } from "antd";
 
 import {
   doc,
@@ -19,10 +20,10 @@ import {
 import UserContext from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { CgSpinner } from "react-icons/cg";
-import "./AuthModel.css"; 
+import "./AuthModel.css";
 
 const AuthModal = ({ isOpen, close }) => {
-  const [step, setStep] = useState(1); 
+  const [step, setStep] = useState(1);
   const [ph, setPh] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
@@ -74,7 +75,7 @@ const AuthModal = ({ isOpen, close }) => {
         .then((confirmationResult) => {
           window.confirmationResult = confirmationResult;
           setLoading(false);
-          setStep(2); 
+          setStep(2);
           toast.success("OTP sent successfully!");
         })
         .catch((error) => {
@@ -88,7 +89,7 @@ const AuthModal = ({ isOpen, close }) => {
         .then((confirmationResult) => {
           window.confirmationResult = confirmationResult;
           setLoading(false);
-          setStep(2); 
+          setStep(2);
           toast.success("OTP sent successfully!");
         })
         .catch((error) => {
@@ -104,7 +105,7 @@ const AuthModal = ({ isOpen, close }) => {
     try {
       const res = await window.confirmationResult.confirm(otp);
       const uid = res.user.uid;
-      setUser(res.user); 
+      setUser(res.user);
 
       const userExists = await checkIfUserExists(ph);
 
@@ -120,10 +121,10 @@ const AuthModal = ({ isOpen, close }) => {
 
         setLoading(false);
         toast.success("Login successful!");
-        close(); 
+        close();
         navigate("/home");
       } else {
-        setStep(3); 
+        setStep(3);
         setLoading(false);
       }
     } catch (err) {
@@ -173,9 +174,16 @@ const AuthModal = ({ isOpen, close }) => {
 
   if (!isOpen) return null;
 
+  const onChange = (text) => {
+    console.log("onChange:", text);
+  };
+  const sharedProps = {
+    onChange,
+  };
+
   return (
     <div className="auth-modal">
-        <Toaster  toastOptions={{ duration: 4000 }} />
+      <Toaster toastOptions={{ duration: 4000 }} />
       <div className="modal-content">
         <div className="hidden" id="recaptcha-container"></div>
 
@@ -183,7 +191,9 @@ const AuthModal = ({ isOpen, close }) => {
           <div className="login-signUp-div">
             <div className="login-signUp-text-div">
               <div>
-                <h1>Get <br></br> Started</h1>
+                <h1>
+                  Get <br></br> Started
+                </h1>
               </div>
               <div className="login-signUp-text-para-div">
                 <p>saving cannot get anymore easier</p>
@@ -229,50 +239,54 @@ const AuthModal = ({ isOpen, close }) => {
             <h1 className="text-center text-black font-semibold text-3xl">
               VERIFY OTP
             </h1>
-            <input
+            {/* <input
               type="number"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
               maxLength={6}
               autoFocus
               style={{}}
               disabled={false}
               required
-              placeholder="enter your OTP"
+            /> */}
+
+            <Input.OTP
+              formatter={(str) => str.toUpperCase()}
+              {...sharedProps}
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              disabled={false}
+              required
             />
 
-            <button
-              onClick={onOTPVerify}
-              className="submit-button flex mt-10 gap-1 items-center justify-center py-2.5"
-            >
-              {loading && 
-              // <LoadingOutlined size={20} className="mt-1 animate-spin" />
-              <CgSpinner size={20} className="mt-1 animate-spin" />
-              }
-              <span>Verify OTP</span>
+            <button onClick={onOTPVerify} className="submit-button-step2">
+              {loading && (
+                // <LoadingOutlined size={20} className="mt-1 animate-spin" />
+                <CgSpinner size={20} className="mt-1 animate-spin" />
+              )}
+              Verify OTP
             </button>
           </div>
         )}
 
-        {step === 3 && (
-          <div className="login-signUp-div">
-          <div className="login-signUp-text-div">
-            <div>
-              <h1>Get <br></br> Started</h1>
+        {step === 3
+         && (
+          <div className="login-signUp-div" style={{ minHeight: "55vh" }}>
+            <div className="login-signUp-text-div">
+              <div>
+                <h1>
+                  Get <br></br> Started
+                </h1>
+              </div>
+              <div className="login-signUp-text-para-div">
+                <p>saving cannot get anymore easier</p>
+                <p>Sign Up and start saving right now</p>
+              </div>
             </div>
-            <div className="login-signUp-text-para-div">
-              <p>saving cannot get anymore easier</p>
-              <p>Sign Up and start saving right now</p>
-            </div>
-          </div>
 
-          <div className="divider-div divider-signup-div"></div>
+            <div className="divider-div divider-signup-div"></div>
 
             <form onSubmit={handleFormSubmit} className="signup-form-div">
               <div className="signup-caption-div">
-                <h1>
-                  Complete Your Profile
-                </h1>
+                <h1>Complete Your Profile</h1>
               </div>
               <div className="signup-input-div">
                 <input
@@ -283,7 +297,7 @@ const AuthModal = ({ isOpen, close }) => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  minLength={3} 
+                  minLength={3}
                   className="form-input"
                 />
                 <input
@@ -295,7 +309,7 @@ const AuthModal = ({ isOpen, close }) => {
                   onChange={handleInputChange}
                   required
                   min={1}
-                  max={100} 
+                  max={100}
                   className="form-input"
                 />
                 <input

@@ -1,7 +1,7 @@
 import React from "react";
 import ContentCard from "./ContentCard";
 import "./ContentTab.css";
-import ClipLoader from "react-spinners/ClipLoader";
+// import ClipLoader from "react-spinners/ClipLoader";
 import { LoadingOutlined } from '@ant-design/icons';
 
 const ContentTab = ({ contents, isLoading }) => {

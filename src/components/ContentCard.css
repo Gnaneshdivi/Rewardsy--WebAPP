@@ -1,15 +1,9 @@
-/* src/components/ContentCard.css */
 .content-card {
-  background-color: #1c1c1c;
+  background-color: #000000;
   border-radius: 10px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
-}
-
-.content-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .content-image-container {

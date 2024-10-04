@@ -1,7 +1,7 @@
 import React from "react";
 import OfferCard from "./OfferCard";
 import "./OffersTab.css";
-import ClipLoader from "react-spinners/ClipLoader";
+// import ClipLoader from "react-spinners/ClipLoader";
 import { LoadingOutlined } from '@ant-design/icons';
 
 const OffersTab = ({ offers, context, isLoading }) => {

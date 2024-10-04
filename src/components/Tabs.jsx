@@ -1,24 +1,116 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import OffersTab from "./OffersTab";
 import ContentTab from "../components/ContentTab";
 import StoresTab from "./StoresTab";
 import "./Tabs.css";
+import { getOffers } from "../services/OffersService";
+import { getReels } from "../services/ReelsServices";
+import { getStoreByLocation } from "../services/StoreServices";
 
-const Tabs = ({
-  offers,
-  contents,
-  stores,
-  context,
-  isOffersLoading,
-  isContentsLoading,
-  isStoreLoading,
-}) => {
-  const [activeTab, setActiveTab] = useState(
-    context === "store" ? "content" : "stores"
-  );
+const Tabs = ({ SearchKey, selectedCategory, context }) => {
+  const [activeTab, setActiveTab] = useState("stores");
+  const [Offers, setOffers] = useState([]);
+  const [Reels, setReels] = useState([]);
+  const [Stores, setStores] = useState([]);
+  const [FilteredOffers, setFilteredOffers] = useState([]);
+  const [FilteredStores, setFilteredStores] = useState([]);
+  const [isOffersLoading, setisOffersLoading] = useState(false);
+  const [isReelsLoading, setisReelsLoading] = useState(false);
+  const [isStoreLoading, setisStoreLoading] = useState(true);
+  const [searchKey, setSearchKey] = useState(SearchKey || "All");
 
-  const handleTabClick = (tab) => {
+
+  useEffect(() => {
+    const loadStores = async () => {
+      try {
+        const storeData = await getStoreByLocation(""); 
+        setStores(storeData); 
+        setFilteredStores(storeData); 
+      } catch (error) {
+        console.error("Error fetching stores:", error);
+      } finally {
+        setisStoreLoading(false);
+      }
+    };
+
+    loadStores();
+  }, []);
+
+  useEffect(() => {
+    setSearchKey(SearchKey);
+  }, [SearchKey]);
+
+  const isValidString = (value) => typeof value === "string";
+
+  const filterOffersAndStores = () => {
+    const lowerSearchKey = searchKey ? searchKey.toLowerCase() : "";
+    const lowerCategory = selectedCategory
+      ? selectedCategory.toLowerCase()
+      : "all";
+
+    if (!isStoreLoading) {
+      const filteredOffers = Offers.filter(
+        (offer) =>
+          (lowerCategory === "all" ||
+            (isValidString(offer.category) &&
+              offer.category.toLowerCase() === lowerCategory)) &&
+          (offer.title.toLowerCase().includes(lowerSearchKey) ||
+            offer.tags.some((tag) =>
+              tag.toLowerCase().includes(lowerSearchKey)
+            ))
+      );
+
+      const filteredStores = Stores.filter(
+        (store) =>
+          (lowerCategory === "all" ||
+            (isValidString(store.category) &&
+              store.category.toLowerCase() === lowerCategory)) &&
+          isValidString(store.name) &&
+          store.name.toLowerCase().includes(lowerSearchKey)
+      );
+
+      return {
+        offers: filteredOffers,
+        stores: filteredStores,
+      };
+    }
+  };
+
+  useEffect(() => {
+    const searchResults = filterOffersAndStores();
+    if (searchResults) {
+      setFilteredOffers(searchResults.offers);
+      setFilteredStores(searchResults.stores);
+    }
+  }, [searchKey, Offers, Stores, selectedCategory, isStoreLoading]);
+
+  const handleTabClick = async (tab) => {
     setActiveTab(tab);
+
+    if (tab === "offers" && Offers.length === 0) {
+      setisOffersLoading(true);
+      try {
+        const offersData = await getOffers();
+        setOffers(offersData);
+        setFilteredOffers(offersData);
+      } catch (error) {
+        console.error("Error fetching offers:", error);
+      } finally {
+        setisOffersLoading(false);
+      }
+    }
+
+    if (tab === "content" && Reels.length === 0) {
+      setisReelsLoading(true);
+      try {
+        const reelsData = await getReels();
+        setReels(reelsData);
+      } catch (error) {
+        console.error("Error fetching reels:", error);
+      } finally {
+        setisReelsLoading(false);
+      }
+    }
   };
 
   return (
@@ -30,9 +122,7 @@ const Tabs = ({
         >
           Offers
         </div>
-        {context === "store" ? (
-          <div></div>
-        ) : (
+        {context === "store" ? null : (
           <div
             className={`tab ${activeTab === "stores" ? "active" : ""}`}
             onClick={() => handleTabClick("stores")}
@@ -50,20 +140,20 @@ const Tabs = ({
       <div className="tab-content-container">
         {activeTab === "offers" && (
           <OffersTab
-            offers={offers}
+            offers={FilteredOffers}
             context={context}
             isLoading={isOffersLoading}
           />
         )}
         {context === "home" && activeTab === "stores" && (
           <StoresTab
-            stores={stores}
+            stores={FilteredStores}
             context={context}
             isLoading={isStoreLoading}
           />
         )}
         {activeTab === "content" && (
-          <ContentTab contents={contents} isLoading={isContentsLoading} />
+          <ContentTab contents={Reels} isLoading={isReelsLoading} />
         )}
       </div>
     </div>
