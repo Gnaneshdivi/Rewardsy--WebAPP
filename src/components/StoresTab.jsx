@@ -5,7 +5,6 @@ import "./StoresTab.css";
 import { LoadingOutlined } from '@ant-design/icons';
 
 const StoresTab = ({ stores, context, isLoading }) => {
-  // console.log(stores);
   return (
     <div className="store-tab-container">
       {isLoading ? (
