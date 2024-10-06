@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 // import PhoneInput from "react-phone-input-2";
 // import "react-phone-input-2/lib/style.css";
 import OtpInput from "otp-input-react";
@@ -101,6 +101,7 @@ const AuthModal = ({ isOpen, close }) => {
   }
 
   async function onOTPVerify() {
+    console.log(otp);
     setLoading(true);
     try {
       const res = await window.confirmationResult.confirm(otp);
@@ -187,7 +188,7 @@ const AuthModal = ({ isOpen, close }) => {
       <div className="modal-content">
         <div className="hidden" id="recaptcha-container"></div>
 
-        {step === 1 && (
+        {step === 2 && (
           <div className="login-signUp-div">
             <div className="login-signUp-text-div">
               <div>
@@ -234,7 +235,7 @@ const AuthModal = ({ isOpen, close }) => {
           </div>
         )}
 
-        {step === 2 && (
+        {step === 1 && (
           <div className=" step2 ">
             <h1 className="text-center text-black font-semibold text-3xl">
               VERIFY OTP
@@ -246,14 +247,21 @@ const AuthModal = ({ isOpen, close }) => {
               style={{}}
               disabled={false}
               required
+              onChange={(e) => {
+                setOtp(e.target.value);
+                console.log(e.target.value);
+              }}
             /> */}
 
             <Input.OTP
               formatter={(str) => str.toUpperCase()}
-              {...sharedProps}
+              // {...sharedProps}
               value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              disabled={false}
+              onChange={(e) => {
+                setOtp(e);
+                // console.log(e)
+              }}
+              // disabled={false}
               required
             />
 
@@ -267,8 +275,7 @@ const AuthModal = ({ isOpen, close }) => {
           </div>
         )}
 
-        {step === 3
-         && (
+        {step === 3 && (
           <div className="login-signUp-div" style={{ minHeight: "55vh" }}>
             <div className="login-signUp-text-div">
               <div>
