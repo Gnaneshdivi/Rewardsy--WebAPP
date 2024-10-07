@@ -188,7 +188,7 @@ const AuthModal = ({ isOpen, close }) => {
       <div className="modal-content">
         <div className="hidden" id="recaptcha-container"></div>
 
-        {step === 2 && (
+        {step === 1 && (
           <div className="login-signUp-div">
             <div className="login-signUp-text-div">
               <div>
@@ -235,7 +235,7 @@ const AuthModal = ({ isOpen, close }) => {
           </div>
         )}
 
-        {step === 1 && (
+        {step === 2 && (
           <div className=" step2 ">
             <h1 className="text-center text-black font-semibold text-3xl">
               VERIFY OTP
