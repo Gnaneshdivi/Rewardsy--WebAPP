@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { CgSpinner } from "react-icons/cg";
 import "./AuthModel.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails } from "../../slices/userSlice";
+import { setUserDetails } from "../../slices/userSlice"; // Import the setUserDetails action
 
 const AuthModal = ({ isOpen, close }) => {
   const [step, setStep] = useState(1);
@@ -23,9 +23,9 @@ const AuthModal = ({ isOpen, close }) => {
     state: "",
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // Use Redux dispatch
   const navigate = useNavigate();
-  const userDetails = useSelector((state) => state.user.userDetails);
+  const userDetails = useSelector((state) => state.user.userDetails); // Access the user details from Redux state
 
   async function checkIfUserExists(phoneNumber) {
     try {
@@ -40,17 +40,28 @@ const AuthModal = ({ isOpen, close }) => {
   }
 
   function onCaptchVerify() {
+    // Make sure the Firebase Auth instance is properly initialized and passed
     if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: () => onSignup(),
-        },
-        auth
-      );
+      try {
+        window.recaptchaVerifier = new RecaptchaVerifier(
+          "recaptcha-container", // The ID of the reCAPTCHA container
+          {
+            size: "invisible",
+            callback: (response) => {
+              console.log("reCAPTCHA verified:", response);
+            },
+            'expired-callback': () => {
+              console.warn("reCAPTCHA expired. Please try again.");
+            },
+          },
+          auth // Ensure 'auth' is properly passed here
+        );
+      } catch (error) {
+        console.error("Error initializing reCAPTCHA verifier:", error);
+      }
     }
   }
+  
 
   async function onPhoneSubmit() {
     setLoading(true);
@@ -88,7 +99,7 @@ const AuthModal = ({ isOpen, close }) => {
         if (userDoc.exists()) {
           const userData = userDoc.data();
           userData.token = await auth.currentUser.getIdToken();
-          dispatch(setUserDetails(userData));
+          dispatch(setUserDetails(userData)); // Dispatch the action to set user details in Redux
         }
 
         setLoading(false);
