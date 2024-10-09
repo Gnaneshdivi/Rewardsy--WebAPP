@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+// import PhoneInput from "react-phone-input-2";
+// import "react-phone-input-2/lib/style.css";
 import OtpInput from "otp-input-react";
 import { auth, db } from "../../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
@@ -84,6 +86,7 @@ const AuthModal = ({ isOpen, close }) => {
   }
 
   async function onOTPVerify() {
+    console.log(otp);
     setLoading(true);
     try {
       const res = await window.confirmationResult.confirm(otp);
@@ -217,14 +220,33 @@ const AuthModal = ({ isOpen, close }) => {
         )}
 
         {step === 2 && (
-          <div className="step2">
-            <h1 className="text-center text-black font-semibold text-3xl">VERIFY OTP</h1>
-            <OtpInput
+          <div className=" step2 ">
+            <h1 className="text-center text-black font-semibold text-3xl">
+              VERIFY OTP
+            </h1>
+            {/* <input
+              type="number"
+              maxLength={6}
+              autoFocus
+              style={{}}
+              disabled={false}
+              required
+              onChange={(e) => {
+                setOtp(e.target.value);
+                console.log(e.target.value);
+              }}
+            /> */}
+
+            <Input.OTP
+              formatter={(str) => str.toUpperCase()}
+              // {...sharedProps}
               value={otp}
-              onChange={setOtp}
-              numInputs={6}
-              isInputNum
-              separator={<span>-</span>}
+              onChange={(e) => {
+                setOtp(e);
+                // console.log(e)
+              }}
+              // disabled={false}
+              required
             />
             <button onClick={onOTPVerify} className="submit-button-step2">
               {loading && <CgSpinner size={20} className="mt-1 animate-spin" />}
