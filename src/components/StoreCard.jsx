@@ -1,15 +1,12 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./StoreCard.css";
-import { redeemOffers } from "../services/OffersService";
-import UserContext from "../context/UserContext";
 
 const StoreCard = ({ store, context }) => {
   const navigate = useNavigate();
   const [redeemedCode, setRedeemedCode] = useState(null);
   const [redeemCodeLoading, setRedeemedCodeLoading] = useState(false);
   const [copyMessage, setCopyMessage] = useState("");
-  const { userDetails } = useContext(UserContext); // Access user details from context
 
   // Determine the button text based on the context prop
   const buttonText = context === "store" ? "Redeem" : "Explore";

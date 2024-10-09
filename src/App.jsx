@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,10 +12,11 @@ import URLForwarding from "./pages/URLForwarding";
 import RedirectToHome from "./pages/RedirectToHomepage";
 import Footer from "./components/Footer";
 import ReelsPage from "./pages/ReelsPage";
-import UserContext from "./context/UserContext"; // Import the UserContext
 import AdPopup from "./components/AdPop";
 import Payment from "./pages/Payment";
 import "./App.css"; // Include your global styles here
+import { listenToAuthState } from './slices/userSlice';
+import { useDispatch,useSelector } from "react-redux"; // Import useSelector to access Redux state
 
 const App = () => {
   return (
@@ -29,19 +30,22 @@ const AppContent = () => {
   const location = useLocation();
   const [showAd, setShowAd] = useState(false);
   const [img, setImg] = useState(null);
-  const { userDetails, loading } = useContext(UserContext); // Get user details and loading state from context
+  const { loading } = useSelector((state) => state.user); // Access user state from Redux
   const searchParams = new URLSearchParams(window.location.search);
   const showAdParam = searchParams.get("showAd");
   const imgLink = searchParams.get("img");
-
+  const dispatch = useDispatch();
+  
   useEffect(() => {
-    // console.log(showAdParam);
-    // console.log(imgLink);
     if (showAdParam === "true") {
       setShowAd(true);
       setImg(imgLink);
     }
   }, [showAdParam, imgLink]);
+  
+  useEffect(() => {
+    dispatch(listenToAuthState());
+  }, [dispatch]);
 
   const closeAd = () => {
     setShowAd(false);
@@ -50,9 +54,9 @@ const AppContent = () => {
     window.history.pushState(null, "", newUrl);
   };
 
-  // Show a loading indicator while checking authentication
+  // Conditionally render based on the loading state
   if (loading) {
-    return <></>; // You can replace this with a spinner or loader component
+    return <div>Loading...</div>; // You can replace this with a spinner or loader component
   }
 
   return (
@@ -73,7 +77,6 @@ const AppContent = () => {
           <Route path="/qr/:shortUrl" element={<URLForwarding />} />
           <Route path="/Login" element={<HomePage />} />
           <Route path="/SignUp" element={<HomePage />} />
-          {/* Update the route pattern to catch both /reelID and /reel1, /reel2, etc. */}
           <Route path="/reels/:reelId" element={<ReelsPage />} />
           <Route path="/upi" element={<Payment />} />
         </Routes>
@@ -84,5 +87,6 @@ const AppContent = () => {
     </div>
   );
 };
+
 
 export default App;

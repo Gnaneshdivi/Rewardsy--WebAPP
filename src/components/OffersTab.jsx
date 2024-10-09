@@ -9,7 +9,7 @@ const OffersTab = ({ offers, context, isLoading }) => {
     <>
       <div className="offers-tab-container">
         {isLoading ? (
-          <LoadingOutlined loading={isLoading} color="white"/>
+          <LoadingOutlined style={{ fontSize: 24, color: 'white' }} spin />
           // <ClipLoader loading={isLoading} color="white" />
         ) : (
           <>

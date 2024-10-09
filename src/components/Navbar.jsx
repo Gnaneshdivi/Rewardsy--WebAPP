@@ -1,34 +1,28 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AuthModal from "./AuthModel";
-// import { Link } from "react-router-dom";
-// import { HiMenu } from "react-icons/hi";
 import { useLocation, useNavigate } from "react-router-dom";
-import UserContext from "../context/UserContext"; 
 import { Button } from 'antd';
-import { MenuOutlined} from '@ant-design/icons';
-
+import { MenuOutlined } from '@ant-design/icons';
 import "./Navbar.css";
-
 import { createStyles } from 'antd-style';
+import { useSelector, useDispatch } from "react-redux"; // Import useSelector and useDispatch from Redux
+import { logout } from "../slices/userSlice"; // Import logout action from userSlice
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
-  const { userDetails, clearUserDetails } = useContext(UserContext); // Access user details from context
   const [menuOpen, setMenuOpen] = useState(false);
+  const { userDetails } = useSelector((state) => state.user); // Access user details from Redux
+  const dispatch = useDispatch(); // Initialize dispatch for actions
 
   const useStyle = createStyles(({ prefixCls, css }) => ({
     linearGradientButton: css`
-  
-        &::hover {
-          background-color: gold;
-        }
-  
-        $::active{
-          background-color: darkgoldenrod;
-        }
-  
+      &::hover {
+        background-color: gold;
+      }
+      &::active {
+        background-color: darkgoldenrod;
       }
     `,
   }));
@@ -61,7 +55,7 @@ const Navbar = () => {
   };
 
   const handleSignOut = () => {
-    clearUserDetails(); // Clear user details from context
+    dispatch(logout()); // Dispatch the logout action
     navigate("/home"); // Navigate back to home after signing out
   };
 
@@ -69,11 +63,9 @@ const Navbar = () => {
     <>
       <div className="flex justify-between items-center p-3 bg-black" id="nav">
         <div className="flex-shrink-0" id="logoDiv">
-
-        <Button type="link" href="/home"><img id="logo" src="/Logo.png" alt="Logo" className="h-10 ml-5 " /></Button>
-          {/* <Link to="/home">
+          <Button type="link" href="/home">
             <img id="logo" src="/Logo.png" alt="Logo" className="h-10 ml-5 " />
-          </Link> */}
+          </Button>
         </div>
 
         <div className="hidden sm:flex gap-2">
@@ -89,16 +81,15 @@ const Navbar = () => {
             </>
           ) : (
             <>
-            <Button className='bg-yellow-500 text-black font-bold py-2 px-5 rounded' classNames={styles.linearGradientButton} id="login-nav" type="primary" onClick={openAuthModal}>Login / Signup</Button>
+              <Button className={styles.linearGradientButton} id="login-nav" type="primary" onClick={openAuthModal}>
+                Login / Signup
+              </Button>
             </>
           )}
         </div>
+
         <div className="sm:hidden flex items-center">
-          {/* <HiMenu
-            className="text-white text-2xl cursor-pointer"
-            onClick={toggleMenu}
-          /> */}
-          <MenuOutlined onClick={toggleMenu} className="text-white text-2xl cursor-pointer"/>
+          <MenuOutlined onClick={toggleMenu} className="text-white text-2xl cursor-pointer" />
         </div>
 
         {menuOpen && (
@@ -143,4 +134,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar
+export default Navbar;
