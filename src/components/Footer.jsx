@@ -1,70 +1,47 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import "./Footer.css";
-import UserContext from "../context/UserContext";
+import { useSelector, useDispatch } from "react-redux"; // Import useSelector and useDispatch from Redux
 import { useLocation, useNavigate } from "react-router-dom";
+import { logout } from "../slices/userSlice"; // Import logout action from userSlice if needed
 
 const Footer = () => {
-  const { userDetails, clearUserDetails } = useContext(UserContext); // Access user details from context
+  const { userDetails } = useSelector((state) => state.user); // Access user details from Redux
+  const dispatch = useDispatch(); // Initialize dispatch for actions
   const location = useLocation();
   const navigate = useNavigate();
 
   const openAuthModal = (mode) => {
     navigate(`/${mode}`); // Navigate programmatically to set URL
   };
+
+  // Optional: If you want to clear user details programmatically
+  const handleLogout = () => {
+    dispatch(logout()); // Dispatch the logout action
+  };
+
   return (
     <footer className="footer">
       <div className="footer-top">
         <div className="footer-logo">
           <img src="../Logo.png" alt="logo"></img>
         </div>
-        {/* <div className="footer-links">
-          <div className="footer-column">
-            <h3>Mobile app</h3>
-            <ul>
-              <li>Features</li>
-              <li>Live share</li>
-              <li>Video record</li>
-            </ul>
-          </div>
-          <div className="footer-column">
-            <h3>Community</h3>
-            <ul>
-              <li>Featured artists</li>
-              <li>The Portal</li>
-              <li>Live events</li>
-            </ul>
-          </div>
-          <div className="footer-column">
-            <h3>Company</h3>
-            <ul>
-              <li>About us</li>
-              <li>Contact us</li>
-              <li>History</li>
-            </ul>
-          </div>
-        </div> */}
         <div className="contact-div">
-            <div>{/* <label>contect info </label> */}</div>
-            <div>
-              <div className="info-main">
-                <div className="info">
-                  <label>contact</label>
-                </div>
-                {/* <div className="info">
-                  <label>Name </label>
-                  <label>divi gnanesh</label>
-                </div> */}
-                <div className="info">
-                  <label>Mobile </label>
-                  <label>9100828649</label>
-                </div>
-                <div className="info">
-                  <label>email </label>
-                  <label>divignanesh@gmail.com</label>
-                </div>
+          <div>
+            <div className="info-main">
+              <div className="info">
+                <label>Contact</label>
+              </div>
+              <div className="info">
+                <label>Mobile </label>
+                <label>9100828649</label>
+              </div>
+              <div className="info">
+                <label>Email </label>
+                <label>divignanesh@gmail.com</label>
               </div>
             </div>
           </div>
+        </div>
         {!userDetails ? (
           <div className="footer-buttons">
             <button
