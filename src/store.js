@@ -6,7 +6,7 @@ import themeReducer from './slices/themeSlice';
 const store = configureStore({
   reducer: {
     user: userReducer,
-    // theme: themeReducer,
+    theme: themeReducer,
   },
 });
 
