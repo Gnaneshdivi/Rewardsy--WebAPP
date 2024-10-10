@@ -11,9 +11,9 @@ const StorePage = () => {
   const [offers, setOffer] = useState([]);
   const [content, setContent] = useState([]);
   const [isStoreLoading, setIsStoreLoading] = useState(true);
-  const [area, setArea] = useState(""); // State for the area name
-  const [latitude, setLatitude] = useState(null); // Store latitude
-  const [longitude, setLongitude] = useState(null); // Store longitude
+  const [area, setArea] = useState(""); 
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
   useEffect(() => {
     const updateStore = async () => {
@@ -24,7 +24,6 @@ const StorePage = () => {
       setContent(storeData.content);
       setIsStoreLoading(false);
 
-      // Call reverse geocoding to get area name from coordinates
       if (storeData.store && storeData.store.location) {
         const [lat, lon] = storeData.store.location.split(",");
         setLatitude(lat);
@@ -33,7 +32,6 @@ const StorePage = () => {
       }
     };
 
-    // Function to fetch the area name using OpenStreetMap (Nominatim)
     const fetchAreaName = async (lat, lon) => {
       try {
         const response = await fetch(
@@ -42,7 +40,6 @@ const StorePage = () => {
         const data = await response.json();
 
         if (data && data.address) {
-          // Fallback if some parts of the address are missing
           const road = data.address.road || "";
           const city =
             data.address.city ||
@@ -52,12 +49,10 @@ const StorePage = () => {
           const state = data.address.state || "";
           const country = data.address.country || "";
 
-          // Construct the area name based on available fields
           const locationName = [road, city, state, country]
             .filter(Boolean)
             .join(", ");
 
-          // Show only the portion before the first comma
           const firstPart = locationName.split(",")[0].trim();
           setArea(firstPart);
         } else {

@@ -1,14 +1,22 @@
-import React, { useState } from "react";
-import OtpInput from "otp-input-react";
+import React, { useState, useContext, useEffect } from "react";
 import { auth, db } from "../../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
-import { doc, getDoc, setDoc, collection, query, where, getDocs } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { CgSpinner } from "react-icons/cg";
 import "./AuthModel.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails } from "../../slices/userSlice"; // Import the setUserDetails action
+import { setUserDetails } from "../../slices/userSlice";
+import { Flex, Input, Typography } from "antd";
 
 const AuthModal = ({ isOpen, close }) => {
   const [step, setStep] = useState(1);
@@ -23,9 +31,9 @@ const AuthModal = ({ isOpen, close }) => {
     state: "",
   });
 
-  const dispatch = useDispatch(); // Use Redux dispatch
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userDetails = useSelector((state) => state.user.userDetails); // Access the user details from Redux state
+  const userDetails = useSelector((state) => state.user.userDetails);
 
   async function checkIfUserExists(phoneNumber) {
     try {
@@ -40,50 +48,65 @@ const AuthModal = ({ isOpen, close }) => {
   }
 
   function onCaptchVerify() {
-    // Make sure the Firebase Auth instance is properly initialized and passed
     if (!window.recaptchaVerifier) {
       try {
         window.recaptchaVerifier = new RecaptchaVerifier(
-          "recaptcha-container", // The ID of the reCAPTCHA container
+          auth,
+          "recaptcha-container",
           {
             size: "invisible",
             callback: (response) => {
               console.log("reCAPTCHA verified:", response);
             },
-            'expired-callback': () => {
+            "expired-callback": () => {
               console.warn("reCAPTCHA expired. Please try again.");
             },
-          },
-          auth // Ensure 'auth' is properly passed here
+          }
         );
       } catch (error) {
         console.error("Error initializing reCAPTCHA verifier:", error);
       }
     }
   }
-  
 
   async function onPhoneSubmit() {
     setLoading(true);
     const userExists = await checkIfUserExists(ph);
     const formatPh = "+91" + ph;
 
-    onCaptchVerify();
-    signInWithPhoneNumber(auth, formatPh, window.recaptchaVerifier)
-      .then((confirmationResult) => {
-        window.confirmationResult = confirmationResult;
-        setLoading(false);
-        setStep(2);
-        toast.success("OTP sent successfully!");
-      })
-      .catch((error) => {
-        console.error("Failed to send OTP:", error);
-        setLoading(false);
-        toast.error("Failed to send OTP. Please try again.");
-      });
+    if (userExists) {
+      onCaptchVerify();
+      signInWithPhoneNumber(auth, formatPh, window.recaptchaVerifier)
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          setLoading(false);
+          setStep(2);
+          toast.success("OTP sent successfully!");
+        })
+        .catch((error) => {
+          console.error("Failed to send OTP:", error);
+          setLoading(false);
+          toast.error("Failed to send OTP. Please try again.");
+        });
+    } else {
+      onCaptchVerify();
+      signInWithPhoneNumber(auth, formatPh, window.recaptchaVerifier)
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          setLoading(false);
+          setStep(2);
+          toast.success("OTP sent successfully!");
+        })
+        .catch((error) => {
+          console.error("Failed to send OTP:", error);
+          setLoading(false);
+          toast.error("Failed to send OTP. Please try again.");
+        });
+    }
   }
 
   async function onOTPVerify() {
+    console.log(otp);
     setLoading(true);
     try {
       const res = await window.confirmationResult.confirm(otp);
@@ -99,7 +122,7 @@ const AuthModal = ({ isOpen, close }) => {
         if (userDoc.exists()) {
           const userData = userDoc.data();
           userData.token = await auth.currentUser.getIdToken();
-          dispatch(setUserDetails(userData)); // Dispatch the action to set user details in Redux
+          dispatch(setUserDetails(userData));
         }
 
         setLoading(false);
@@ -208,7 +231,9 @@ const AuthModal = ({ isOpen, close }) => {
                   onClick={onPhoneSubmit}
                   className="submit-button flex gap-1 items-center justify-center mt-10 py-2.5"
                 >
-                  {loading && <CgSpinner size={20} className="mt-1 animate-spin" />}
+                  {loading && (
+                    <CgSpinner size={20} className="mt-1 animate-spin" />
+                  )}
                   <span>Request OTP</span>
                 </button>
               </div>
@@ -217,14 +242,21 @@ const AuthModal = ({ isOpen, close }) => {
         )}
 
         {step === 2 && (
-          <div className="step2">
-            <h1 className="text-center text-black font-semibold text-3xl">VERIFY OTP</h1>
-            <OtpInput
+          <div className=" step2 ">
+            <h1 className="text-center text-black font-semibold text-3xl">
+              VERIFY OTP
+            </h1>
+
+            <Input.OTP
+              formatter={(str) => str.toUpperCase()}
+              // {...sharedProps}
               value={otp}
-              onChange={setOtp}
-              numInputs={6}
-              isInputNum
-              separator={<span>-</span>}
+              onChange={(e) => {
+                setOtp(e);
+                // console.log(e)
+              }}
+              // disabled={false}
+              required
             />
             <button onClick={onOTPVerify} className="submit-button-step2">
               {loading && <CgSpinner size={20} className="mt-1 animate-spin" />}
@@ -235,62 +267,93 @@ const AuthModal = ({ isOpen, close }) => {
 
         {step === 3 && (
           <div className="login-signUp-div" style={{ minHeight: "55vh" }}>
+            <div className="login-signUp-text-div">
+              <div>
+                <h1>
+                  Get <br /> Started
+                </h1>
+              </div>
+              <div className="login-signUp-text-para-div">
+                <p>saving cannot get anymore easier</p>
+                <p>Sign Up and start saving right now</p>
+              </div>
+            </div>
+            <div className="divider-div"></div>
+
             <form onSubmit={handleFormSubmit} className="signup-form-div">
-              <input
-                placeholder="Name"
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-                minLength={3}
-                className="form-input"
-              />
-              <input
-                placeholder="Age"
-                type="number"
-                id="age"
-                name="age"
-                value={formData.age}
-                onChange={handleInputChange}
-                required
-                min={1}
-                max={100}
-                className="form-input"
-              />
-              <input
-                placeholder="Email"
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-                className="form-input"
-              />
-              <input
-                placeholder="State"
-                type="text"
-                id="state"
-                name="state"
-                value={formData.state}
-                onChange={handleInputChange}
-                required
-                className="form-input"
-              />
+              <div className="label">
+                {/* <label>Name</label> */}
+                <input
+                  placeholder="Name"
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  minLength={3}
+                  className="form-input"
+                />
+              </div>
+              <div className="label">
+                {/* <label>Age</label> */}
+                <input
+                  placeholder="Age"
+                  type="number"
+                  id="age"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleInputChange}
+                  required
+                  min={1}
+                  max={100}
+                  className="form-input"
+                />
+              </div>
+              <div className="label">
+                {/* <label>Email</label> */}
+                <input
+                  placeholder="Email"
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="form-input"
+                />
+              </div>
+              <div className="label">
+                {/* <label>State</label> */}
+                <input
+                  placeholder="State"
+                  type="text"
+                  id="state"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleInputChange}
+                  required
+                  className="form-input"
+                />
+              </div>
               <button
                 type="submit"
                 className="signup-submit-button"
                 disabled={loading}
               >
-                {loading ? <CgSpinner size={20} className="animate-spin" /> : "Submit"}
+                {loading ? (
+                  <CgSpinner size={20} className="animate-spin" />
+                ) : (
+                  "Submit"
+                )}
               </button>
             </form>
           </div>
         )}
 
-        <button onClick={close} className="close-button">X</button>
+        <button onClick={close} className="close-button">
+          X
+        </button>
       </div>
     </div>
   );
