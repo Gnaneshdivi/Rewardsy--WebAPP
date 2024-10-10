@@ -254,23 +254,24 @@
   min-width: 21vw;
   height: 100%;
   padding: 30px;
+  color: #000;
 }
 
 .signup-input-div input{
   background-color: transparent;
   border: 3px solid rgba(0, 0, 0, 0.674);
-  color: black;
+  color: black ;
   font-size: 20px;
   font-weight:500;
   border-radius: 10px;
 }
 
 .signup-input-div input::placeholder{
-  color: black;
+  color: #000;
   font-weight:500;
 }
 
-textarea:focus, input:focus{
+textarea:focus, input:focus::placeholder{
   outline: none;
 }
 
@@ -310,6 +311,18 @@ textarea:focus, input:focus{
   border: none;
   color: black;
   cursor: pointer;
+}
+
+.label{
+  width: 100%;
+}
+
+.label label{
+  background-color: yellowgreen;
+}
+
+.label input::placeholder{
+  color: #000;
 }
 
 .signup-caption-div h1{
@@ -382,6 +395,18 @@ textarea:focus, input:focus{
     align-items: center;
     justify-content: flex-start;
     
+  }
+
+  .label{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .label label{
+    /* background-color: yellowgreen; */
+    min-width: 10vw;
   }
 
   .login-signUp-div {
@@ -502,6 +527,7 @@ textarea:focus, input:focus{
   font-weight:500;
   height: 4vh;
   border-radius: 5px;
+  color: #000;
 }
 
 .terms-conditions{

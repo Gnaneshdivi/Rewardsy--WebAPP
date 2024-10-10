@@ -2,6 +2,12 @@
     margin-left: 5vw;
 }
 
+#login-nav{
+    background-color: #ffc107;
+    color: black;
+    font-weight: 600;
+}
+
 #login-nav:hover{
     background-color: gold;
 
