@@ -19,13 +19,12 @@ const Tabs = ({ SearchKey, selectedCategory, context }) => {
   const [isStoreLoading, setisStoreLoading] = useState(true);
   const [searchKey, setSearchKey] = useState(SearchKey || "All");
 
-
   useEffect(() => {
     const loadStores = async () => {
       try {
-        const storeData = await getStoreByLocation(""); 
-        setStores(storeData); 
-        setFilteredStores(storeData); 
+        const storeData = await getStoreByLocation("");
+        setStores(storeData);
+        setFilteredStores(storeData);
       } catch (error) {
         console.error("Error fetching stores:", error);
       } finally {
