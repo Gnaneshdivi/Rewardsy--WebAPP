@@ -1,4 +1,3 @@
-// theme.js
 const theme = {
     colors: {
       primary: '#1976d2',
@@ -16,7 +15,6 @@ const theme = {
       medium: '16px',
       large: '24px',
     },
-    // Add more settings like border-radius, shadows, etc., as needed
   };
   
   export default theme;

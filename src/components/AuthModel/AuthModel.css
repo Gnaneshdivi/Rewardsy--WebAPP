@@ -181,13 +181,28 @@
 }
 
 .step2 input{
-  background-color: transparent;
+  background-color: #ffde00;
   border: 2px solid rgba(0, 0, 0, 0.674);
   color: black;
   font-size: 20px;
   font-weight:500;
   border-radius: 10px;
   padding: 5px 10px;
+}
+
+.step2 input:hover{
+  background-color: #ffde00;
+  border: 2px solid rgba(0, 0, 0, 0.674);
+}
+
+.step2 input:active{
+  background-color: #ffde00;  
+  border: 1px solid rgba(0, 0, 0, 0.674);
+}
+
+.step2 input:focus{
+  background-color: #ffde00;  
+  border: 1px solid rgba(0, 0, 0, 0.674);
 }
 
 .submit-button-step2{

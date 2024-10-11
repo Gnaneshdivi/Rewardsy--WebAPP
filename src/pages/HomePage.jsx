@@ -10,13 +10,12 @@ const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
-    // Any side-effects related to searchKey/category can go here if needed
   }, [searchKey, selectedCategory]);
 
   const bannerImages = ["/carousal/1.png", "/carousal/2.png"];
 
   const categories = [
-    { name: "All", asset: "/categories/discount.png" },
+    { name: "", asset: "/categories/discount.png" },
     { name: "Restaurants", asset: "/categories/cutlery.png" },
     { name: "Beauty", asset: "/categories/cosmetics.png" },
     { name: "Fashion", asset: "/categories/tshirt.png" },
