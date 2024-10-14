@@ -1,16 +1,31 @@
+/* Reset Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: var(--background-color);
-  color: #ffffff;
-  max-width: 100vh;
+/* Prevent horizontal and unwanted scrolling */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
+body::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in WebKit browsers (Chrome, Safari) */
+}
+
+body {
+  -ms-overflow-style: none;  /* Hide scrollbar in IE/Edge */
+  scrollbar-width: none;     /* Hide scrollbar in Firefox */
+  font-family: 'Arial', sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Links */
 a {
   text-decoration: none;
   color: inherit;
@@ -21,7 +36,13 @@ a {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100%; 
+  overflow-x: hidden; /* Prevent any horizontal scrolling */
+}
+
+/* Ensure hidden scrollbars within the app container */
+.app::-webkit-scrollbar {
+  display: none;
 }
 
 /* Navbar Styles */
@@ -30,10 +51,10 @@ a {
   justify-content: space-between;
   align-items: center;
   background-color: #272727;
-  /* position: fixed; */
-  z-index: 1000;
   width: 100%;
   padding: 10px 20px;
+  position: relative; /* Avoid layout shift */
+  overflow: hidden;
 }
 
 .navbar-logo {
@@ -42,6 +63,7 @@ a {
   transform: translateX(-50%);
   font-size: 1.5em;
   color: #ffc107;
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 .authentication {
@@ -50,22 +72,40 @@ a {
   gap: 10px;
 }
 
+/* Manage scroll behavior */
 .no-scroll {
   overflow: hidden;
 }
 
 .scroll {
-  overflow: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
 }
 
+/* Navbar Button */
 .navbar-button {
   background-color: #ffc107;
   color: #121212;
   padding: 10px 20px;
   border-radius: 5px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .navbar-button:hover {
   background-color: #ffa000;
+}
+
+/* Handling full-page sections */
+.full-page {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Prevent layout shifts caused by hidden elements */
+.hidden {
+  display: none;
 }

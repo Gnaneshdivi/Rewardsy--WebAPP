@@ -39,7 +39,11 @@ const HomePage = () => {
 
       <>
         <CarouselComponent images={bannerImages} />
-        
+        <Categories
+          categories={categories}
+          setSelectedCategory={setSelectedCategory} 
+          selectedCategory={selectedCategory}
+        />
       </>
 
       <Tabs

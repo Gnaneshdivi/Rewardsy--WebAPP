@@ -19,9 +19,9 @@ const StorePage = () => {
     const updateStore = async () => {
       setIsStoreLoading(true);
       let storeData = await getStore(storeId);
-      setStore(storeData.store);
-      setOffer(storeData.offers);
-      setContent(storeData.content);
+      setStore(storeData);
+      // setOffer(storeData.offers);
+      // setContent(storeData.content);
       setIsStoreLoading(false);
 
       if (storeData.store && storeData.store.location) {

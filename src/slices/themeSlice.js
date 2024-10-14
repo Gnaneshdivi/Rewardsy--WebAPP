@@ -7,11 +7,7 @@ const lightTheme = {
   secondaryColor: '#1D1D1D', // Eerie black
   backgroundColor: '#FBF5EB',
   textColor: '#1D1D1D',
-  borderRadius: '13px',
-  borderSize: '4px',
-  gapBetweenElements: '17px',
-  font: 'Giphurs',
-  iconSet: 'Bootstrap',
+ 
 };
 
 const darkTheme = {
@@ -20,11 +16,7 @@ const darkTheme = {
   secondaryColor: '#FBF5EB', // Seashell white
   backgroundColor: '#1D1D1D',
   textColor: '#FBF5EB',
-  borderRadius: '13px',
-  borderSize: '4px',
-  gapBetweenElements: '17px',
-  font: 'Giphurs',
-  iconSet: 'Bootstrap',
+ 
 };
 
 const themeSlice = createSlice({

@@ -19,7 +19,7 @@ const Tabs = ({ SearchKey, selectedCategory, context }) => {
   const [isStoreLoading, setisStoreLoading] = useState(true);
   const [searchKey, setSearchKey] = useState(SearchKey || "All");
 
-
+console.log(searchKey,selectedCategory);
   useEffect(() => {
     const loadStores = async () => {
       try {
@@ -49,25 +49,37 @@ const Tabs = ({ SearchKey, selectedCategory, context }) => {
       : "all";
 
     if (!isStoreLoading) {
-      const filteredOffers = Offers.filter(
-        (offer) =>
-          (lowerCategory === "all" ||
-            (isValidString(offer.category) &&
-              offer.category.toLowerCase() === lowerCategory)) &&
-          (offer.title.toLowerCase().includes(lowerSearchKey) ||
-            offer.tags.some((tag) =>
-              tag.toLowerCase().includes(lowerSearchKey)
-            ))
-      );
+      const filteredOffers = Offers.filter((offer) => {
+        // Normalize tags into a single lowercase string for easier comparison
+        const normalizedTags = offer.tags.map((tag) => tag.toLowerCase());
+      
+        // Check if the selected category matches any tag OR 'all' is selected
+        const categoryMatch = lowerCategory === "all" || normalizedTags.includes(lowerCategory);
+      
+        // Check if the search key matches the title, description, or tags
+        const searchKeyMatch = [
+          offer.title.toLowerCase(),
+          offer.description?.toLowerCase() || "", // Handle optional description
+          ...normalizedTags,
+        ].some((field) => field.includes(lowerSearchKey));
+      
+        return categoryMatch && searchKeyMatch;
+      });
+      
 
-      const filteredStores = Stores.filter(
-        (store) =>
-          (lowerCategory === "all" ||
-            (isValidString(store.category) &&
-              store.category.toLowerCase() === lowerCategory)) &&
-          isValidString(store.name) &&
-          store.name.toLowerCase().includes(lowerSearchKey)
-      );
+      const filteredStores = Stores.filter((store) => {
+        const lowerSearchKey = searchKey.toLowerCase();
+        const hasMatchingCategory = 
+          lowerCategory === "all" || 
+          store.category.some(tag => tag.toLowerCase() === lowerCategory);
+      
+        const matchesSearchKey =
+          (isValidString(store.name) && store.name.toLowerCase().includes(lowerSearchKey)) ||
+          (isValidString(store.desc) && store.desc.toLowerCase().includes(lowerSearchKey));
+      
+        return hasMatchingCategory && matchesSearchKey;
+      });
+      
 
       return {
         offers: filteredOffers,
