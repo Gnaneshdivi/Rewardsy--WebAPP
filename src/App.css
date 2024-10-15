@@ -5,24 +5,24 @@
   box-sizing: border-box;
 }
 
-/* Prevent horizontal and unwanted scrolling */
+/* Full page dimensions */
 html, body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: #ffffff;
 }
 
 body::-webkit-scrollbar {
-  display: none; /* Hide scrollbar in WebKit browsers (Chrome, Safari) */
+  display: none; /* Hide scrollbar in WebKit browsers */
 }
 
 body {
-  -ms-overflow-style: none;  /* Hide scrollbar in IE/Edge */
-  scrollbar-width: none;     /* Hide scrollbar in Firefox */
-  font-family: 'Arial', sans-serif;
-  background-color: #121212;
-  color: #ffffff;
+  -ms-overflow-style: none; /* Hide scrollbar in IE/Edge */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
 }
 
 /* Links */
@@ -37,12 +37,7 @@ a {
   flex-direction: column;
   min-height: 100vh;
   width: 100%; 
-  overflow-x: hidden; /* Prevent any horizontal scrolling */
-}
-
-/* Ensure hidden scrollbars within the app container */
-.app::-webkit-scrollbar {
-  display: none;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 /* Navbar Styles */
@@ -53,8 +48,8 @@ a {
   background-color: #272727;
   width: 100%;
   padding: 10px 20px;
-  position: relative; /* Avoid layout shift */
-  overflow: hidden;
+  position: relative;
+  z-index: 1000; /* Keep navbar above other elements */
 }
 
 .navbar-logo {
@@ -70,33 +65,62 @@ a {
   margin-left: auto;
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
-/* Manage scroll behavior */
-.no-scroll {
-  overflow: hidden;
-}
-
-.scroll {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
-}
-
-/* Navbar Button */
+/* Fix for Button Visibility on Web Screens */
 .navbar-button {
   background-color: #ffc107;
   color: #121212;
   padding: 10px 20px;
   border-radius: 5px;
-  text-decoration: none;
+  font-weight: bold;
+  border: none;
   cursor: pointer;
+  display: inline-block; /* Ensure button is visible */
+  transition: background-color 0.3s ease;
 }
 
 .navbar-button:hover {
   background-color: #ffa000;
 }
 
-/* Handling full-page sections */
+.navbar-button:active {
+  background-color: #e59400;
+}
+
+/* Menu Toggle for Mobile */
+.menu-toggle {
+  display: none;
+}
+
+@media screen and (max-width: 645px) {
+  .menu-toggle {
+    display: block;
+    font-size: 2em;
+    cursor: pointer;
+    color: #ffffff;
+  }
+
+  .authentication {
+    display: none; /* Hide full buttons in mobile view */
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #272727;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1001; /* Ensure it stays above everything */
+  }
+}
+
+/* Full-page layout handling */
 .full-page {
   width: 100%;
   height: 100vh;
@@ -105,7 +129,7 @@ a {
   justify-content: center;
 }
 
-/* Prevent layout shifts caused by hidden elements */
+/* Hidden Elements */
 .hidden {
   display: none;
 }

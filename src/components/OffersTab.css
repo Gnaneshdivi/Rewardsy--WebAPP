@@ -6,13 +6,14 @@
 }
 
 .offers-tab-grid-container {
+  
   display: grid;
   gap: 20px;
    /* Always 2 items per row */
   /* width: 100%; */
-  max-width: 70vw; /* Adjust this value based on your desired maximum width */
+  width: 90% !important; /* Adjust this value based on your desired maximum width */
   justify-items: center; /* Center the items within the grid */
-  /* background-color: aliceblue; */
+
 }
 
 .offer-placeholder-text {

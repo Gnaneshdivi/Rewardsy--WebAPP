@@ -98,6 +98,8 @@
 @media (max-width: 600px) {
   .search-form {
     padding: 0px;
+    
+  width: 90vw;
     /* flex-direction: column; */
     /* background-color: #ddd; */
   }

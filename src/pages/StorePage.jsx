@@ -1,34 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Tabs from "../components/Tabs";
+import Links from "../components/Links";
 import "./StorePage.css";
 import { getStore } from "../services/StoreServices";
+import { getMerchantConfigs } from "../services/MerchantConfig";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const StorePage = () => {
   const { storeId } = useParams();
   const [store, setStore] = useState(null);
-  const [offers, setOffer] = useState([]);
-  const [content, setContent] = useState([]);
   const [isStoreLoading, setIsStoreLoading] = useState(true);
-  const [area, setArea] = useState(""); 
+  const [area, setArea] = useState("");
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [tabs, setTabs] = useState([]);
+  const [config, setconfig] = useState([]);
+
+  const extractTabsFromConfig = (configArray) => {
+    const validKeys = { offers: "offers", reels: "content" };
+    return configArray
+      .filter(({ key, value }) => validKeys[key] && value === "true")
+      .map(({ key }) => validKeys[key]);
+  };
 
   useEffect(() => {
     const updateStore = async () => {
       setIsStoreLoading(true);
-      let storeData = await getStore(storeId);
-      setStore(storeData);
-      // setOffer(storeData.offers);
-      // setContent(storeData.content);
-      setIsStoreLoading(false);
+      try {
+        const storeData = await getStore(storeId);
+        const configData = await getMerchantConfigs(storeId);
+setconfig(configData);
+        setTabs(extractTabsFromConfig(configData)); // Extract and set tabs
+        setStore(storeData);
 
-      if (storeData.store && storeData.store.location) {
-        const [lat, lon] = storeData.store.location.split(",");
-        setLatitude(lat);
-        setLongitude(lon);
-        fetchAreaName(lat, lon);
+        if (storeData.store && storeData.store.location) {
+          const [lat, lon] = storeData.store.location.split(",");
+          setLatitude(lat);
+          setLongitude(lon);
+          fetchAreaName(lat, lon);
+        }
+      } catch (error) {
+        console.error("Error fetching store or config data:", error);
+      } finally {
+        setIsStoreLoading(false);
       }
     };
 
@@ -40,21 +55,16 @@ const StorePage = () => {
         const data = await response.json();
 
         if (data && data.address) {
-          const road = data.address.road || "";
-          const city =
-            data.address.city ||
-            data.address.town ||
-            data.address.village ||
-            "";
-          const state = data.address.state || "";
-          const country = data.address.country || "";
-
-          const locationName = [road, city, state, country]
+          const locationName = [
+            data.address.road || "",
+            data.address.city || data.address.town || data.address.village || "",
+            data.address.state || "",
+            data.address.country || "",
+          ]
             .filter(Boolean)
             .join(", ");
 
-          const firstPart = locationName.split(",")[0].trim();
-          setArea(firstPart);
+          setArea(locationName.split(",")[0].trim());
         } else {
           setArea("Unknown Location");
         }
@@ -110,14 +120,13 @@ const StorePage = () => {
                     </span>
                   ))}
                 </p>
-                <br></br>
+                <br />
                 <p id="desc">{store.desc}</p>
               </div>
             </div>
           </div>
-          {!isStoreLoading && (
-            <Tabs offers={offers} contents={content} context={"store"} />
-          )}
+          <Links config={{merchantid:store.id }}/>
+          <Tabs context={"store"} config={{ tabs:tabs,merchantid:store.id }} />
         </div>
       )}
     </>

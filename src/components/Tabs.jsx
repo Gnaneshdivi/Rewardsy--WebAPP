@@ -1,40 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import OffersTab from "./OffersTab";
 import ContentTab from "../components/ContentTab";
 import StoresTab from "./StoresTab";
 import "./Tabs.css";
-import { getOffers } from "../services/OffersService";
-import { getReels } from "../services/ReelsServices";
+import { getOffers,getOffersByStore } from "../services/OffersService";
+import { getReels, getReelsByStore } from "../services/ReelsServices";
 import { getStoreByLocation } from "../services/StoreServices";
 
-const Tabs = ({ SearchKey, selectedCategory, context }) => {
-  const [activeTab, setActiveTab] = useState("stores");
+const Tabs = ({ SearchKey, selectedCategory, context, config }) => {
+  const availableTabs = config?.tabs || ["offers", "stores", "content"];
+
+  const determineDefaultTab = () => {
+    if (availableTabs.includes("stores")) return "stores";
+    if (availableTabs.includes("offers")) return "offers";
+    return availableTabs[0] || ""; // Default to the first tab or empty
+  };
+
+  const [activeTab, setActiveTab] = useState(determineDefaultTab);
   const [Offers, setOffers] = useState([]);
   const [Reels, setReels] = useState([]);
   const [Stores, setStores] = useState([]);
   const [FilteredOffers, setFilteredOffers] = useState([]);
   const [FilteredStores, setFilteredStores] = useState([]);
-  const [isOffersLoading, setisOffersLoading] = useState(false);
-  const [isReelsLoading, setisReelsLoading] = useState(false);
-  const [isStoreLoading, setisStoreLoading] = useState(true);
+  const [isOffersLoading, setIsOffersLoading] = useState(false);
+  const [isReelsLoading, setIsReelsLoading] = useState(false);
+  const [isStoreLoading, setIsStoreLoading] = useState(false);
   const [searchKey, setSearchKey] = useState(SearchKey || "All");
-
-console.log(searchKey,selectedCategory);
-  useEffect(() => {
-    const loadStores = async () => {
-      try {
-        const storeData = await getStoreByLocation(""); 
-        setStores(storeData); 
-        setFilteredStores(storeData); 
-      } catch (error) {
-        console.error("Error fetching stores:", error);
-      } finally {
-        setisStoreLoading(false);
-      }
-    };
-
-    loadStores();
-  }, []);
 
   useEffect(() => {
     setSearchKey(SearchKey);
@@ -43,112 +34,133 @@ console.log(searchKey,selectedCategory);
   const isValidString = (value) => typeof value === "string";
 
   const filterOffersAndStores = () => {
-    const lowerSearchKey = searchKey ? searchKey.toLowerCase() : "";
-    const lowerCategory = selectedCategory
-      ? selectedCategory.toLowerCase()
-      : "all";
+    if (Offers.length === 0 && Stores.length === 0) return; // Prevent unnecessary filtering
 
-    if (!isStoreLoading) {
-      const filteredOffers = Offers.filter((offer) => {
-        // Normalize tags into a single lowercase string for easier comparison
-        const normalizedTags = offer.tags.map((tag) => tag.toLowerCase());
-      
-        // Check if the selected category matches any tag OR 'all' is selected
-        const categoryMatch = lowerCategory === "all" || normalizedTags.includes(lowerCategory);
-      
-        // Check if the search key matches the title, description, or tags
-        const searchKeyMatch = [
-          offer.title.toLowerCase(),
-          offer.description?.toLowerCase() || "", // Handle optional description
-          ...normalizedTags,
-        ].some((field) => field.includes(lowerSearchKey));
-      
-        return categoryMatch && searchKeyMatch;
-      });
-      
+    const lowerSearchKey = searchKey.toLowerCase();
+    const lowerCategory = selectedCategory.toLowerCase();
 
-      const filteredStores = Stores.filter((store) => {
-        const lowerSearchKey = searchKey.toLowerCase();
-        const hasMatchingCategory = 
-          lowerCategory === "all" || 
-          store.category.some(tag => tag.toLowerCase() === lowerCategory);
-      
-        const matchesSearchKey =
-          (isValidString(store.name) && store.name.toLowerCase().includes(lowerSearchKey)) ||
-          (isValidString(store.desc) && store.desc.toLowerCase().includes(lowerSearchKey));
-      
-        return hasMatchingCategory && matchesSearchKey;
-      });
-      
+    const filteredOffers = Offers.filter((offer) => {
+      const normalizedTags = offer.tags.map((tag) => tag.toLowerCase());
+      const categoryMatch =
+        lowerCategory === "all" || normalizedTags.includes(lowerCategory);
+      const searchKeyMatch = [
+        offer.title.toLowerCase(),
+        offer.description?.toLowerCase() || "",
+        ...normalizedTags,
+      ].some((field) => field.includes(lowerSearchKey));
 
-      return {
-        offers: filteredOffers,
-        stores: filteredStores,
-      };
+      return categoryMatch && searchKeyMatch;
+    });
+
+    const filteredStores = Stores.filter((store) => {
+      const hasMatchingCategory =
+        lowerCategory === "all" ||
+        store.category.some((tag) => tag.toLowerCase() === lowerCategory);
+
+      const matchesSearchKey =
+        (isValidString(store.name) &&
+          store.name.toLowerCase().includes(lowerSearchKey)) ||
+        (isValidString(store.desc) &&
+          store.desc.toLowerCase().includes(lowerSearchKey));
+
+      return hasMatchingCategory && matchesSearchKey;
+    });
+
+    setFilteredOffers(filteredOffers);
+    setFilteredStores(filteredStores);
+  };
+
+  useEffect(() => {
+    if ((Offers.length > 0 || Stores.length > 0) && context==="home" ) {
+      filterOffersAndStores(); // Only filter if there are offers or stores
+    }
+  }, [searchKey, Offers, Stores, selectedCategory]);
+
+  const handleTabClick = async (tab) => {
+    setActiveTab(tab);
+    await loadData(tab);
+  };
+
+  const loadData = async (tab) => {
+    switch (tab) {
+      case "offers":
+        if (Offers.length === 0) await loadOffers();
+        break;
+      case "stores":
+        if (Stores.length === 0) await loadStores();
+        break;
+      case "content":
+        if (Reels.length === 0) await loadReels();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const loadOffers = async () => {
+    setIsOffersLoading(true);
+    try {
+      const offersData = context === "store"
+      ?await getOffersByStore(config?.merchantid):await getOffers();
+      setOffers(offersData);
+      setFilteredOffers(offersData);
+    } catch (error) {
+      console.error("Error fetching offers:", error);
+    } finally {
+      setIsOffersLoading(false);
+    }
+  };
+
+  const loadReels = async () => {
+    setIsReelsLoading(true);
+    try {
+      const reelsData =
+        context === "store"
+          ? await getReelsByStore(config?.merchantid)
+          : await getReels();
+      setReels(reelsData);
+    } catch (error) {
+      console.error("Error fetching reels:", error);
+    } finally {
+      setIsReelsLoading(false);
+    }
+  };
+
+  const loadStores = async () => {
+    setIsStoreLoading(true);
+    try {
+      const storeData = await getStoreByLocation("");
+      setStores(storeData);
+      setFilteredStores(storeData);
+    } catch (error) {
+      console.error("Error fetching stores:", error);
+    } finally {
+      setIsStoreLoading(false);
     }
   };
 
   useEffect(() => {
-    const searchResults = filterOffersAndStores();
-    if (searchResults) {
-      setFilteredOffers(searchResults.offers);
-      setFilteredStores(searchResults.stores);
-    }
-  }, [searchKey, Offers, Stores, selectedCategory, isStoreLoading]);
+    loadData(activeTab); // Load data for the active tab on initial load
+  }, []);
 
-  const handleTabClick = async (tab) => {
-    setActiveTab(tab);
-
-    if (tab === "offers" && Offers.length === 0) {
-      setisOffersLoading(true);
-      try {
-        const offersData = await getOffers();
-        setOffers(offersData);
-        setFilteredOffers(offersData);
-      } catch (error) {
-        console.error("Error fetching offers:", error);
-      } finally {
-        setisOffersLoading(false);
-      }
-    }
-
-    if (tab === "content" && Reels.length === 0) {
-      setisReelsLoading(true);
-      try {
-        const reelsData = await getReels();
-        setReels(reelsData);
-      } catch (error) {
-        console.error("Error fetching reels:", error);
-      } finally {
-        setisReelsLoading(false);
-      }
-    }
-  };
+  if (availableTabs.length === 0) {
+    return null; // Render nothing if no tabs are available
+  }
 
   return (
     <div>
       <div className="tabs-container">
-        <div
-          className={`tab ${activeTab === "offers" ? "active" : ""}`}
-          onClick={() => handleTabClick("offers")}
-        >
-          Offers
-        </div>
-        {context === "store" ? null : (
+        {availableTabs.map((tab) => (
           <div
-            className={`tab ${activeTab === "stores" ? "active" : ""}`}
-            onClick={() => handleTabClick("stores")}
+            key={tab}
+            className={`tab ${activeTab === tab ? "active" : ""}`}
+            onClick={() => handleTabClick(tab)}
           >
-            Stores
+            {tab.charAt(0).toUpperCase() + tab.slice(1)}
           </div>
-        )}
-        <div
-          className={`tab ${activeTab === "content" ? "active" : ""}`}
-          onClick={() => handleTabClick("content")}
-        >
-          Reels
-        </div>
+        ))}
       </div>
+
       <div className="tab-content-container">
         {activeTab === "offers" && (
           <OffersTab
@@ -157,7 +169,7 @@ console.log(searchKey,selectedCategory);
             isLoading={isOffersLoading}
           />
         )}
-        {context === "home" && activeTab === "stores" && (
+        {activeTab === "stores" && (
           <StoresTab
             stores={FilteredStores}
             context={context}

@@ -2,6 +2,7 @@ import { getBaseURL, APICallHandler } from "./APIServices";
 // 1. Get Links by Store ID
 export const getLinksByStore = async (storeId) => {
     try {
+      console.log(storeId);
       const url = `${getBaseURL()}/links/by-store/${storeId}`;
       const response = await APICallHandler(url, 'GET');
       return response;
@@ -22,7 +23,16 @@ export const getLinksByStore = async (storeId) => {
       throw error;
     }
   };
-  
+  export const getLinkUpiById = async ( id) => {
+    try {
+      const url = `${getBaseURL()}/links/upi/${id}`;
+      const response = await APICallHandler(url, 'GET');
+      return response;
+    } catch (error) {
+      console.error(`Failed to fetch link for location ${location}: ${error.message}`);
+      throw error;
+    }
+  };
   // 3. Get Links by Screen Location
   export const getLinkByScreenLocation = async (location, storeId) => {
     try {

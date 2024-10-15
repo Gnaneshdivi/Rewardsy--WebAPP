@@ -10,7 +10,7 @@ const Payment = () => {
 
       // Redirect to the UPI payment URL
       window.location.href =
-        "upi://pay?pa=suryatej01234@ibl&pn=surya%20teja&mc=0000&mode=02&purpose=00";
+        "gpay://pay?pa=suryatej01234@ibl&pn=surya%20teja&mc=0000&mode=02&purpose=00";
     };
 
     fetchMapping();
