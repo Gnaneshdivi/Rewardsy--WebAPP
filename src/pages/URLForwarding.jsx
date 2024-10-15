@@ -1,36 +1,40 @@
 // src/pages/URLForwarding.js
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { db } from "../firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { getQRDetails } from "../services/QrService"; // Import the getQRDetails function
 
 const URLForwarding = () => {
-  const { shortUrl } = useParams();
-  const navigate = useNavigate();
+  const { shortUrl } = useParams(); // Get the shortUrl parameter
+  const navigate = useNavigate(); // For navigation
 
   useEffect(() => {
-    const fetchMapping = async () => {
+    const fetchAndRedirect = async () => {
       try {
-        const docRef = doc(db, "qr", shortUrl);
-        const docSnap = await getDoc(docRef);
+        const data = await getQRDetails(shortUrl); // Fetch QR details using the API
 
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          const link = data.link;
-          const img = data.ads_link;
-          navigate(`${link}`+`?showAd=${data.ads}&img=${encodeURI(img)}`, { replace: true });
+        if (data && data.link) {
+          const { link, ads, adsLink } = data;
+          
+          // Redirect with query parameters
+          navigate(
+            `${link}?showAd=${ads}&img=${encodeURIComponent(adsLink)}`,
+            { replace: true }
+          );
         } else {
+          // Redirect to home if no valid link is found
           navigate("/home", { replace: true });
         }
       } catch (error) {
+        console.error("Error fetching QR details:", error);
+        // Redirect to home on any error
         navigate("/home", { replace: true });
       }
     };
 
-    fetchMapping();
+    fetchAndRedirect();
   }, [shortUrl, navigate]);
 
-  return <></>;
+  return null; 
 };
 
 export default URLForwarding;

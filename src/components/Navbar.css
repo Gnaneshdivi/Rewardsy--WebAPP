@@ -1,27 +1,113 @@
-#logo{
-    margin-left: 5vw;
-}
-
-#login-nav{
-    background-color: #ffc107;
-    color: black;
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Ensure the entire screen is occupied */
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+  }
+  
+  body::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in WebKit browsers */
+  }
+  
+  body {
+    -ms-overflow-style: none; /* Hide scrollbar in IE/Edge */
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+  }
+  
+  /* Navbar Styles */
+  #nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #272727;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 1000; /* Ensure Navbar stays on top */
+  }
+  
+  #logoDiv {
+    flex-shrink: 0;
+  }
+  
+  #logo {
+    height: 30px;
+    margin-left: 2vw;
+  }
+  
+  /* Desktop Authentication Section */
+  .authentication {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  /* Mobile Menu Toggle */
+  .menu-toggle {
+    display: none;
+    cursor: pointer;
+    color: white;
+    font-size: 2em;
+  }
+  
+  .mobile-menu {
+    display: none;
+  }
+  
+  /* Menu Styles for Mobile */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: block;
+    }
+    #logo {
+      height: 20px;
+      margin-left: 2vw;
+    }
+    .authentication {
+      display: none; /* Hide desktop buttons on mobile */
+    }
+  
+    .mobile-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      z-index: 10;
+    }
+  }
+  
+  /* Login/Signup Button */
+  .navbar-button {
+    background: linear-gradient(45deg, #ffc107, #ffca28);
+    color: #000000;
+    
     font-weight: 600;
-}
+    border-radius: 30px;
+    cursor: pointer;
+   
+   display: flex;
+   justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    justify-content: center;
+    align-items: center;
+  }
+  
 
-#login-nav:hover{
-    background-color: gold;
-
-}
-
-#login-nav:active{
-    background-color:darkgoldenrod;
-}
-
-@media screen and (max-width: 645px) {
-    #nav{
-        justify-content: space-between;
-    }
-    #logo{
-        height: 30px;
-    }
-}
+  

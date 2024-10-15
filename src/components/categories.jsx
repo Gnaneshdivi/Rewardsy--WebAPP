@@ -34,7 +34,7 @@ const Categories = ({ categories, setSelectedCategory, selectedCategory }) => {
                 ? "selected-item"
                 : "category-item"
             }
-            onClick={() => setSelectedCategory(category.name === "All" ? "" : category.name)}
+            onClick={() => setSelectedCategory( category.name)}
           >
             <img className="category-icon" src={category.asset} />
             <p className="category-name">{category.name}</p>

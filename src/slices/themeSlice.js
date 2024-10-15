@@ -3,18 +3,20 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const lightTheme = {
   mode: 'light',
-  primaryColor: '#1976d2',
-  secondaryColor: '#ff4081',
-  backgroundColor: '#ffffff',
-  textColor: '#333333',
+  primaryColor: '#FBF5EB', // Seashell white
+  secondaryColor: '#1D1D1D', // Eerie black
+  backgroundColor: '#FBF5EB',
+  textColor: '#1D1D1D',
+ 
 };
 
 const darkTheme = {
   mode: 'dark',
-  primaryColor: '#333333',
-  secondaryColor: '#ff4081',
-  backgroundColor: '#1e1e1e',
-  textColor: '#ffffff',
+  primaryColor: '#1D1D1D', // Eerie black
+  secondaryColor: '#FBF5EB', // Seashell white
+  backgroundColor: '#1D1D1D',
+  textColor: '#FBF5EB',
+ 
 };
 
 const themeSlice = createSlice({
