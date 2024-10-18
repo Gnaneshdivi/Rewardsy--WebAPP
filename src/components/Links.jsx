@@ -59,7 +59,7 @@ const Links = ({ config }) => {
     try {
       const upiLink = links.find((link) => link.type === "upi");
       if (!upiLink) throw new Error("UPI link not found");
-
+window.location.href="phonepe://pay?pa=cf.sdetpayments@cashfreensdlpb&amp;pn=SDET%20Payments&amp;tr=3110624575&amp;am=1.00&amp;cu=INR&amp;mode=00&amp;purpose=00&amp;mc=5651&amp;tn=paymentlink48744045"
       const upiData = await getLinkUpiById(upiLink.url); // Fetch UPI data using service
       const redirectUrl = buildUpiUrl(
         appName,
