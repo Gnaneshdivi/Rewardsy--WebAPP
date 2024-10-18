@@ -75,7 +75,8 @@ const Links = ({ config }) => {
 
   const buildUpiUrl = (origin, pa, pn, aid, defaultLink) => {
     const encodedPn = encodeURIComponent(pn);
-    const upiBaseUrl = `upi://pay?pa=${pa}&pn=${encodedPn}&mode=02&purpose=00`;
+    const upiBaseUrl = `upi://pay?pa=${pa}&pn=${encodedPn}&mode=22&purpose=00&mc=0000&cu=INR&am=1&tr=test&tn=hello
+`;
 
     switch (true) {
       case origin.toLowerCase().includes("gpay"):
