@@ -76,7 +76,7 @@ window.location.href="phonepe://pay?pa=Q263512182@ybl&pn=PhonePeMerchant&mc=0000
 
   const buildUpiUrl = (origin, pa, pn, aid, defaultLink) => {
     const encodedPn = encodeURIComponent(pn);
-    const upiBaseUrl = `upi://pay?pa=${pa}&pn=${encodedPn}&mc=0000&mode=00&purpose=00`;
+    const upiBaseUrl = `upi://pay?pa=${pa}&pn=${encodedPn}&mode=04&purpose=00`;
 
     switch (true) {
       case origin.toLowerCase().includes("gpay"):
