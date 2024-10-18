@@ -7,7 +7,7 @@ export const APICallHandler = async ( url, method, token=undefined,header, body=
       const headers = {
         'Content-Type': 'application/json',
         ...(token && { 'Authorization': `Bearer ${token}` }),
-        ...(header && {header})
+        ...(header && {...header})
       };
 
       const response = await fetch(url, {
