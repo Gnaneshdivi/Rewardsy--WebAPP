@@ -2,19 +2,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./OfferCard.css";
 import { redeemOffers } from "../services/OffersService";
-import { useSelector } from "react-redux"; // Import useSelector from Redux
+import { useSelector } from "react-redux";
 
 const OfferCard = ({ offer, context }) => {
   const navigate = useNavigate();
   const [redeemedCode, setRedeemedCode] = useState(null);
   const [redeemCodeLoading, setRedeemedCodeLoading] = useState(false);
   const [copyMessage, setCopyMessage] = useState("");
-  const { userDetails } = useSelector((state) => state.user); // Access user details from Redux
+  const { userDetails } = useSelector((state) => state.user);
 
-  // Determine the button text based on the context prop
   const buttonText = context === "store" ? "Redeem" : "Explore";
 
-  // Handle the redeem button click
   const handleButtonClick = async () => {
     if (context === "home") {
       navigate(`/store/${offer.store}`);
@@ -32,18 +30,37 @@ const OfferCard = ({ offer, context }) => {
     }
   };
 
-  // Handle code copy
   const handleCopyClick = () => {
     if (redeemedCode) {
       navigator.clipboard.writeText(redeemedCode).then(() => {
         setCopyMessage("Code copied to clipboard!");
-        setTimeout(() => setCopyMessage(""), 2000); // Clear the message after 2 seconds
+        setTimeout(() => setCopyMessage(""), 2000);
+      });
+    }
+  };
+
+  const onFocus = (clickedId) => {
+    if (context === "store") {
+      const offers = document.querySelectorAll(".offer-card");
+
+      offers.forEach((offer) => {
+        const offerId = offer.getAttribute("data-offer-id");
+
+        if (offerId === clickedId) {
+          offer.classList.remove("blurred");
+        } else {
+          offer.classList.add("blurred");
+        }
       });
     }
   };
 
   return (
-    <div className="offer-card">
+    <div
+      className={`offer-card ${context === "store" ? "blurred" : ""}`}
+      data-offer-id={offer.id}
+      onClick={() => onFocus(offer.id)}
+    >
       <div className="offer-body">
         <div className="offer-logo">
           <img src={offer.image} alt={offer.title} />

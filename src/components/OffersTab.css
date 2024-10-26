@@ -6,14 +6,10 @@
 }
 
 .offers-tab-grid-container {
-  
   display: grid;
   gap: 20px;
-   /* Always 2 items per row */
-  /* width: 100%; */
-  width: 90% !important; /* Adjust this value based on your desired maximum width */
-  justify-items: center; /* Center the items within the grid */
-
+  width: 90% !important; 
+  justify-items: center; 
 }
 
 .offer-placeholder-text {
@@ -28,7 +24,6 @@
     max-width: 90vw;
   }
 }
-
 
 @media (min-width: 1250px) {
   .offers-tab-grid-container {
