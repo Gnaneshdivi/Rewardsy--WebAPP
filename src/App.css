@@ -1,135 +1,24 @@
-/* Reset Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.navbar{
+    
+  background-color: var(--secondary-color);
+  
 }
 
-/* Full page dimensions */
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  font-family: Arial, sans-serif;
-  background-color: #121212;
-  color: #ffffff;
+body, html, #root, .app {
+  background-color: var(--primary-color); 
+  padding: 0%;
+  height: auto;
+  scrollbar-width: none;
+  font-family: var(--font-family) !important;
 }
 
-body::-webkit-scrollbar {
-  display: none; /* Hide scrollbar in WebKit browsers */
-}
-
-body {
-  -ms-overflow-style: none; /* Hide scrollbar in IE/Edge */
-  scrollbar-width: none; /* Hide scrollbar in Firefox */
-}
-
-/* Links */
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* App Container */
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%; 
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
-
-/* Navbar Styles */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #272727;
-  width: 100%;
-  padding: 10px 20px;
-  position: relative;
-  z-index: 1000; /* Keep navbar above other elements */
-}
-
-.navbar-logo {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.5em;
-  color: #ffc107;
-  white-space: nowrap; /* Prevent text wrapping */
-}
-
-.authentication {
-  margin-left: auto;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-/* Fix for Button Visibility on Web Screens */
-.navbar-button {
-  background-color: #ffc107;
-  color: #121212;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  display: inline-block; /* Ensure button is visible */
-  transition: background-color 0.3s ease;
-}
-
-.navbar-button:hover {
-  background-color: #ffa000;
-}
-
-.navbar-button:active {
-  background-color: #e59400;
-}
-
-/* Menu Toggle for Mobile */
-.menu-toggle {
+body::-webkit-scrollbar, 
+html::-webkit-scrollbar,
+.app::-webkit-scrollbar {
   display: none;
 }
 
-@media screen and (max-width: 645px) {
-  .menu-toggle {
-    display: block;
-    font-size: 2em;
-    cursor: pointer;
-    color: #ffffff;
-  }
-
-  .authentication {
-    display: none; /* Hide full buttons in mobile view */
-  }
-
-  .mobile-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    background-color: #272727;
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 1001; /* Ensure it stays above everything */
-  }
-}
-
-/* Full-page layout handling */
-.full-page {
-  width: 100%;
+.no-scroll {
+  overflow: hidden;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Hidden Elements */
-.hidden {
-  display: none;
 }

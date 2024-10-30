@@ -1,105 +1,91 @@
-/* src/components/Categories.css */
 .categories-container {
-    width: 100%;
-    margin-top: 1vh;
-    margin-bottom: 1vh;
-    text-align: center;
-    color: #ffffff;
-    max-width: 95vw;
-    border-radius: 10px;
-    overflow-x: scroll;
-    overflow: hidden;
-    padding: 10px;
-  }
-  
-.categories-list::-webkit-scrollbar {
-  display: none;
+  width: 95%;
+  padding: 15px 0;
+  display: flex;
+  justify-content: center; /* Center the categories list on desktop */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; 
 }
+
+.categories-list {
   
-  .categories-title {
-    font-size: 1.5em;
-    color: #ffc107; /* Match the color for title */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the list */
+  width: max-content; /* Ensure list fits its content */
+}
+
+.category-item,
+.selected-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 10vh;
+  height: 10vh;
+  border: 2px solid var(--secondary-color);
+  border-radius: 13px;
+  margin-right: 15px;
+  background-color: var(--primary-color);
+  text-align: center;
+  cursor: pointer;
+}
+
+.selected-item {
+  background-color: var(--secondary-color); /* Selected category background */
+}
+
+.category-icon {
+  width: 50%; /* Icon size relative to the container */
+  height: 50%;
+  object-fit: contain;
+}
+
+.category-name {
+  font-size: 12px;
+  color: var(--secondary-color);
+}
+
+.selected-item .category-name {
+  color: var(--primary-color); /* Text color when selected */
+}
+
+@media (max-width: 768px) {
+  .categories-container {
+    justify-content: flex-start; /* Ensure the list starts from the first element on mobile */
+    padding-left: 0;
+    margin-left: 0;
   }
-  
+
   .categories-list {
-    display: flex;
-    overflow-x: auto; /* Make the list horizontally scrollable */
-    padding: 10px;
-    scroll-behavior: smooth;
-    white-space: nowrap; /* Prevent items from wrapping */
-    align-items: center; /* Center items vertically */
+    justify-content: flex-start; /* Align categories to the start on mobile */
   }
-  
+
+  .category-item,
   .selected-item {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 15px; /* Space between items */
-    text-align: center;
-    width: 10vw;
+    width: 17vw; /* Adjusted width for mobile */
+    height:17vw; /* Adjusted height for mobile */
+    margin-right: 10px; /* Reduced margin */
   }
 
-  .selected-item  .category-icon{
-    background-color: #ffc107;
-  }
-
-  .category-item {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content:center;
-    align-items:center;
-    text-align: center;
-    margin: 0 15px; /* Space between items */
-    width: 10vw;
-  }
-  
   .category-icon {
-    width: 10vw; /* Adjust the size of the icons */
-    height: 10vw;
-    padding: 10px;
-    max-width: 80px; /* Set a maximum width */
-    max-height: 80px; /* Set a maximum height */
-    border-radius: 50%;
-    background-color: whitesmoke; /* Placeholder color for icons */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 50%;
+    height: 50%;
   }
-  
-  
 
   .category-name {
-    overflow-y: auto;
-    margin-top: 10px;
-    font-size:1em;
-    color: #ffc107; /* Match the color for category name */
+    font-size: 10px;
   }
-  
-  @media (max-width: 768px) {
+}
 
-    .selected-item {
-      margin: 0 10px; 
-      width: 25vw;
-      justify-content: flex-start;
-      white-space: normal; /* Allow text to wrap */
-      text-align: center;
-      height: 35vw;
-      font-size: 14px;
-      padding: 0px;
-    }
+/* Hide scrollbar */
+.categories-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar on WebKit browsers */
+}
 
-    .category-item {
-      margin: 0 10px;
-      width: 25vw;
-      justify-content: flex-start;
-      white-space: normal; /* Allow text to wrap */
-      height: 35vw;
-      font-size: 14px;
-    }
-
-    .category-icon {
-      width: 15vw; 
-      height: 15vw;
-    }
-  }
+.categories-container {
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
+}

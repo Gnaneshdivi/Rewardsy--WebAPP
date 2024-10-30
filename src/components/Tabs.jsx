@@ -101,7 +101,7 @@ const Tabs = ({ SearchKey, selectedCategory, context, config }) => {
     setIsOffersLoading(true);
     try {
       const offersData = context === "store"
-      ?await getOffersByStore(config?.merchantid):await getOffers();
+      ?config?.offers?.length?config.offers:await getOffersByStore(config?.merchantid):await getOffers();
       setOffers(offersData);
       setFilteredOffers(offersData);
     } catch (error) {
@@ -140,7 +140,11 @@ const Tabs = ({ SearchKey, selectedCategory, context, config }) => {
   };
 
   useEffect(() => {
-    loadData(activeTab); // Load data for the active tab on initial load
+   
+   
+      loadData(activeTab);
+    
+    // Load data for the active tab on initial load
   }, []);
 
   if (availableTabs.length === 0) {

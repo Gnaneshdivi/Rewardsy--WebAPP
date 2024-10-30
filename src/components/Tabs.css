@@ -3,43 +3,43 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #333333; /* Background color for the tab container */
-  border-radius: 10px;
+  background-color: var(--secondary-color); /* Background color for the tab container */
+  border-radius: 13px;
   overflow: hidden;
   width: 50vw;
+  height: 5vh;
   margin: 0 auto;
-  padding: 2px;
+  padding: 4px;
   position: sticky;
 }
 
 .tab {
+  display: flex;
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
   padding: 10px 20px;
   cursor: pointer;
-  color: #ffffff;
-  background-color: #333333;
-  
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  font-size: medium;
   flex: 1;
   text-align: center;
-}
-
-.tab:last-child {
-  border-right: none; /* Remove the border from the last tab */
+  border-radius: 13px;
 }
 
 .tab.active {
-  background-color: #000000; /* Active tab background color */
-  color: #ffc107;
-  border-radius: 10px; /* Active tab text color */
+  background-color: var(--primary-color); /* Active tab background color */
+  color: var(--secondary-color); /* Active tab text color */
+  height: 90%; /* Make the active tab 90% of the normal tab height */
+  border-radius: 10px; /* Rounded corners for active tab */
 }
 
 .tab-content-container {
   position: relative;
-  margin-top: 20px;
+  margin: 10px 0px;
 }
-
-
 @media screen and (max-width: 645px) {
   .tabs-container {
-    width: 90vw;
+    width: 95vw;
   }
 }

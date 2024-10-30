@@ -1,24 +1,16 @@
 import React from "react";
 import { Carousel } from "antd";
 import "./Carousel.css";
-const contentStyle = {};
 
 const CarouselComponent = ({ images }) => {
   return (
-    <div className="carousel">
-      <div className="carousel-inner">
-        <Carousel autoplay>
-          {images.map((image, index) => (
-            <div
-              key={index}
-              className={`carousel-item ${index === 0 ? "active" : ""}`}
-              style={contentStyle}
-            >
-              <img src={image} />
-            </div>
-          ))}
-        </Carousel>
-      </div>
+    <div className="carousel-container">
+      <Carousel autoplay className="carousel">
+        {images.map((image, index) => (
+            <img src={image} alt={`carousel-${index}`} className="carousel-image" />
+          
+        ))}
+      </Carousel>
     </div>
   );
 };
