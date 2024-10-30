@@ -1,38 +1,29 @@
-/* src/pages/OffersPage.css */
 .offers-tab-container {
   display: flex;
   justify-content: center;
-  padding: 10px;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  
 }
 
 .offers-tab-grid-container {
-  
-  display: grid;
-  gap: 20px;
-   /* Always 2 items per row */
-  /* width: 100%; */
-  width: 90% !important; /* Adjust this value based on your desired maximum width */
-  justify-items: center; /* Center the items within the grid */
-
+  width: 60vw;
 }
 
 .offer-placeholder-text {
-  color: #ffc107;
+  color: var(--secondary-color);
   text-align: center;
+  font-size: 16px;
+  padding: 20px;
 }
 
-@media (max-width: 1250px) {
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
   .offers-tab-grid-container {
-    grid-template-columns: repeat(1, 1fr); /* Auto-fill for smaller screens */
-    min-width: 70vw;
-    max-width: 90vw;
+    width: 95%;
+  }
+  .offers-tab-container {
+    width: 95vw;
   }
 }
-
-
-@media (min-width: 1250px) {
-  .offers-tab-grid-container {
-    grid-template-columns: repeat(2, 1fr); /* 4 items per row for larger screens */
-  }
-}
-

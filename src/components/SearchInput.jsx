@@ -13,26 +13,24 @@ function SearchInput({ word }) {
           const { latitude, longitude } = position.coords;
           try {
             const api_key = import.meta.env.VITE_GEOLOCATION_API_KEY;
-            // Fetch geolocation data
             const response = await fetch(
               `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`
             );
             const data = await response.json();
 
-            // Extract area or city name from the response
             if (data.address) {
               const area =
                 data.address.city ||
                 data.address.town ||
                 data.address.village ||
                 data.address.state;
-              setLocation("📍 "+area);
+              setLocation("📍 " + area);
             } else {
-              setLocation("📍 yeshanthpur");
+              setLocation("📍 Yeshanthpur");
             }
           } catch (error) {
             console.error("Error fetching location details:", error);
-            setLocation("📍 yeshanthpur");
+            setLocation("📍 Yeshanthpur");
           }
         },
         (error) => {
@@ -53,7 +51,6 @@ function SearchInput({ word }) {
     const value = e.target.value;
     setSearchTerm(value);
     word(value);
-    // console.log(value)
   };
 
   const handleSubmit = (e) => {
@@ -64,7 +61,7 @@ function SearchInput({ word }) {
   return (
     <form onSubmit={handleSubmit} className="search-form">
       <div className="input-container">
-        <div className="input-wrapper">
+        <div className="input-wrapper-location">
           <input
             type="text"
             value={location}
@@ -73,7 +70,8 @@ function SearchInput({ word }) {
             className="input-location"
           />
         </div>
-        <div className="input-wrapper">
+        <div className="divider"></div> {/* Separator */}
+        <div className="input-wrapper-search">
           <input
             type="text"
             value={searchTerm}
@@ -82,11 +80,8 @@ function SearchInput({ word }) {
             className="input-search"
           />
         </div>
+       
       </div>
-      <button type="submit" className="search-button">
-      🔍
-      </button>
-      {/* {error && <p className="error-message">{error}</p>} */}
     </form>
   );
 }

@@ -1,204 +1,96 @@
+/* src/components/StoreCard.css */
+
 .store-card {
+  width: 100%;
+  max-height: 25vh;
+  border-radius: 13px;
+  overflow: hidden;
+  background-color: var(--primary-color);
+  border: 2px solid var(--secondary-color);
   display: flex;
   flex-direction: column;
-  background-color: #2e2e2e;
-  border-radius: 15px;
-  padding: 20px;
-  margin: 10px;
+}
+
+.store-card-logo {
   width: 100%;
-  min-width: 60px;
-  color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 40%;
+  overflow: hidden;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
-.store-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-}
-
-.store-body {
-  display: flex;
-  align-items: center;
-}
-
-.offer-logo img {
-  width: 80px;
-  height: auto;
-  margin-right:1vw ;
-}
-
-.store-details {
-  margin-left: 10px;
-  flex: 1;
-}
-
-.offer-header {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-}
-
-.store-tag {
-  background-color: #444;
-  color: #fff;
-  padding: 5px 10px;
-  margin-left: 5px;
-  border-radius: 10px;
-  font-size: 0.55em;
-}
-
-.store-title {
-  font-size: 1.5em;
-  margin: 0;
-}
-
-.store-description {
-  display: -webkit-box;         
-  -webkit-box-orient: vertical; 
-  overflow: hidden;             
-  text-overflow: ellipsis;      
-  -webkit-line-clamp: 3;        
-  line-height: 1.5em;           
-  max-height: 4.5em;           
-}
-
-.redeemed-code{
-  font-size: 0.8em;
-  color: #ffc107;
-}
-
-.copy-message{
-  font-size: 0.6em;
-}
-
-.store-button {
-  border: 2px solid #ffc107;
-  background-color: transparent;
-  border-width: 0.1em;
-  color: #ffc107;
-  padding: 5px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.65em;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.divider {
-  width: 2px;
+.store-card-logo img {
+  width: 100%;
   height: 100%;
-  background-color: #dbdbdb; 
-  margin: 10px;
+  object-fit: cover;
 }
 
-.store-button:hover {
-  background-color: #ffc107;
-  color: #2e2e2e;
-}
-
-
-/* my css */
-
- /* .store-card {
-  display: flex;
-  flex-direction: column;
-  background-color: #2e2e2e;
-  border-radius: 15px;
-  padding: 20px;
-  margin: 10px;
-  width: 100%;
-  min-width: 60px;
-  color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.store-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-}
-
-.store-body {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-.top{
-  display: flex;
-  width: 100%;
-  justify-content: left;
-  padding-bottom: 0.5vh;
-  margin-bottom: 1vh;
-  border-bottom: 0.1px solid #ffc107a2;
-}
-
-.left{
-  float: left;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.267);
-}
-
-.offer-logo img {
-  width: 80px;
-  height: auto;
-}
-
-
-.right{
-  float: right;
-  width: 100%;
+.store-card-details {
+  padding: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 60%;
 }
 
-.store-title {
-  font-size: 1.5em;
-  margin: 0;
+.store-card-header {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  
 }
 
-.store-button {
-  border: 2px solid #ffc107;
-  background-color: transparent;
-  border-width: 0.1em;
-  color: #ffc107;
-  padding: 5px 20px;
+.store-card-tag {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
   border-radius: 5px;
+  padding: 3px 8px;
+  font-size: 0.75em;
+  white-space: nowrap;
+}
+
+.store-card-title {
+  color: var(--secondary-color);
+  font-size: 1.2em;
+  font-weight: bold;
+  
+}
+
+.store-card-description {
+  color: var(--secondary-color);
+  font-size: 0.9em;
+  line-height: 1.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: default;
+  
+}
+
+.store-card-button {
+  align-self: flex-start;
+  padding: 6px 16px;
+  border-radius: 5px;
+  border: 1px solid var(--secondary-color);
+  background-color: transparent;
+  color: var(--secondary-color);
+  font-size: 0.9em;
   cursor: pointer;
-  font-size: 16px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.name-button{
-  display: flex;
-  justify-content: space-between;
-  padding: 0px 20px; 
+.store-card-button:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
 }
 
-.store-tag {
-  border: 1px solid #ffc107;
-  color: #ffc107;
-  padding: 0px 10px;
-  margin-left: 5px;
-  border-radius: 5px;
-  font-size: 14px;
-}
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .store-card {
+    width: 95vw;
+  }
 
-.offer-header {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-  padding: 0px 20px;
+  .store-card-logo {
+    height: 100px;
+  }
 }
-.store-description {
-  display: -webkit-box;         
-  -webkit-box-orient: vertical; 
-  overflow: hidden;             
-  text-overflow: ellipsis;      
-  -webkit-line-clamp: 3;        
-  line-height: 1.5em;           
-  max-height: 4.5em;           
-} */

@@ -37,14 +37,14 @@ const HomePage = () => {
     <div className="homepage">
       <SearchInput word={updateSearchKey} />
 
-      <>
+      
         <CarouselComponent images={bannerImages} />
         <Categories
           categories={categories}
           setSelectedCategory={setSelectedCategory} 
           selectedCategory={selectedCategory}
         />
-      </>
+      
 
       <Tabs
         SearchKey={searchKey}
@@ -56,3 +56,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

@@ -1,51 +1,29 @@
-
-/* Base Styles */
-.carousel {
-  flex: content;
-  padding: 10px; 
-  width: 100vw;
-  max-height: 40vh;
-  margin: 20px;
+/* Carousel Container */
+.carousel-container {
+  width: 100vw; 
   display: flex;
-  justify-self: center;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
 
-.carousel-inner {
-  border-radius: 10px;
+/* Carousel Inner */
+.carousel,
+.carousel-image {
+  width: 60vw;
+  height: 30vh;
+  border-radius: 13px;
+  object-fit: fill; /* Ensures image scales properly */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.carousel-item {
-  height: 100%; 
-
-}
-
-.carousel-item img {
-  border-radius: 10px;
-  width: 100%;
-  max-width: 65vw;
-  max-height: 30vh;
-  margin-left: 17.5vw;
-  display: block;
-}
-
-/* .carousel-indicators {
-  bottom: 0px; 
-}
-
-.carousel-indicators [data-bs-target] {
-  background-color: black; 
-} */
-
-/* Adjustments for Smaller Screens */
-@media (max-width : 1100px){
-  .carousel-item img{
-    max-width: 96%;
-    margin-left: 2%;
-    border: 10%;
+/* Adjustments for Mobile Screens */
+@media (max-width: 768px) {
+  .carousel,
+  .carousel-image {
+    width: 95vw;
+    height: 15vh;
   }
 }
-
-
-/* Adjustments for Larger Screens */

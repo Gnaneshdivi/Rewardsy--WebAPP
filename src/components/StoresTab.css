@@ -1,40 +1,37 @@
-/* src/pages/OffersPage.css */
+/* src/pages/StoresTab.css */
 .store-tab-container {
   display: flex;
   justify-content: center;
-  padding: 10px;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .store-tab-grid-container {
-  display: grid;
-  gap: 20px;
-   /* Always 2 items per row */
-  width: 100%;
-  max-width: 100vh; /* Adjust this value based on your desired maximum width */
-  justify-items: space-evenly; /* Center the items within the grid */
-  padding: 10px;
+  width: 60vw;
 }
 
 .store-placeholder-text {
-  color: #ffc107;
+  color: var(--secondary-color);
   text-align: center;
+  font-size: 16px;
+  padding: 20px;
 }
 
-@media (max-width: 1000px) {
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .store-tab-container {
+    width: 95vw;
+  }
   .store-tab-grid-container {
-    gap: 0px;
-    grid-template-columns: repeat(1, 1fr); /* Auto-fill for smaller screens */
-    max-width: 90vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 95vw;
   }
 }
-
-
-@media (min-width: 1000px) {
-  .store-tab-grid-container {
-    grid-template-columns: repeat(2, 1fr); /* 4 items per row for larger screens */
-  }
-}
-

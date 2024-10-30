@@ -1,129 +1,102 @@
 .store-page {
-  background-color: #121212;
-  color: #fff;
+  background-color: var(--primary-color);
+  color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.store-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  margin-top: 10vh;
 }
 
 .store-header {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-  width: 100%;
-  height: 35vh;
-  overflow: hidden;
-}
-
-.store-spinner{
-  margin-top: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 80vh;
+  width: 100vw;
+  height: 25vh;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .store-banner {
   width: 100%;
-  height: 25vh;
+  height: 100%;
   object-fit: cover;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
-.store-info {
-  position: absolute;
-  bottom: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #1c1c1c;
-  width: 90%;
-  padding: 20px;
+
+.store-info-card {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  margin: -7vh auto 20px;
+  padding: 15px;
+  width: 60vw;
+  height: 15vh;
   border-radius: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.ant-card-body {
+  margin: 0 !important;
+  padding: 0 !important;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
-.store-logo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  object-fit: cover;
-  margin-right: 20px;
+.store-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.store-details {
-  flex: 1;
+.store-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.9rem;
+  display: block; 
 }
 
-.store-details h1 {
-  font-size: 2em;
-  margin: 0;
+.store-area {
+  font-style: italic;
+  color: var(--secondary-color);
+  display: block; 
 }
 
-.store-details p {
-  /* margin: 5px 0; */
-  display: -webkit-box;         
-  -webkit-box-orient: vertical; 
-  overflow: hidden;             
-  text-overflow: ellipsis;      
-  -webkit-line-clamp: 3;        
-  line-height: 1.5em;           
-  max-height: 4.5em;    
-}
 
-.name-location-div{
+.store-icons-column {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 100%;
+  padding-right: 10px;
+  color:var(--secondary-color) 
+}
+/* Alternatively, for individual icon adjustments */
+.icon-share {
+  
+  color: var(--secondary-color) ;
 }
 
-#read-more{
-  display: none;
+.icon-phone {
+  
+  color: var(--secondary-color) ;
 }
 
-.store-social-links {
-  display: flex;
-  gap: 15px;
+.icon-location {
+  color: var(--secondary-color) ;
 }
 
-.store-social-links a {
-  color: #fff;
-  font-size: 1.5em;
-  text-decoration: none;
-}
 
-.store-social-links a:hover {
-  color: #ffc107;
-}
-
-@media (max-width: 1450px) {
-
-  .store-details p {
-      max-width: 70vw;         
-  }
-
-  .store-details br{
-    display: none;
-  }
-}
-
-@media (max-width: 600px) {
-  .store-details h1{
-    font-size: 18px;
-  }
-
-  .name-location-div p{
-    max-width: 20vw;
-    font-size: 8px;
-  }
-
-  .store-logo {
-    width: 70px;
-    height: 70px;
-    border: 1px solid #fff;
-    margin-right: 0px;
-  }
-
-  #desc{
-    display: none;
+@media (max-width: 850px) {
+  .store-info-card {
+    width: 95vw;
   }
 }

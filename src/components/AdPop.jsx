@@ -1,35 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
+import { Modal } from "antd";
+import "./AdPopup.css"; // Import the updated CSS file
 
 const AdPopup = ({ img, onClose }) => {
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "visible";
-    };
-  }, []);
+  const [visible, setVisible] = useState(true);
+
+  const handleCancel = () => {
+    setVisible(false);
+    if (onClose) {
+      onClose();
+    }
+  };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50 py-10">
-      <div className="relative bg-white px-2 sm:px-5 pt-2 border border-black rounded-lg w-full sm:w-full lg:w-3/4 h-3/4 max-h-3/4 mx-4 overflow-auto">
-        {/* Close "X" button at the top right */}
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-black text-2xl font-bold hover:text-red-500 transition duration-300"
-        >
-          &times;
-        </button>
-        <h4 className="text-lg font-bold text-black mb-3 text-center">
-          Advertisement
-        </h4>
+    <Modal
+      visible={visible} // Modal visibility controlled here
+      footer={null} // No footer buttons
+      onCancel={handleCancel} // Properly handle modal close
+      centered // Center the modal
+      bodyStyle={{ padding: 0, margin: 0 }} // Ensure no padding/margin around the modal content
+      className="ad-popup-modal"
+    >
+      <div className="ad-popup-image-container">
         {img && (
           <img
-            src={decodeURI(img)}
+            src={img}
             alt="ad"
-            className="w-3/4 h-3/4 m-auto object-cover rounded-md mb-3"
+            className="ad-popup-image" // Apply the CSS class for the image
+            style={{ width: "100%", height: "auto", objectFit: "cover" }} // Ensure image fits the modal
           />
         )}
       </div>
-    </div>
+    </Modal>
   );
 };
 

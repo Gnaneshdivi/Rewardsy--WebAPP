@@ -1,94 +1,276 @@
-/* src/components/OfferCard.css */
 .offer-card {
   display: flex;
   flex-direction: column;
-  background-color: #2e2e2e;
-  border-radius: 15px;
-  padding: 20px;
-  margin: 10px;
+  background-color: var(--primary-color);
+  border: 2px solid var(--secondary-color);
+  border-radius: 10px;
+  padding: 15px;
   width: 100%;
-  min-width: 60px;
-  color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: auto;
+  position: relative;
 }
 
-.offer-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+.offer-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .offer-header {
   display: flex;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-}
-
-.offer-tag {
-  background-color: #444;
-  color: #fff;
-  padding: 5px 10px;
-  margin-left: 5px;
-  border-radius: 10px;
-  font-size: 0.55em;
-}
-
-.offer-body {
-  display: flex;
   align-items: center;
+  gap: 10px;
 }
 
-.offer-logo img {
-  width: 80px;
-  height: auto;
+.offer-image {
+  width: 30%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.offer-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .offer-details {
-  margin-left: 10px;
-  flex: 1;
+  width: 70%;
+  padding: 10px;
 }
 
 .offer-title {
-  font-size: 1.5em;
-  margin: 0;
+  font-size: 1.2em;
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+
+.offer-store-name{
+  font-size: 1.3em;
+  color: var(--secondary-color);
+  margin-right: 5px; 
 }
 
 .offer-description {
-  font-size: 1em;
-  margin: 5px 0;
-}
-.redeemed-code{
-  font-size: 0.8em;
-  color: #ffc107;
-}
-.copy-message{
-  font-size: 0.6em;
+  font-size: 0.9em;
+  color: var(--secondary-color);
+  margin-bottom: 8px;
 }
 
-.offer-button {
-  border: 2px solid #ffc107;
-  background-color: transparent;
-  border-width: 0.1em;
-  color: #ffc107;
-  padding: 5px 20px;
-  border-radius: 5px;
+.view-details {
+  color: var(--secondary-color);
+  font-weight: bold;
   cursor: pointer;
-  font-size: 0.65em;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
-.divider {
-  width: 2px;
-  height: 100%;
-  background-color: #fff; /* or another color that suits your design */
+
+.ticket-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0;
+  position: relative;
+}
+
+.semi-circle-left,
+.semi-circle-right {
+  width: 20px;
+  height: 20px;
+  background-color: var(--primary-color);
+  
+  border-radius: 50%;
+  position: relative;
+}
+
+.semi-circle-left {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -18px;
+  border-top: 2px solid var(--secondary-color);
+  border-right: 2px solid var(--secondary-color);
+  border-bottom: 2px solid var(--secondary-color);
+  border-left: 2px solid var(--primary-color);
+}
+
+.semi-circle-right {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: -18px;
+  border-top: 2px solid var(--secondary-color);
+  border-right: 2px solid var(--primary-color);
+  border-bottom: 2px solid var(--secondary-color);
+  border-left: 2px solid var(--secondary-color);
+}
+
+.dotted-line {
+  flex: 1;
+  height: 1px;
+  border-top: 1px dashed var(--secondary-color);
   margin: 0 10px;
 }
-.offer-button:hover {
-  background-color: #ffc107;
-  color: #2e2e2e;
+
+.redeem-section {
+  display: flex;
+  justify-content: center;
 }
 
+.redeem-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 5px;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: none;
+}
 
+.redeem-button:hover {
+  background-color: var(--secondary-color) !important;
+  color: var(--primary-color) !important;
+}
+.custom-offer-drawer .ant-drawer-body {
+  background-color: var(--primary-color) !important;
+  padding: 0% !important;
+  scrollbar-width: none !important;
+  overflow-y: auto;
+}
 
-@media screen and (max-width: 645px) {
+.custom-offer-drawer .ant-drawer-content-wrapper {
+  border-top-left-radius: 13px;
+  border-top-right-radius: 13px;
+  background-color: var(--primary-color);
+}
+
+.custom-drawer-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-drawer-banner img {
+  width: 100%;
+  height: 15vh;
+  border-top-left-radius: 13px;
+  border-top-right-radius: 13px;
+  object-fit: cover;
+}
+
+.custom-drawer-divider {
+  width: 90%;
+  height: 1px;
+  background-color: var(--secondary-color);
+  opacity: 0.5;
+  margin: 5px auto;
+}
+.offer-store-logo {
+  width: 24px; /* Adjust size as needed */
+  height: 24px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.custom-offer-drawer-content {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+}
+
+.custom-drawer-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.custom-drawer-image {
+  width: 60px; /* Ensure image takes 30% width */
+  height: 60px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.custom-drawer-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.custom-drawer-title-section {
+  width: 70%; /* Make title section take remaining space */
+  padding-left: 10px; /* Add padding for spacing */
+}
+
+.custom-drawer-title {
+  font-size: 1.5em;
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+
+.custom-drawer-description {
+  font-size: 0.9em;
+  color: var(--secondary-color);
+  margin-top: 5px;
+}
+
+.custom-drawer-tnc-section {
+  margin-top: 15px;
+}
+
+.custom-drawer-tnc-heading {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--secondary-color);
+  margin-bottom: 8px;
+}
+
+.custom-drawer-tnc {
+  font-size: 0.9em;
+  color: var(--secondary-color);
+}
+
+.custom-drawer-footer {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  justify-content:center;
   
+  background-color: var(--primary-color);
+}
+
+.custom-drawer-redeem-button,
+.custom-drawer-visit-button {
+  width: 48%;
+  height: 5vh;
+  padding: 12px;
+  font-size: 1em;
+  margin: 0 5px;
+  border-radius: 5px;
+}
+
+.custom-drawer-redeem-button {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: 1px solid var(--secondary-color);
+}
+
+.custom-drawer-redeem-button:hover {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.custom-drawer-visit-button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+}
+
+.custom-drawer-visit-button:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+.code{
+  font-size: 1.2rem;
+  color: var(--secondary-color);
 }

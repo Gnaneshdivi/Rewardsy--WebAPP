@@ -1,14 +1,16 @@
+// src/pages/StoresTab.js
 import React from "react";
+import { Row, Col, Spin } from "antd";
+import { LoadingOutlined } from '@ant-design/icons';
 import StoreCard from "./StoreCard";
 import "./StoresTab.css";
-import { LoadingOutlined } from '@ant-design/icons';
 
 const StoresTab = ({ stores, context, isLoading }) => {
   return (
     <div className="store-tab-container">
       {isLoading ? (
         <div className="loading-container">
-          <LoadingOutlined style={{ fontSize: 24, color: 'white' }} spin />
+          <Spin indicator={<LoadingOutlined style={{ fontSize: 24, color: 'var(--secondary-color)' }} spin />} />
         </div>
       ) : (
         <>
@@ -17,11 +19,25 @@ const StoresTab = ({ stores, context, isLoading }) => {
               No stores found under this category
             </div>
           ) : (
-            <div className="store-tab-grid-container">
+            <Row
+              gutter={[15, 15]}
+              className="store-tab-grid-container"
+              justify="center"
+            >
               {stores.map((store, index) => (
-                <StoreCard key={index} store={store} context={context} />
+                <Col
+                  key={index}
+                  xs={24}  // 1 column on extra small screens
+                  sm={24}  // 1 column on small screens
+                  md={24}  // 1 column on medium screens (up to 1450px)
+                  lg={12}  // 2 columns on large screens
+                  xl={12}  // 2 columns on extra-large screens
+                  style={{ display: 'flex', justifyContent: 'center' }}
+                >
+                  <StoreCard store={store} context={context} />
+                </Col>
               ))}
-            </div>
+            </Row>
           )}
         </>
       )}
