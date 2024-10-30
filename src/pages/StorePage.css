@@ -57,6 +57,7 @@
 }
 
 .store-description {
+  height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.9rem;

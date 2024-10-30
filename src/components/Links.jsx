@@ -4,6 +4,7 @@ import "./Links.css";
 import { getLinksByStore, getLinkUpiById } from "../services/LinksService"; // Import necessary services
 import { Modal, Drawer } from "antd"; // Drawer for UPI, Modal for overlay
 import { SocialIcon } from "react-social-icons";
+import Tabs from "../components/Tabs";
 
 const Links = ({ config }) => {
   const [links, setLinks] = useState([]);
@@ -16,7 +17,7 @@ const Links = ({ config }) => {
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-        const data = await getLinksByStore(config?.merchantid);
+        const data = config?.links?.length?config.links:await getLinksByStore(config?.merchantid);
         const sortedLinks = sortLinks(data);
         setLinks(sortedLinks.links);
         setSocialLinks(sortedLinks.socialLinks);
@@ -121,6 +122,7 @@ const Links = ({ config }) => {
           </div>
         ))}
       </div>
+      {/* <Tabs context={"store"} config={{ tabs: config.tabs, merchantid: config.merchantid }} /> */}
 
       <Modal open={isModalOpen} onCancel={closeModal} footer={null} centered className="overlay-modal">
         <img src={modalContent} alt="Overlay Content" className="overlay-image" />

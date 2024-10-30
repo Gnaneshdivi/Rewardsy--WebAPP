@@ -7,6 +7,8 @@ import Links from "../components/Links";
 import { getStore } from "../services/StoreServices";
 import { getMerchantConfigs } from "../services/MerchantConfig";
 import "./StorePage.css";
+import { getLinksByStore } from "../services/LinksService";
+import { getOffersByStore } from "../services/OffersService";
 
 const { Title, Text } = Typography;
 
@@ -19,7 +21,11 @@ const StorePage = () => {
   const [longitude, setLongitude] = useState(null);
   const [tabs, setTabs] = useState([]);
   const [config, setConfig] = useState([]);
-
+  const [offers, setOffers] = useState([]);
+  const [links, setLinks] = useState([]);
+  const [isLinksEnabled, setisLinksEnabled] = useState(false);
+  const [isOffersEnabled, setisOffersEnabled] = useState(false);
+   
   const extractTabsFromConfig = (configArray) => {
     const validKeys = { offers: "offers", reels: "content" };
     return configArray
@@ -33,9 +39,24 @@ const StorePage = () => {
       try {
         const storeData = await getStore(storeId);
         const configData = await getMerchantConfigs(storeId);
+        const links=configData.some((item) => item.key === "links" && item.value === "true");
+        const offers=configData.some((item) => item.key === "offers" && item.value === "true");
+        setisLinksEnabled(links);
+  setisOffersEnabled(offers);
         setConfig(configData);
         setTabs(extractTabsFromConfig(configData));
         setStore(storeData);
+        console.log("figma",links);
+        if (links) {
+          const linksData = await getLinksByStore(storeId);
+          setLinks(linksData);
+        }
+
+        // Fetch offers data if enabled
+        if (offers) {
+          const offersData = await getOffersByStore(storeId);
+          setOffers(offersData);
+        }
 
         if (storeData.store && storeData.store.location) {
           const [lat, lon] = storeData.store.location.split(",");
@@ -80,6 +101,7 @@ const StorePage = () => {
     updateStore();
   }, [storeId]);
 
+
   const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
 
   const handleShare = () => {
@@ -105,7 +127,6 @@ const StorePage = () => {
   const handleOpenMaps = () => {
     window.open(googleMapsLink, "_blank");
   };
-
   return (
     <div className="store-page">
       {isStoreLoading ? (
@@ -137,8 +158,8 @@ const StorePage = () => {
 
             </Row>
           </Card>
-          <Links config={{ merchantid: store.id }} />
-          <Tabs context={"store"} config={{ tabs: tabs, merchantid: store.id }} />
+          {isLinksEnabled  && <Links config={{ merchantid: store.id,offers:offers,links:links }} />}
+          <Tabs context={"store"} config={{ tabs: tabs, merchantid: store.id,offers:offers?offers:[] }} />
         </>
       )}
     </div>
