@@ -9,15 +9,15 @@ body, html, #root, .app {
   padding: 0%;
   height: auto;
   scrollbar-width: none;
+  font-family: var(--font-family) !important;
 }
 
 body::-webkit-scrollbar, 
 html::-webkit-scrollbar,
 .app::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Edge */
+  display: none;
 }
 
-/* App.css */
 .no-scroll {
   overflow: hidden;
   height: 100vh;

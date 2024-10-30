@@ -32,10 +32,9 @@ const Footer = () => {
 
           {/* Links Column */}
           <div className="footer-column">
-            <h3>Additional</h3>
-            <p>Landing Page</p>
-            <p>About us</p>
-            <p>More about us</p>
+            <a href="https://rewardsy.one/">Landing Page</a>
+            <a href="https://rewardsy.one/about">About us</a>
+            <a href="https://rewardsy.one/contact">contact us</a>
           </div>
         </div>
 
