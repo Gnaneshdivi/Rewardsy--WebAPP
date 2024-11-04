@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef } from "react";
 import { useParams } from "react-router-dom";
-import { Row, Col, Typography, Button, Image, Card, Spin } from "antd";
+import { Row, Col, Typography, Button, Card, Spin, Carousel } from "antd";
 import { EnvironmentOutlined, ShareAltOutlined, PhoneOutlined } from "@ant-design/icons";
 import Tabs from "../components/Tabs";
 import Links from "../components/Links";
+import OfferCard from "../components/OfferCard";
 import { getStore } from "../services/StoreServices";
 import { getMerchantConfigs } from "../services/MerchantConfig";
-import "./StorePage.css";
 import { getLinksByStore } from "../services/LinksService";
 import { getOffersByStore } from "../services/OffersService";
+import "./StorePage.css";
 
 const { Title, Text } = Typography;
 
@@ -22,10 +23,10 @@ const StorePage = () => {
   const [tabs, setTabs] = useState([]);
   const [config, setConfig] = useState([]);
   const [offers, setOffers] = useState([]);
-  const [links, setLinks] = useState([]);
+  // const [links, setLinks] = useState([]);
   const [isLinksEnabled, setisLinksEnabled] = useState(false);
   const [isOffersEnabled, setisOffersEnabled] = useState(false);
-   
+  const linksRef = useRef(null);
   const extractTabsFromConfig = (configArray) => {
     const validKeys = { offers: "offers", reels: "content" };
     return configArray
@@ -39,20 +40,19 @@ const StorePage = () => {
       try {
         const storeData = await getStore(storeId);
         const configData = await getMerchantConfigs(storeId);
-        const links=configData.some((item) => item.key === "links" && item.value === "true");
-        const offers=configData.some((item) => item.key === "offers" && item.value === "true");
+        const links = configData.some((item) => item.key === "links" && item.value === "true");
+        const offers = configData.some((item) => item.key === "offers" && item.value === "true");
         setisLinksEnabled(links);
-  setisOffersEnabled(offers);
+        setisOffersEnabled(offers);
         setConfig(configData);
         setTabs(extractTabsFromConfig(configData));
         setStore(storeData);
-        console.log("figma",links);
-        if (links) {
-          const linksData = await getLinksByStore(storeId);
-          setLinks(linksData);
-        }
 
-        // Fetch offers data if enabled
+        // if (links) {
+        //   const linksData = await getLinksByStore(storeId);
+        //   setLinks(linksData);
+        // }
+
         if (offers) {
           const offersData = await getOffersByStore(storeId);
           setOffers(offersData);
@@ -100,7 +100,15 @@ const StorePage = () => {
 
     updateStore();
   }, [storeId]);
-
+  const handleViewAll = () => {
+    
+      const tabsSection = document.getElementById("tabs-section");
+      if (tabsSection) {
+        tabsSection.scrollIntoView({ behavior: "smooth" });
+      } else {
+        console.error("Tabs section not available");
+      } // Adjust delay time if necessary
+  }
 
   const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
 
@@ -117,8 +125,8 @@ const StorePage = () => {
   };
 
   const handleCall = () => {
-    if (store.phone) {
-      window.location.href = `tel:${store.phone}`;
+    if (store.phoneNumber) {
+      window.location.href = `tel:${store.phoneNumber}`;
     } else {
       alert("Contact number not available.");
     }
@@ -127,6 +135,7 @@ const StorePage = () => {
   const handleOpenMaps = () => {
     window.open(googleMapsLink, "_blank");
   };
+
   return (
     <div className="store-page">
       {isStoreLoading ? (
@@ -136,11 +145,7 @@ const StorePage = () => {
       ) : (
         <>
           <div className="store-header">
-            <img
-              src={store.background}
-              alt={`${store.name} banner`}
-              className="store-banner"
-            />
+            <img src={store.background} alt={`${store.name} banner`} className="store-banner" />
           </div>
 
           <Card className="store-info-card">
@@ -151,15 +156,39 @@ const StorePage = () => {
                 <Text className="store-area">{store.area}</Text>
               </Col>
               <Col span={8} className="store-icons-column">
-  <Button icon={<ShareAltOutlined className="icon-share" />} type="link" onClick={handleShare} />
-  <Button icon={<PhoneOutlined className="icon-phone" />} type="link" onClick={handleCall} />
-  <Button icon={<EnvironmentOutlined className="icon-location" />} type="link" onClick={handleOpenMaps} />
-</Col>
-
+                <Button icon={<ShareAltOutlined className="icon-share" />} type="link" onClick={handleShare} />
+                <Button icon={<PhoneOutlined className="icon-phone" />} type="link" onClick={handleCall} />
+                <Button icon={<EnvironmentOutlined className="icon-location" />} type="link" onClick={handleOpenMaps} />
+              </Col>
             </Row>
           </Card>
-          {isLinksEnabled  && <Links config={{ merchantid: store.id,offers:offers,links:links }} />}
-          <Tabs context={"store"} config={{ tabs: tabs, merchantid: store.id,offers:offers?offers:[] }} />
+
+            {isOffersEnabled && (
+              <div className="offers-section">
+              <div className="offers-header">
+                <Title level={4} className="offers-title">Offers</Title>
+                <Text className="view-all-button" onClick={handleViewAll}>View All</Text>
+              </div>
+              <Carousel
+                autoplay
+                className="offers-carousel"
+                autoplaySpeed={2000} // Set to 2 seconds
+              >
+                {offers.slice(0, 3).map((offer, index) => (
+                  <div key={index} className="carousel-slide-container">
+                    <div className="carousel-slide">
+                      <OfferCard offer={offer} context="store" />
+                    </div>
+                  </div>
+                ))}
+              </Carousel>
+            </div>
+            
+            )}
+
+          {isLinksEnabled && <Links config={{ merchantid: store.id }} />}
+          <Tabs id="tabs-section" context="store" config={{ tabs: tabs, merchantid: store.id, offers: offers || [] }} />
+
         </>
       )}
     </div>

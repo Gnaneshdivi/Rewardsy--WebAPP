@@ -21,9 +21,9 @@
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
   .offers-tab-grid-container {
-    width: 95%;
+    width: 90vw;
   }
   .offers-tab-container {
-    width: 95vw;
+    width: 90vw;
   }
 }

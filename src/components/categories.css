@@ -51,6 +51,31 @@
 .selected-item .category-name {
   color: var(--primary-color); /* Text color when selected */
 }
+@media (max-width : 850px) {
+  .category-item,
+  .selected-item {
+    width: 10vw; /* Adjusted width for mobile */
+    height:10vw; /* Adjusted height for mobile */
+    margin-right: 10px; /* Reduced margin */
+  }
+  .categories-container {
+    justify-content: flex-start; /* Ensure the list starts from the first element on mobile */
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .categories-list {
+    justify-content: flex-start; /* Align categories to the start on mobile */
+  }
+  .category-icon {
+    width: 50%;
+    height: 50%;
+  }
+
+  .category-name {
+    font-size: 10px;
+  }
+}
 
 @media (max-width: 768px) {
   .categories-container {

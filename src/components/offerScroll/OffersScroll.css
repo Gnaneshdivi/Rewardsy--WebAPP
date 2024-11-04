@@ -1,0 +1,48 @@
+/* src/components/OffersScroll.css */
+.offers-scroll-container {
+    margin: 20px 0;
+  }
+  
+  .offers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .offers-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .view-all-button {
+    font-size: 14px;
+  }
+  
+  .offers-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+  }
+  
+  .offer-card {
+    min-width: 150px;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .offer-image {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+  
+  .redeem-button {
+    margin-top: 10px;
+    background-color: black;
+    color: white;
+    border-radius: 8px;
+  }
+  

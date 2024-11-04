@@ -84,7 +84,7 @@ input::placeholder {
 }
 
 /* Mobile Adjustments */
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .search-form {
     width: 95vw; /* Full width on mobile */
     height: 50px; /* Smaller height on mobile */

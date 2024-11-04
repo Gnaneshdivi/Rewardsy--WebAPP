@@ -1,3 +1,6 @@
+/* StorePage.css */
+
+/* General Store Page Layout */
 .store-page {
   background-color: var(--primary-color);
   color: var(--primary-color);
@@ -30,14 +33,13 @@
   border-bottom-right-radius: 15px;
 }
 
-
 .store-info-card {
   background-color: var(--primary-color);
   color: var(--secondary-color);
-  margin: -7vh auto 20px;
+  margin: -7vh auto 10px;
   padding: 15px;
   width: 60vw;
-  height: 15vh;
+  height: auto;
   border-radius: 15px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -70,7 +72,6 @@
   display: block; 
 }
 
-
 .store-icons-column {
   display: flex;
   flex-direction: column;
@@ -78,26 +79,81 @@
   justify-content: space-around;
   height: 100%;
   padding-right: 10px;
-  color:var(--secondary-color) 
+  color: var(--secondary-color);
 }
-/* Alternatively, for individual icon adjustments */
-.icon-share {
-  
-  color: var(--secondary-color) ;
-}
-
-.icon-phone {
-  
-  color: var(--secondary-color) ;
-}
-
-.icon-location {
-  color: var(--secondary-color) ;
+/* Offers Section Styling */
+.offers-section {
+  width: 100%; /* Use full width for centering flexibility */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 5px auto; /* Center the section within the page */
 }
 
+.offers-header {
+  display: flex;
+  width: 60vw;
+  max-width: 90vw; /* Limit header width for centering */
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
 
-@media (max-width: 850px) {
+.offers-carousel {
+  width: 40vw; /* Use full width */
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-slide-container {
+  display: flex;
+  justify-content: center;
+  padding: 0 5px;
+}
+
+.carousel-slide {
+  min-width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Offers Header */
+.offers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.offers-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--secondary-color);
+  margin: 0 !important;
+}
+
+.view-all-button {
+  font-size: 14px;
+  color: var(--secondary-color);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
   .store-info-card {
     width: 95vw;
   }
+.offers-header{
+  width: 90vw;
 }
+  
+  .offers-carousel {
+    width: 90vw;
+   
+  }
+}
+

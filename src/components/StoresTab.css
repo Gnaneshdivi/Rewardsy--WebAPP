@@ -29,9 +29,9 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .store-tab-container {
-    width: 95vw;
+    width: 90vw;
   }
   .store-tab-grid-container {
-    width: 95vw;
+    width: 90vw;
   }
 }

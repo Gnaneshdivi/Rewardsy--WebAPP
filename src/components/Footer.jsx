@@ -41,9 +41,7 @@ const Footer = () => {
         {/* Buttons for Register and Log in or Sign Out */}
         <div className="footer-buttons">
           {userDetails ? (
-            <Button className="footer-logout-button" onClick={handleSignOut}>
-              Sign Out
-            </Button>
+           <></>
           ) : (
             <>
               <Button className="login-nav-button" onClick={handleOpenAuth}>
