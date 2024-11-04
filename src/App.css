@@ -1,24 +1,30 @@
-.navbar{
-    
+/* Ensure the layout fills the entire height of the viewport */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color:  var(--primary-color);
+}
+
+/* Header styling to stick to the top */
+.navbar {
   background-color: var(--secondary-color);
-  
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensures the navbar stays above other content */
 }
 
-body, html, #root, .app {
-  background-color: var(--primary-color); 
-  padding: 0%;
-  height: auto;
-  scrollbar-width: none;
-  font-family: var(--font-family) !important;
+/* Content styling to take up remaining space */
+.ant-layout-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
 }
 
-body::-webkit-scrollbar, 
-html::-webkit-scrollbar,
-.app::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scroll {
-  overflow: hidden;
-  height: 100vh;
+/* Footer styling to stick to the bottom */
+.ant-layout-footer {
+  background-color: var(--primary-color);
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
 }

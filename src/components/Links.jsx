@@ -1,26 +1,22 @@
 // src/components/Links.js
 import React, { useEffect, useState } from "react";
 import "./Links.css";
-import { getLinksByStore, getLinkUpiById } from "../services/LinksService"; // Import necessary services
-import { Modal, Drawer } from "antd"; // Drawer for UPI, Modal for overlay
-import { SocialIcon } from "react-social-icons";
-import Tabs from "../components/Tabs";
+import { getLinksByScreen } from "../services/LinksService";
+import { Modal, Button, Card } from "antd"; 
+import { FilePdfOutlined, PlayCircleOutlined, FileImageOutlined } from '@ant-design/icons';
 
 const Links = ({ config }) => {
   const [links, setLinks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [socialLinks, setSocialLinks] = useState([]);
 
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-        const data = config?.links?.length?config.links:await getLinksByStore(config?.merchantid);
+        const data = config?.links?.length ? config.links : await getLinksByScreen("store", config?.merchantid);
         const sortedLinks = sortLinks(data);
-        setLinks(sortedLinks.links);
-        setSocialLinks(sortedLinks.socialLinks);
+        setLinks(sortedLinks);
       } catch (error) {
         console.error("Error fetching merchant links:", error);
       } finally {
@@ -31,117 +27,145 @@ const Links = ({ config }) => {
   }, [config?.merchantid]);
 
   const sortLinks = (links) => {
-    const upiLinks = links.filter((link) => link.type === "upi");
-    const otherLinks = links
-      .filter((link) => link.type !== "upi" && link.type !== "social")
-      .sort((a, b) => a.location.localeCompare(b.location));
-    const socialLinks = links.filter((link) => link.type === "social");
-    return { links: [...upiLinks, ...otherLinks], socialLinks };
+    const sortedData = {
+      upi: [],
+      social: [],
+      redirection: [],
+      overlay: {}
+    };
+
+    links.forEach((link) => {
+      switch (link.type) {
+        case "upi":
+          sortedData.upi.push(link);
+          break;
+        case "social":
+          sortedData.social.push(link);
+          break;
+        case "overlay":
+          if (link.location && link.location.startsWith("store/view")) {
+            const identifier = link.location.split("/")[2];
+            if (!sortedData.overlay[identifier]) {
+              sortedData.overlay[identifier] = [];
+            }
+            sortedData.overlay[identifier].push(link);
+          } else {
+            sortedData.redirection.push(link);
+          }
+          break;
+        case "redirect":
+          sortedData.redirection.push(link);
+          break;
+        default:
+          console.warn("Unknown link type:", link.type);
+      }
+    });
+    return sortedData;
+  };
+
+  const determineAssetType = (url) => {
+    const extension = url.split('.').pop().toLowerCase();
+    if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) return 'image';
+    if (['mp4', 'webm'].includes(extension)) return 'video';
+    if (['pdf'].includes(extension)) return 'pdf';
+    return 'other';
   };
 
   const handleLinkClick = (link) => {
-    switch (link.type) {
-      case "upi":
-        setIsDrawerOpen(true);
-        break;
-      case "overlay":
-        setModalContent(link.url);
-        setIsModalOpen(true);
-        break;
-      case "redirect":
-        window.location.href = link.url;
-        break;
+    if (link.type === "overlay") {
+      setModalContent(link.url);
+      setIsModalOpen(true);
+    } else {
+      window.location.href = link.url;
+    }
+  };
+
+  const renderAsset = (url) => {
+    const assetType = determineAssetType(url);
+    switch (assetType) {
+      case 'image':
+        return <img src={url} alt="Asset" className="overlay-image" />;
+      case 'video':
+        return (
+          <video controls className="overlay-video">
+            <source src={url} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        );
+      case 'pdf':
+        return (
+          <Button
+            type="primary"
+            icon={<FilePdfOutlined />}
+            onClick={() => window.open(url, '_blank')}
+          >
+            Open PDF
+          </Button>
+        );
       default:
-        console.warn("Unknown link type:", link.type);
+        return <p>Unsupported file type</p>;
     }
   };
-
-  const handlePaymentAppClick = async (appName) => {
-    try {
-      const upiLink = links.find((link) => link.type === "upi");
-      if (!upiLink) throw new Error("UPI link not found");
-      const upiData = await getLinkUpiById(upiLink.url); // Fetch UPI data using service
-      const redirectUrl = buildUpiUrl(
-        appName,
-        upiData.pa,
-        upiData.pn,
-        upiData.aid,
-        upiLink.url
-      );
-      window.location.href = redirectUrl;
-    } catch (error) {
-      console.error("Error during UPI payment:", error);
-    }
-  };
-
-  const buildUpiUrl = (origin, pa, pn, aid, defaultLink) => {
-    const encodedPn = encodeURIComponent(pn);
-    const upiBaseUrl = `upi://pay?pa=${pa}&pn=${encodedPn}&mode=22&purpose=00&mc=0000&cu=INR&am=1&tr=test&tn=hello
-`;
-
-    switch (true) {
-      case origin.toLowerCase().includes("gpay"):
-        return upiBaseUrl.replace("upi://", "gpay://");
-      case origin.toLowerCase().includes("paytm"):
-        return upiBaseUrl.replace("upi://", "paytm://");
-      case origin.toLowerCase().includes("phonepe"):
-        return upiBaseUrl.replace("upi://", "phonepe://");
-      default:
-        return defaultLink;
-    }
-  };
+  
 
   const closeModal = () => {
     setIsModalOpen(false);
     setModalContent(null);
   };
 
-  const closeDrawer = () => {
-    setIsDrawerOpen(false);
-  };
-
   if (isLoading) return null;
 
   return (
     <>
-      <div className="social-links-container">
-        {socialLinks.map((link, index) => (
-          <div key={index} className="social-button">
-            <SocialIcon url={link.url} className="social-icon" target="_blank" rel="noopener noreferrer" style={{height:40,width:40}}/>
-          </div>
-        ))}
-      </div>
-
-      <div className="links-container">
-        {links.map((link, index) => (
-          <div key={index} className="link-item" onClick={() => handleLinkClick(link)}>
-            <span className="link-icon">
-              <img src={link.icon} alt="" className="icon" />
-            </span>
-            <span className="link-text">{link.text}</span>
-          </div>
-        ))}
-      </div>
-      {/* <Tabs context={"store"} config={{ tabs: config.tabs, merchantid: config.merchantid }} /> */}
-
-      <Modal open={isModalOpen} onCancel={closeModal} footer={null} centered className="overlay-modal">
-        <img src={modalContent} alt="Overlay Content" className="overlay-image" />
-      </Modal>
-
-      <Drawer placement="bottom" closable={false} onClose={closeDrawer} open={isDrawerOpen} height={150}>
-        <div className="payment-icons">
-          {["GPay", "Paytm", "PhonePe"].map((app) => (
-            <div key={app} className="payment-icon-container">
-              <img
-                src={`/payment/${app.toLowerCase()}.png`}
-                alt={app}
-                className="payment-icon"
-                onClick={() => handlePaymentAppClick(app)}
-              />
+      {/* Redirection Section */}
+      <div className="redirection-section">
+        <div className={`chips-container`}>
+          {links.redirection.map((link, index) => (
+            <div
+              key={index}
+              className="chip"
+              onClick={() => handleLinkClick(link)}
+            >
+              {link.text}
             </div>
           ))}
         </div>
-      </Drawer>
+        {links.redirection.length > 4 && (
+          <Button className="dropdown-button" onClick={() => setIsExpanded(!isExpanded)}>
+            {isExpanded ? "▲" : "▼"}
+          </Button>
+        )}
+      </div>
+
+      <div className="overlay-section">
+  {Object.keys(links.overlay).map((identifier, index) => (
+    <React.Fragment key={identifier}>
+      <div className="overlay-group">
+        <h3 className="overlay-group-title">{identifier}</h3>
+        <div className="overlay-horizontal-scroll">
+          {links.overlay[identifier].map((link, linkIndex) => (
+            <div key={linkIndex} onClick={() => handleLinkClick(link)}>
+              {renderAsset(link.url)}
+            </div>
+          ))}
+        </div>
+      </div>
+      {index < Object.keys(links.overlay).length - 1 && <hr className="section-divider" />}
+    </React.Fragment>
+  ))}
+</div>
+
+
+      {/* Modal for viewing images */}
+     {/* Modal for viewing assets */}
+<Modal open={isModalOpen} onCancel={closeModal} footer={null} centered className="overlay-modal">
+  {modalContent && (
+    <div className="modal-overlay-content">
+      {renderAsset(modalContent)}
+    </div>
+  )}
+</Modal>
+
     </>
   );
 };

@@ -143,7 +143,7 @@ body {
 
 
 /* Mobile Styles */
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .desktop-auth {
     display: none;
   }

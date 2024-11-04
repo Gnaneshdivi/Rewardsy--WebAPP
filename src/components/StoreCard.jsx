@@ -20,18 +20,14 @@ const StoreCard = ({ store, context }) => {
         <img src={store.dp} alt={store.name} />
       </div>
       <div className="store-card-details">
-        {/* <div className="store-card-header">
-          {store.category.map((tag, index) => (
-            <span key={index} className="store-card-tag">
-              {tag}
-            </span>
-          ))}
-        </div> */}
-        <h3 className="store-card-title">{store.name}</h3>
-        <p className="store-card-description">{store.desc}</p>
-        <button className="store-card-button" onClick={handleButtonClick}>
-          {buttonText}
-        </button>
+          <div className="store-card-info">
+            <h3 className="store-card-title">{store.name}</h3>
+            <p className="store-card-description">{store.desc}</p>
+          </div>
+          <button className="store-card-button" onClick={handleButtonClick}>
+            {buttonText}
+          </button>
+        
       </div>
     </div>
   );
