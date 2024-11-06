@@ -1,7 +1,7 @@
 // src/pages/URLForwarding.js
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getQRDetails } from "../services/QrService"; // Import the getQRDetails function
+import { getQRDetails } from "../services/QrService";
 
 const URLForwarding = () => {
   const { shortUrl } = useParams(); // Get the shortUrl parameter
@@ -14,12 +14,17 @@ const URLForwarding = () => {
 
         if (data && data.link) {
           const { link, ads, adsLink } = data;
-          
-          // Redirect with query parameters
-          navigate(
-            `${link}?showAd=${ads}&img=${encodeURIComponent(adsLink)}`,
-            { replace: true }
-          );
+
+          const redirectUrl = `${link}?showAd=${ads}&img=${encodeURIComponent(adsLink)}`;
+          // Check if the URL is internal or external
+          if (link.startsWith("http") || link.startsWith("https") ) {
+            // External URL: Use window.location.href to redirect
+            
+            window.location.href =link;
+          } else {
+            // Internal URL: Use navigate for client-side navigation
+            navigate(redirectUrl, { replace: true });
+          }
         } else {
           // Redirect to home if no valid link is found
           navigate("/home", { replace: true });
@@ -34,7 +39,7 @@ const URLForwarding = () => {
     fetchAndRedirect();
   }, [shortUrl, navigate]);
 
-  return null; 
+  return null;
 };
 
 export default URLForwarding;
