@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "./Links.css";
 import { getLinksByScreen } from "../services/LinksService";
-import { Modal, Button, Card } from "antd"; 
+import { Modal, Button, Divider } from "antd"; 
 import { FilePdfOutlined, PlayCircleOutlined, FileImageOutlined } from '@ant-design/icons';
 
 const Links = ({ config }) => {
@@ -10,6 +10,7 @@ const Links = ({ config }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     const fetchLinks = async () => {
@@ -103,10 +104,9 @@ const Links = ({ config }) => {
           </Button>
         );
       default:
-        return <p>Unsupported file type</p>;
+        return <img src={url} alt="Asset" className="overlay-image" />;
     }
   };
-  
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -119,7 +119,7 @@ const Links = ({ config }) => {
     <>
       {/* Redirection Section */}
       <div className="redirection-section">
-        <div className={`chips-container`}>
+        <div className={`chips-container ${isExpanded ? "expanded" : ""}`}>
           {links.redirection.map((link, index) => (
             <div
               key={index}
@@ -130,42 +130,36 @@ const Links = ({ config }) => {
             </div>
           ))}
         </div>
-        {links.redirection.length > 4 && (
-          <Button className="dropdown-button" onClick={() => setIsExpanded(!isExpanded)}>
-            {isExpanded ? "▲" : "▼"}
-          </Button>
-        )}
       </div>
 
       <div className="overlay-section">
-  {Object.keys(links.overlay).map((identifier, index) => (
-    <React.Fragment key={identifier}>
-      <div className="overlay-group">
-        <h3 className="overlay-group-title">{identifier}</h3>
-        <div className="overlay-horizontal-scroll">
-          {links.overlay[identifier].map((link, linkIndex) => (
-            <div key={linkIndex} onClick={() => handleLinkClick(link)}>
-              {renderAsset(link.url)}
+        {Object.keys(links.overlay).map((identifier, index) => (
+          <React.Fragment key={identifier}>
+          <div className="overlay-group">
+            <h3 className="overlay-group-title">{identifier}</h3>
+            <div className="overlay-horizontal-scroll">
+              {links.overlay[identifier].map((link, linkIndex) => (
+                <div className="overlay-item" key={linkIndex} onClick={() => handleLinkClick(link)}>
+                  {renderAsset(link.url)}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            <Divider className="section-divider" />
+          </div>
+          
+        </React.Fragment>
+        
+        ))}
       </div>
-      {index < Object.keys(links.overlay).length - 1 && <hr className="section-divider" />}
-    </React.Fragment>
-  ))}
-</div>
 
-
-      {/* Modal for viewing images */}
-     {/* Modal for viewing assets */}
-<Modal open={isModalOpen} onCancel={closeModal} footer={null} centered className="overlay-modal">
-  {modalContent && (
-    <div className="modal-overlay-content">
-      {renderAsset(modalContent)}
-    </div>
-  )}
-</Modal>
-
+      {/* Modal for viewing assets */}
+      <Modal open={isModalOpen} onCancel={closeModal} footer={null} centered className="overlay-modal">
+        {modalContent && (
+          <div className="modal-overlay-content">
+            {renderAsset(modalContent)}
+          </div>
+        )}
+      </Modal>
     </>
   );
 };

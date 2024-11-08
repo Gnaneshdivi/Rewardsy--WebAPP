@@ -10,7 +10,9 @@
   height: 5vh;
   margin: 0 auto;
   padding: 4px;
-  position: sticky;
+  position: sticky; /* Makes the container sticky */
+  top: 0; /* Sticks to the top of the viewport */
+  z-index: 1000; /* Ensures it stays above other content when scrolling */
 }
 
 .tab {

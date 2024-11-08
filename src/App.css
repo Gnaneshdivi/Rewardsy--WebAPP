@@ -2,6 +2,7 @@
 .app {
   min-height: 100vh;
   display: flex;
+  overflow-y: auto;
   flex-direction: column;
   background-color:  var(--primary-color);
 }

@@ -11,9 +11,10 @@ const Tabs = ({ SearchKey, selectedCategory, context, config }) => {
   const availableTabs = config?.tabs || ["offers", "stores", "content"];
 
   const determineDefaultTab = () => {
+    console.log(availableTabs);
     if (availableTabs.includes("stores")) return "stores";
-    if (availableTabs.includes("offers")) return "offers";
-    return availableTabs[0] || ""; // Default to the first tab or empty
+    if (availableTabs.includes("content")) return "content";
+    return availableTabs[0] || ""; ty
   };
 
   const [activeTab, setActiveTab] = useState(determineDefaultTab);
@@ -160,7 +161,7 @@ const Tabs = ({ SearchKey, selectedCategory, context, config }) => {
             className={`tab ${activeTab === tab ? "active" : ""}`}
             onClick={() => handleTabClick(tab)}
           >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            {tab==='content'?'Reels':tab.charAt(0).toUpperCase() + tab.slice(1)}
           </div>
         ))}
       </div>
