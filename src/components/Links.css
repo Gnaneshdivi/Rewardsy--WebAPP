@@ -125,6 +125,32 @@
   object-fit: contain;
   border-radius: 8px;
 }
+/* Links.css */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Increased gap for better spacing */
+  padding: 10px 0;
+  max-width: 90vw;
+}
+
+.social-icon-button {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  width: 40px !important; /* Adjusted size for better visibility */
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold; /* Ensures icon font is bold */
+}
+
+.social-icon-button .anticon {
+  font-size: 30px; /* Larger font size specifically for the icon */
+  font-weight: 900; 
+}
+
 
 @media (max-width: 800px) {
   .redirection-section { width: 95vw; }

@@ -4,6 +4,8 @@ import "./Links.css";
 import { getLinksByScreen } from "../services/LinksService";
 import { Modal, Button, Divider } from "antd"; 
 import { FilePdfOutlined, PlayCircleOutlined, FileImageOutlined } from '@ant-design/icons';
+import { getSocialIcon } from "../utils/getSocialIcon";
+
 
 const Links = ({ config }) => {
   const [links, setLinks] = useState([]);
@@ -114,9 +116,14 @@ const Links = ({ config }) => {
   };
 
   if (isLoading) return null;
-
+console.log(links.social);
   return (
     <>
+     <div className="social-links">
+        {links.social.map((link, index) => (
+          <Button key={index} icon={getSocialIcon(link.url)} onClick={() => handleLinkClick(link)} className="social-icon-button" />
+        ))}
+      </div>
       {/* Redirection Section */}
       <div className="redirection-section">
         <div className={`chips-container ${isExpanded ? "expanded" : ""}`}>
