@@ -46,7 +46,7 @@
   margin: 15px;
   display: flex;
   flex-direction: column;
-  gap: px;
+  gap: 5px;
   align-items: flex-start;
   width: 60vw;
 }
@@ -65,13 +65,14 @@
   padding: 5px 0;
 }
 
+/* Horizontal Scroll Container */
 .overlay-horizontal-scroll {
   display: flex;
   overflow-x: auto;
-  height: 25vh;
-  gap: 10px;
-  padding: 5px 0;
+  gap: 8px; /* Consistent gap between items */
+  padding: 5px 0; /* Less padding to reduce excess space */
   width: 100%;
+  scroll-snap-type: x mandatory; /* Ensures smooth scrolling */
 }
 
 .overlay-horizontal-scroll::-webkit-scrollbar {
@@ -87,7 +88,7 @@
   margin: 5px 0;
 }
 
-/* Individual Overlay Item */
+/* Overlay Item Styling */
 .overlay-item {
   flex: 0 0 auto; /* Prevents item from stretching */
   display: flex;
@@ -95,19 +96,19 @@
   justify-content: center;
   border-radius: 8px;
   overflow: hidden;
-  max-height: 100%; /* Keeps items within the scrollable height */
+  max-height: 100%; /* Ensures item remains within scroll area */
+  scroll-snap-align: start; /* Each item aligns at the start of the viewport during scroll */
 }
 
 /* Media Styling */
 .overlay-image,
 .overlay-video {
-  max-height: 100%; /* Fits the media to container height */
-  max-width: 100%; /* Prevents media from exceeding container width */
-  object-fit: contain; /* Ensures aspect ratio is maintained */
+  max-height: 100%; /* Ensures media fits within item height */
+  max-width: 100%; /* Maintains aspect ratio */
+  object-fit: contain; /* Maintains aspect ratio without cropping */
   border-radius: 8px;
   border: 1px solid var(--secondary-color);
 }
-
 
 /* Modal-Specific Styling */
 .overlay-modal .modal-overlay-content {
