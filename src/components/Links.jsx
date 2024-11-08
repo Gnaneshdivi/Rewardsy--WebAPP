@@ -79,7 +79,7 @@ const Links = ({ config }) => {
       setModalContent(link.url);
       setIsModalOpen(true);
     } else {
-      window.location.href = link.url;
+      window.open(link.url, "_blank");
     }
   };
 
@@ -116,7 +116,6 @@ const Links = ({ config }) => {
   };
 
   if (isLoading) return null;
-console.log(links.social);
   return (
     <>
      <div className="social-links">

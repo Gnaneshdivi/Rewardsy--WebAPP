@@ -110,8 +110,7 @@ const StorePage = () => {
       } // Adjust delay time if necessary
   }
 
-  const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
-
+  
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -132,7 +131,10 @@ const StorePage = () => {
     }
   };
 
-  const handleOpenMaps = () => {
+  const handleOpenMaps = (loc) => {
+    
+    const googleMapsLink = `https://www.google.com/maps?q=${loc.split(',')[0]},${loc.split(',')[1]}`;
+    console.log(googleMapsLink);
     window.open(googleMapsLink, "_blank");
   };
 
@@ -158,7 +160,11 @@ const StorePage = () => {
               <Col span={8} className="store-icons-column">
                 <Button icon={<ShareAltOutlined className="icon-share" />} type="link" onClick={handleShare} />
                 <Button icon={<PhoneOutlined className="icon-phone" />} type="link" onClick={handleCall} />
-                <Button icon={<EnvironmentOutlined className="icon-location" />} type="link" onClick={handleOpenMaps} />
+                <Button
+  icon={<EnvironmentOutlined className="icon-location" />}
+  type="link"
+  onClick={() => handleOpenMaps(store.location)}
+/>
               </Col>
             </Row>
           </Card>
