@@ -140,7 +140,7 @@ const Links = ({ config }) => {
             <div className="overlay-horizontal-scroll">
               {links.overlay[identifier].map((link, linkIndex) => (
                 <div className="overlay-item" key={linkIndex} onClick={() => handleLinkClick(link)}>
-                  {renderAsset(link.url)}
+                  {renderAsset(link.link)}
                 </div>
               ))}
             </div>
