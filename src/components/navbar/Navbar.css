@@ -77,7 +77,10 @@ body {
 }
 
 #logo {
-  height: 30px;
+  height: 35px;
+}
+.navbar-content .ant-btn{
+  padding: 4px 4px !important;
 }
 
 .desktop-auth {
