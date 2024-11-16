@@ -83,27 +83,30 @@
 }
 /* Offers Section Styling */
 .offers-section {
-  width: 100%; /* Use full width for centering flexibility */
+  width: 100%; 
+  /* width: 60vw; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 5px auto; /* Center the section within the page */
+  margin: 5px auto; 
+  overflow-y: hidden;
 }
 
 .offers-header {
   display: flex;
   width: 60vw;
-  max-width: 90vw; /* Limit header width for centering */
+  max-width: 90vw; 
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
 }
 
 .offers-carousel {
-  width: 40vw; /* Use full width */
+  width: 40vw; 
   display: flex;
   justify-content: center;
+  overflow-y: hidden;
 }
 
 .carousel-slide-container {
