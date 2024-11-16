@@ -52,9 +52,9 @@
 }
 
 .overlay-group {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .overlay-group-title {
