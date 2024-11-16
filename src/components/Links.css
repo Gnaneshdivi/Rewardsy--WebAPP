@@ -70,7 +70,7 @@
   display: flex;
   overflow-x: auto;
   gap: 8px; 
-  padding: 5px 0;
+  padding: 10px 0px;
   width: 100%;
   height: 25vh;
   scroll-snap-type: x mandatory;
@@ -83,22 +83,22 @@
 /* Overlay Item Styling */
 .overlay-item {
   /* flex: 0 0 auto; */
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
   /* overflow: hidden; */
   max-height: 100%;
 
   scroll-snap-align: start; 
-  background-color: yellowgreen;
+  /* background-color: yellowgreen; */
 }
 
 /* Media Styling */
 .overlay-image,
 .overlay-video {
   height: 100%;
-  object-fit: contain; 
+  /* object-fit: contain;  */
   border-radius: 8px;
   border: 1px solid var(--secondary-color);
 }
