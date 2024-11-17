@@ -1,7 +1,11 @@
-import React, { useEffect, useState ,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Row, Col, Typography, Button, Card, Spin, Carousel } from "antd";
-import { EnvironmentOutlined, ShareAltOutlined, PhoneOutlined } from "@ant-design/icons";
+import {
+  EnvironmentOutlined,
+  ShareAltOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
 import Tabs from "../components/Tabs";
 import Links from "../components/Links";
 import OfferCard from "../components/OfferCard";
@@ -40,8 +44,12 @@ const StorePage = () => {
       try {
         const storeData = await getStore(storeId);
         const configData = await getMerchantConfigs(storeId);
-        const links = configData.some((item) => item.key === "links" && item.value === "true");
-        const offers = configData.some((item) => item.key === "offers" && item.value === "true");
+        const links = configData.some(
+          (item) => item.key === "links" && item.value === "true"
+        );
+        const offers = configData.some(
+          (item) => item.key === "offers" && item.value === "true"
+        );
         setisLinksEnabled(links);
         setisOffersEnabled(offers);
         setConfig(configData);
@@ -81,7 +89,10 @@ const StorePage = () => {
         if (data && data.address) {
           const locationName = [
             data.address.road || "",
-            data.address.city || data.address.town || data.address.village || "",
+            data.address.city ||
+              data.address.town ||
+              data.address.village ||
+              "",
             data.address.state || "",
             data.address.country || "",
           ]
@@ -101,16 +112,14 @@ const StorePage = () => {
     updateStore();
   }, [storeId]);
   const handleViewAll = () => {
-    
-      const tabsSection = document.getElementById("tabs-section");
-      if (tabsSection) {
-        tabsSection.scrollIntoView({ behavior: "smooth" });
-      } else {
-        console.error("Tabs section not available");
-      } // Adjust delay time if necessary
-  }
+    const tabsSection = document.getElementById("tabs-section");
+    if (tabsSection) {
+      tabsSection.scrollIntoView({ behavior: "smooth" });
+    } else {
+      console.error("Tabs section not available");
+    } // Adjust delay time if necessary
+  };
 
-  
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -132,8 +141,9 @@ const StorePage = () => {
   };
 
   const handleOpenMaps = (loc) => {
-    
-    const googleMapsLink = `https://www.google.com/maps?q=${loc.split(',')[0]},${loc.split(',')[1]}`;
+    const googleMapsLink = `https://www.google.com/maps?q=${
+      loc.split(",")[0]
+    },${loc.split(",")[1]}`;
     console.log(googleMapsLink);
     window.open(googleMapsLink, "_blank");
   };
@@ -147,33 +157,51 @@ const StorePage = () => {
       ) : (
         <>
           <div className="store-header">
-            <img src={store.background} alt={`${store.name} banner`} className="store-banner" />
+            <img
+              src={store.background}
+              alt={`${store.name} banner`}
+              className="store-banner"
+            />
           </div>
 
           <Card className="store-info-card">
             <Row align="middle" justify="space-between">
               <Col span={16}>
-                <Title level={3} className="store-title">{store.name}</Title>
+                <Title level={3} className="store-title">
+                  {store.name}
+                </Title>
                 <Text className="store-description">{store.desc}</Text>
                 <Text className="store-area">{store.area}</Text>
               </Col>
               <Col span={8} className="store-icons-column">
-                <Button icon={<ShareAltOutlined className="icon-share" />} type="link" onClick={handleShare} />
-                <Button icon={<PhoneOutlined className="icon-phone" />} type="link" onClick={handleCall} />
                 <Button
-  icon={<EnvironmentOutlined className="icon-location" />}
-  type="link"
-  onClick={() => handleOpenMaps(store.location)}
-/>
+                  icon={<ShareAltOutlined className="icon-share" />}
+                  type="link"
+                  onClick={handleShare}
+                />
+                <Button
+                  icon={<PhoneOutlined className="icon-phone" />}
+                  type="link"
+                  onClick={handleCall}
+                />
+                <Button
+                  icon={<EnvironmentOutlined className="icon-location" />}
+                  type="link"
+                  onClick={() => handleOpenMaps(store.location)}
+                />
               </Col>
             </Row>
           </Card>
 
-            {isOffersEnabled && (
-              <div className="offers-section">
+          {isOffersEnabled && (
+            <div className="offers-section">
               <div className="offers-header">
-                <Title level={4} className="offers-title">Offers</Title>
-                <Text className="view-all-button" onClick={handleViewAll}>View All</Text>
+                <Title level={4} className="offers-title">
+                  Offers
+                </Title>
+                <Text className="view-all-button" onClick={handleViewAll}>
+                  View All
+                </Text>
               </div>
               <Carousel
                 autoplay
@@ -189,12 +217,14 @@ const StorePage = () => {
                 ))}
               </Carousel>
             </div>
-            
-            )}
+          )}
 
           {isLinksEnabled && <Links config={{ merchantid: store.id }} />}
-          <Tabs id="tabs-section" context="store" config={{ tabs: tabs, merchantid: store.id, offers: offers || [] }} />
-
+          <Tabs
+            id="tabs-section"
+            context="store"
+            config={{ tabs: tabs, merchantid: store.id, offers: offers || [] }}
+          />
         </>
       )}
     </div>

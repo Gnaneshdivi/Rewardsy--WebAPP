@@ -5,6 +5,7 @@ import { getLinksByScreen } from "../services/LinksService";
 import { Modal, Button, Divider } from "antd"; 
 import { FilePdfOutlined, PlayCircleOutlined, FileImageOutlined } from '@ant-design/icons';
 import { getSocialIcon } from "../utils/getSocialIcon";
+// import { SocialIcon } from 'react-social-icons';
 
 
 const Links = ({ config }) => {
