@@ -126,6 +126,7 @@
 .social-links {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
   padding: 10px 0;
   max-width: 90vw;
@@ -141,6 +142,7 @@
   align-items: center;
   justify-content: center;
   font-weight: bold; 
+  margin-right: 3px;
 }
 
 .social-icon-button .anticon {
