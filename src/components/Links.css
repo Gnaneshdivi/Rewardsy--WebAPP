@@ -130,6 +130,7 @@
   gap: 10px;
   padding: 10px 0;
   max-width: 90vw;
+  padding :15px 5px;
 }
 
 .social-icon-button {
@@ -142,7 +143,7 @@
   align-items: center;
   justify-content: center;
   font-weight: bold; 
-  margin-right: 6px;
+  margin: 3px;
 }
 
 .social-icon-button .anticon {
