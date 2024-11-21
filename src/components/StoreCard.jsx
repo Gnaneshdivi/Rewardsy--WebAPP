@@ -17,7 +17,7 @@ const StoreCard = ({ store, context }) => {
   return (
     <div className="store-card">
       <div className="store-card-logo">
-        <img src={store.dp} alt={store.name} />
+        <img src={store.background} alt={store.name} />
       </div>
       <div className="store-card-details">
           <div className="store-card-info">
