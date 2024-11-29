@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 import ReelsPage from "./pages/ReelsPage";
 import AdPopup from "./components/AdPop";
 import Payment from "./pages/Payment";
+import Game from "./pages/Game";
 import { listenToAuthState, closeAuthModal } from './slices/userSlice';
 import "./App.css";
 import AuthModal from "./components/AuthModel";
@@ -100,6 +101,7 @@ const AppContent = () => {
           <Route path="/SignUp" element={<HomePage />} />
           <Route path="/reels/:reelId" element={<ReelsPage />} />
           <Route path="/upi" element={<Payment />} />
+          <Route path="/games/:gameId" element={<Game />} />
         </Routes>
       </Content>
       <AntFooter style={{ padding: 0 }}>

@@ -1,0 +1,35 @@
+.start-page-content {
+    height: 93vh;
+    width: 100vw;
+    text-align: center;
+    background-size: contain;
+    background-position: center;
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    position: relative;
+  }
+  
+  .start-button {
+    background: var(--primary-color);
+    width: 80vw;
+    height: 6vh;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    font-weight: bold;
+    border-radius: 13px;
+    border: 2px solid var(--secondary-color);
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .spinner-container {
+    height: 93vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
