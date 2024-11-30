@@ -13,7 +13,7 @@ const StartPage = ({ gameId, onNext }) => {
         // Simulate API call to get the image URL with a delay
         await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulated waiting time
         // Placeholder for actual API response
-        setBackgroundImage(`${window.location.origin}/game/game.png`);
+        setBackgroundImage(`${window.location.origin}/game/${gameId}.png`);
       } catch (error) {
         console.error("Error fetching background image:", error);
       } finally {

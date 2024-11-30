@@ -1,13 +1,12 @@
+// GameSection Component
 import React, { useState } from 'react';
 import PlayGround from '../../Games/MatchingGame/MatchingGame';
 import "./GameSection.css";
-const GameSection = () => {
-  
 
+const GameSection = ({ gameId,onGameEnd }) => {
   return (
     <div className='game-section-content'>
-      <PlayGround />
-      
+      <PlayGround onGameEnd={onGameEnd} />
     </div>
   );
 };

@@ -1,14 +1,36 @@
-.end-page-content {
+
+  .end-section-content {
+    height: 93vh;
+    width: 100vw;
     text-align: center;
-    padding: 10px;
+    background-size: contain;
+    background-position: center;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
   }
   
-  .play-again-button {
-    background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
-    border: none;
-    color: white;
-    font-weight: bold;
-    border-radius: 13px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-    margin-top: 16px;
+  .end-page {
+    text-align: center;
   }
+  
+  .end-page h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+  
+  .end-page p {
+    font-size: 1.5em;
+  }
+  
+  .end-page button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  
+  

@@ -120,12 +120,14 @@ class PlayGround extends React.Component {
 
   endGame(won = false) {
     clearInterval(this.timerInterval);
-    this.setState({ gameOver: true });
-    if (won) {
-      alert(`Congratulations! You won in ${this.state.moves} moves!`);
-    } else {
-      alert('Time is up or maximum moves reached! Game over.');
-    }
+    this.setState({ gameOver: true }, () => {
+      const gameData = {
+        moves: this.state.moves,
+        timeLeft: this.state.timer,
+        result: won ? 'won' : 'lost'
+      };
+      this.props.onGameEnd(gameData);
+    });
   }
 
   render() {
