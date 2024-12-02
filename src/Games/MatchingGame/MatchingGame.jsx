@@ -5,7 +5,7 @@ import './MatchingGame.css'; // Import the CSS file
 class PlayGround extends React.Component {
   state = {
     frameworks: [
-      'angular2', 'vue', 'react', 'grunt', 'phantomjs', 'ember', 'babel', 'ionic',
+      'angular2', 'vue',
       
     ],
     duplicatedFrameworks: [],
