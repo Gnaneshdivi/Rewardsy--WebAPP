@@ -1,32 +1,44 @@
+import React from "react";
+import OfferCard from "../OfferCard";
+import "./EndPage.css";
 
-import React, { useEffect, useState } from "react";
-import './EndPage.css';
-const EndPage = ({ gameId,gameResult }) => {
-  
-  const [backgroundImage, setBackgroundImage] = useState("");
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const fetchBackgroundImage = async () => {
-      try {
-        // Simulate API call to get the image URL with a delay
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulated waiting time
-        // Placeholder for actual API response
-        setBackgroundImage(`${window.location.origin}/game/${gameId}end.png`);
-      } catch (error) {
-        console.error("Error fetching background image:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBackgroundImage();
-  }, [gameId]);
+const EndPage = ({ gameResult, ctaDetails, offer }) => {
+  const redirectToStore = () => {
+    if (offer && offer.offer) {
+      window.location.href = `/store/${offer.offer.store}`;
+    }
+    window.location.href = `/`;
+  };
   return (
-    <div className='end-section-content' style={{ backgroundImage: `url(${backgroundImage})` }}>
-      <h1>{gameResult.result === 'won' ? 'Congratulations! You Won!' : 'Game Over!'}</h1>
-      <p>Moves: {gameResult.moves}</p>
-      <p>Time Left: {gameResult.timeLeft}s</p>
-      <button className="start-button" style={{ fontWeight: "bold" }} onClick={() => window.location.reload()}>Retry</button>
+    <div
+      className="end-section-content"
+      // style={{ backgroundImage: `url(${ctaDetails.cta.end})` }}
+    >
+      <h1 className="end-heading">
+        {gameResult?.result === "won" ? "Congratulations! You Won!" : "Game Over!"}
+      </h1>
+      <img
+      
+        src=  {gameResult.result === "won"
+        ? "https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/application%2Fwin.gif?alt=media&token=8e0f8c04-efea-4a6b-b629-53fddfa226e5"
+        : "https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/application%2FLose.gif?alt=media&token=25f45e91-e71c-4332-b524-309d554b3356"}
+        alt="Celebration or Game Over"
+        className="end-gif"
+      />
+      {gameResult?.result !== "won" ? (
+        <button className="retry-button" onClick={redirectToStore}>
+          Bad Luck! Try Again
+        </button>
+      ) : (
+        offer?.offer && (
+          <div className="offer-container">
+            <OfferCard offer={offer.offer} context={"cta"} code={offer?.redemption?.code} />
+            <button className="store-button" onClick={redirectToStore}>
+              Go to Store Page
+            </button>
+          </div>
+        )
+      )}
     </div>
   );
 };

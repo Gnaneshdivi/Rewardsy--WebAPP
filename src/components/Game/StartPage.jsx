@@ -3,26 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Button, Spin } from "antd";
 import "./StartPage.css";
 
-const StartPage = ({ gameId, onNext }) => {
-  const [backgroundImage, setBackgroundImage] = useState("");
-  const [loading, setLoading] = useState(true);
+const StartPage = ({onNext,ctaDetails }) => {
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchBackgroundImage = async () => {
-      try {
-        // Simulate API call to get the image URL with a delay
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulated waiting time
-        // Placeholder for actual API response
-        setBackgroundImage(`${window.location.origin}/game/${gameId}.png`);
-      } catch (error) {
-        console.error("Error fetching background image:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBackgroundImage();
-  }, [gameId]);
 
   if (loading) {
     return (
@@ -33,7 +16,8 @@ const StartPage = ({ gameId, onNext }) => {
   }
 
   return (
-    <div className="start-page-content" style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div className="start-page-content" style={{ backgroundImage: `url(${ctaDetails.cta.start})` }}>
+      <h1>Finish the game In less then 15 Moves</h1>
       <Button className="start-button" style={{ fontWeight: "bold" }} onClick={onNext}>Start</Button>
     </div>
   );

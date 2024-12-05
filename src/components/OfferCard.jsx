@@ -6,7 +6,8 @@ import { openAuthModal } from "../slices/userSlice";
 import {redeemOffers} from "../services/OffersService"
 import "./OfferCard.css";
 
-const OfferCard = ({ offer, context }) => {
+const OfferCard = ({ offer, context,code }) => {
+  console.log(code);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [redeemedCode, setRedeemedCode] = useState(null);
@@ -22,11 +23,25 @@ const OfferCard = ({ offer, context }) => {
     }
     if (userDetails) {
       setRedeemCodeLoading(true);
-      const userId = userDetails.uid;
       const token = userDetails.token;
-      const code = await redeemOffers(offer.id, userId, token);
-      setRedeemedCode(code);
-      setRedeemCodeLoading(false);
+      const data = await redeemOffers(offer.id, token);
+      if(data?.redirectionLink){
+        setRedeemCodeLoading(false);
+        const link = data.redirectionLink;
+        if (link.startsWith("http") || link.startsWith("https") ) {
+          
+          window.location.href =link;
+        } else {
+          navigate(link, { replace: true });
+        }
+       
+      }else{console.log(data);
+        setRedeemedCode(data.redemption.code);
+        console.log(redeemedCode);
+        setRedeemCodeLoading(false);
+      }
+      
+      
     } else {
       dispatch(openAuthModal());
     }
@@ -58,9 +73,9 @@ const OfferCard = ({ offer, context }) => {
 ):<></>}
             <h3 className="offer-title">{offer.title}</h3>
             <p className="offer-description">
-              <span className="view-details" onClick={handleShowDetails}>
+              {context!=='cta'?<span className="view-details" onClick={handleShowDetails}>
                 {" "}View Details
-              </span>
+              </span>:<></>}
             </p>
           </div>
         </div>
@@ -77,13 +92,13 @@ const OfferCard = ({ offer, context }) => {
       <div className="redeem-section">
       {redeemedCode ? (
   <p className="code">{redeemedCode}</p>
-) : (
+) : (code?<p className="code">{code}</p>:
   <Button
     className="redeem-button"
     onClick={handleRedeemClick}
     loading={redeemCodeLoading}
   >
-    Redeem
+    {offer.cta?offer.cta.text:'Redeem'}
   </Button>
 )}
       </div>

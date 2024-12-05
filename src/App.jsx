@@ -17,6 +17,7 @@ import Game from "./pages/Game";
 import { listenToAuthState, closeAuthModal } from './slices/userSlice';
 import "./App.css";
 import AuthModal from "./components/AuthModel";
+import NotFoundPage from "./pages/404page";
 
 // Ant Design Layout Destructuring
 const { Header, Content, Footer: AntFooter } = Layout;
@@ -101,7 +102,8 @@ const AppContent = () => {
           <Route path="/SignUp" element={<HomePage />} />
           <Route path="/reels/:reelId" element={<ReelsPage />} />
           <Route path="/upi" element={<Payment />} />
-          <Route path="/games/:gameId" element={<Game />} />
+          <Route path="/cta/:ctaId" element={<Game />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Content>
       <AntFooter style={{ padding: 0 }}>

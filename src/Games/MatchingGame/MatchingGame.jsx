@@ -37,31 +37,40 @@ class PlayGround extends React.Component {
     if (this.state.openedFrameworks.length === 2 || this.state.finalizedFrameworks[index].complete || this.state.gameOver) {
       return;
     }
+  
     let framework = { name, index };
     let finalizedFrameworks = [...this.state.finalizedFrameworks];
     let frameworks = [...this.state.openedFrameworks];
     finalizedFrameworks[index].close = false;
     frameworks.push(framework);
-    this.setState({
-      openedFrameworks: frameworks,
-      finalizedFrameworks: finalizedFrameworks
-    }, () => {
-      if (frameworks.length === 2) {
-        this.setState(prevState => ({ moves: prevState.moves + 1 }), () => {
-          if (this.state.moves >= this.state.maxMoves) {
-            this.endGame();
-          }
-        });
-        setTimeout(() => {
-          this.check();
-        }, 1000);
-      } else {
-        setTimeout(() => {
-          this.check();
-        }, 1500);
+  
+    this.setState(
+      {
+        openedFrameworks: frameworks,
+        finalizedFrameworks: finalizedFrameworks,
+      },
+      () => {
+        if (frameworks.length === 2) {
+          this.setState(
+            (prevState) => ({ moves: prevState.moves - 1 }), // Decrement moves
+            () => {
+              if (this.state.moves <= 0) {
+                this.endGame(); // End game if moves reach zero
+              }
+            }
+          );
+          setTimeout(() => {
+            this.check();
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            this.check();
+          }, 1500);
+        }
       }
-    });
+    );
   }
+  
 
   check() {
     let finalizedFrameworks = [...this.state.finalizedFrameworks];
@@ -102,8 +111,8 @@ class PlayGround extends React.Component {
       });
     });
     const uniqueComponents = this.state.frameworks.length;
-    const maxMoves = uniqueComponents * (2 * uniqueComponents - 1); // Maximum moves equation
-    this.setState({ finalizedFrameworks, moves: 0, timer: 120, gameOver: false, maxMoves });
+    const maxMoves = Math.floor((uniqueComponents * (2 * uniqueComponents - 1)) / 1.5);
+    this.setState({ finalizedFrameworks, moves: maxMoves, timer: 120, gameOver: false, maxMoves });
   }
 
   shuffle(array) {

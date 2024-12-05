@@ -1,36 +1,58 @@
+.end-section-content {
+  height: 93vh;
+  width: 100vw;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+}
 
-  .end-section-content {
-    height: 93vh;
-    width: 100vw;
-    text-align: center;
-    background-size: contain;
-    background-position: center;
-    background-color: var(--primary-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  
-  .end-page {
-    text-align: center;
-  }
-  
-  .end-page h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
-  }
-  
-  .end-page p {
-    font-size: 1.5em;
-  }
-  
-  .end-page button {
-    padding: 10px 20px;
-    font-size: 1.2em;
-    margin-top: 20px;
-    cursor: pointer;
-  }
-  
-  
+.end-heading {
+  font-size: 3em;
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+}
+
+.gif-container {
+  margin: 20px 0;
+}
+
+.result-gif {
+  height: 200px;
+  width: auto;
+  border-radius: 10px;
+}
+
+.retry-button,
+.store-button {
+  padding: 12px 24px;
+  font-size: 1.2em;
+  margin: 20px;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: var(--secondary-color);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.retry-button:hover,
+.store-button:hover {
+  background-color: var(--secondary-color);
+}
+.end-gif{
+  width: 60vw;
+  height: 60vw;
+}
+
+.offer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
