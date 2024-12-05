@@ -1,0 +1,14 @@
+
+.game-section-content {
+  height: 93vh;
+  width: 100vw;
+  text-align: center;
+  background-size: contain;
+  background-position: center;
+  background-color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
