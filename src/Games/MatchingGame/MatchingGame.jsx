@@ -5,7 +5,14 @@ import './MatchingGame.css'; // Import the CSS file
 class PlayGround extends React.Component {
   state = {
     frameworks: [
-     'angular2','vue','react','phantomjs','babel','ionic','yarn','nodejs'
+     'https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/CTA%2Fmemory-game%2Fmg1.png?alt=media&token=80f5575e-65fe-429e-a5d2-9635312073d8',
+     'https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/CTA%2Fmemory-game%2Fmg2.png?alt=media&token=8664d9b8-86e3-453d-953f-77d68e611340'
+     ,'https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/CTA%2Fmemory-game%2Fmg3.png?alt=media&token=bc3a5e49-2741-4c07-a13b-9a942d0fe5e1',
+     'https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/CTA%2Fmemory-game%2Fmg4.png?alt=media&token=31a33303-2176-4a39-a139-8ff1aaeba7ec',
+     'https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/CTA%2Fmemory-game%2Fmg5.png?alt=media&token=ffa52dc4-25e6-4c9d-9f6f-c749b6812624',
+     'https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/CTA%2Fmemory-game%2Fmg6.png?alt=media&token=a6751e7a-dc7f-4bb0-9692-5575d131da06',
+     'https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/CTA%2Fmemory-game%2Fmg7.png?alt=media&token=8e072ed8-3022-408b-b6fd-3cab5a68e124',
+     'https://firebasestorage.googleapis.com/v0/b/rewardsy-app.appspot.com/o/CTA%2Fmemory-game%2Fmg8.png?alt=media&token=88ecf9a4-3cb9-45e0-8fd6-2ec23aaee92c'
       
     ],
     duplicatedFrameworks: [],
@@ -190,11 +197,9 @@ class Card extends React.Component {
           {!this.props.close || this.props.complete ? (
             <img
               src={
-                "https://raw.githubusercontent.com/samiheikki/javascript-guessing-game/master/static/logos/" +
-                this.props.framework +
-                ".png"
+                 this.props.framework 
               }
-              alt={this.props.framework}
+              alt={"card"}
             />
           ) : null}
         </div>

@@ -17,7 +17,6 @@ const StartPage = ({onNext,ctaDetails }) => {
 
   return (
     <div className="start-page-content" style={{ backgroundImage: `url(${ctaDetails.cta.start})` }}>
-      <h1>Finish the game In less then 15 Moves</h1>
       <Button className="start-button" style={{ fontWeight: "bold" }} onClick={onNext}>Start</Button>
     </div>
   );
