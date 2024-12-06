@@ -26,10 +26,30 @@ class PlayGround extends React.Component {
   };
 
   componentDidMount() {
+    this.preloadImages();
     this.start();
     this.startTimer();
   }
 
+  preloadImages() {
+    const images = this.state.frameworks.concat(this.state.frameworks);
+    let loadedImages = 0;
+
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        loadedImages++;
+        if (loadedImages === images.length) {
+          // All images are loaded
+          this.setState({ imagesLoaded: true }, this.start);
+        }
+      };
+      img.onerror = () => {
+        console.error(`Failed to load image: ${src}`);
+      };
+    });
+  }
   startTimer() {
     this.timerInterval = setInterval(() => {
       if (this.state.timer > 0 && !this.state.gameOver) {
@@ -118,7 +138,7 @@ class PlayGround extends React.Component {
       });
     });
     const uniqueComponents = this.state.frameworks.length;
-    const maxMoves = Math.floor((uniqueComponents * (2 * uniqueComponents - 1)) / 1.5);
+    const maxMoves = Math.floor((uniqueComponents * (2 * uniqueComponents - 1)) / 2);
     this.setState({ finalizedFrameworks, moves: maxMoves, timer: 120, gameOver: false, maxMoves });
   }
 
