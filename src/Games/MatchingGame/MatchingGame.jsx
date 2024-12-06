@@ -118,7 +118,7 @@ class PlayGround extends React.Component {
       });
     });
     const uniqueComponents = this.state.frameworks.length;
-    const maxMoves = Math.floor((uniqueComponents * (2 * uniqueComponents - 1)) / 1.5);
+    const maxMoves = Math.floor((uniqueComponents * (2 * uniqueComponents - 1)) / 2);
     this.setState({ finalizedFrameworks, moves: maxMoves, timer: 120, gameOver: false, maxMoves });
   }
 
