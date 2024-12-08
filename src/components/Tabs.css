@@ -8,10 +8,10 @@
   overflow: hidden;
   width: 50vw;
   height: 5vh;
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 4px;
   position: sticky; /* Makes the container sticky */
-  top: 0; /* Sticks to the top of the viewport */
+ 
   z-index: 1000; /* Ensures it stays above other content when scrolling */
 }
 

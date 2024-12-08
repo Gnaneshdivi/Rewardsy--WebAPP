@@ -199,9 +199,9 @@ const StorePage = () => {
                 <Title level={4} className="offers-title">
                   Offers
                 </Title>
-                <Text className="view-all-button" onClick={handleViewAll}>
+                {/* <Text className="view-all-button" onClick={handleViewAll}>
                   View All
-                </Text>
+                </Text> */}
               </div>
               <Carousel
                 autoplay
