@@ -52,7 +52,7 @@ const OfferCard = ({ offer, context,code }) => {
 
   // Close drawer
   const handleCloseDrawer = () => setIsDrawerVisible(false);
-
+console.log(offer);
   return (
     <div className="offer-card">
       {/* Top Section: Image and Details */}
@@ -109,18 +109,18 @@ const OfferCard = ({ offer, context,code }) => {
   closable={false}
   onClose={handleCloseDrawer}
   open={isDrawerVisible}
-  height="50%"
+  height="40%"
   className="offer-drawer custom-offer-drawer"
   style={{
     width: "100%",
-    borderTopLeftRadius: 13,
-    borderTopRightRadius: 13,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   }}
 >
   {/* Top Banner Image */}
-  <div className="custom-drawer-banner">
+  {/* <div className="custom-drawer-banner">
     <img src={offer.storeDp} alt="Banner" />
-  </div>
+  </div> */}
 
   <div className="custom-offer-drawer-content">
     {/* Row with Image and Title */}
@@ -139,7 +139,7 @@ const OfferCard = ({ offer, context,code }) => {
     {/* Terms and Conditions */}
     <div className="custom-drawer-tnc-section">
       <h4 className="custom-drawer-tnc-heading">Terms & Conditions</h4>
-      <p className="custom-drawer-tnc">Offer Valid from 24th Oct to 4th Nov 2024. Applicable only on specific bank cards for purchases above ₹4000.</p>
+      <p className="custom-drawer-tnc">Offer Valid from {offer.startDate} to {offer.endDate} Applicable only at the store.</p>
     </div>
   </div>
 
