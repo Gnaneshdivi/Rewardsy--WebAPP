@@ -128,7 +128,6 @@ const AuthModal = ({ isOpen, close }) => {
         setLoading(false);
         toast.success("Login successful!");
         close();
-        navigate("/home");
       } else {
         setStep(3);
         setLoading(false);

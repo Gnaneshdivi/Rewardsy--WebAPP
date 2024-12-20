@@ -6,7 +6,8 @@ import { openAuthModal } from "../slices/userSlice";
 import {redeemOffers} from "../services/OffersService"
 import "./OfferCard.css";
 
-const OfferCard = ({ offer, context }) => {
+const OfferCard = ({ offer, context,code }) => {
+  console.log(code);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [redeemedCode, setRedeemedCode] = useState(null);
@@ -22,11 +23,25 @@ const OfferCard = ({ offer, context }) => {
     }
     if (userDetails) {
       setRedeemCodeLoading(true);
-      const userId = userDetails.uid;
       const token = userDetails.token;
-      const code = await redeemOffers(offer.id, userId, token);
-      setRedeemedCode(code);
-      setRedeemCodeLoading(false);
+      const data = await redeemOffers(offer.id, token);
+      if(data?.redirectionLink){
+        setRedeemCodeLoading(false);
+        const link = data.redirectionLink;
+        if (link.startsWith("http") || link.startsWith("https") ) {
+          
+          window.location.href =link;
+        } else {
+          navigate(link, { replace: true });
+        }
+       
+      }else{console.log(data);
+        setRedeemedCode(data.redemption.code);
+        console.log(redeemedCode);
+        setRedeemCodeLoading(false);
+      }
+      
+      
     } else {
       dispatch(openAuthModal());
     }
@@ -37,7 +52,7 @@ const OfferCard = ({ offer, context }) => {
 
   // Close drawer
   const handleCloseDrawer = () => setIsDrawerVisible(false);
-
+console.log(offer);
   return (
     <div className="offer-card">
       {/* Top Section: Image and Details */}
@@ -58,9 +73,9 @@ const OfferCard = ({ offer, context }) => {
 ):<></>}
             <h3 className="offer-title">{offer.title}</h3>
             <p className="offer-description">
-              <span className="view-details" onClick={handleShowDetails}>
+              {context!=='cta'?<span className="view-details" onClick={handleShowDetails}>
                 {" "}View Details
-              </span>
+              </span>:<></>}
             </p>
           </div>
         </div>
@@ -77,13 +92,13 @@ const OfferCard = ({ offer, context }) => {
       <div className="redeem-section">
       {redeemedCode ? (
   <p className="code">{redeemedCode}</p>
-) : (
+) : (code?<p className="code">{code}</p>:
   <Button
     className="redeem-button"
     onClick={handleRedeemClick}
     loading={redeemCodeLoading}
   >
-    Redeem
+    {offer.cta?offer.cta.text:'Redeem'}
   </Button>
 )}
       </div>
@@ -94,18 +109,18 @@ const OfferCard = ({ offer, context }) => {
   closable={false}
   onClose={handleCloseDrawer}
   open={isDrawerVisible}
-  height="50%"
+  height="40%"
   className="offer-drawer custom-offer-drawer"
   style={{
     width: "100%",
-    borderTopLeftRadius: 13,
-    borderTopRightRadius: 13,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   }}
 >
   {/* Top Banner Image */}
-  <div className="custom-drawer-banner">
+  {/* <div className="custom-drawer-banner">
     <img src={offer.storeDp} alt="Banner" />
-  </div>
+  </div> */}
 
   <div className="custom-offer-drawer-content">
     {/* Row with Image and Title */}
@@ -124,7 +139,7 @@ const OfferCard = ({ offer, context }) => {
     {/* Terms and Conditions */}
     <div className="custom-drawer-tnc-section">
       <h4 className="custom-drawer-tnc-heading">Terms & Conditions</h4>
-      <p className="custom-drawer-tnc">Offer Valid from 24th Oct to 4th Nov 2024. Applicable only on specific bank cards for purchases above ₹4000.</p>
+      <p className="custom-drawer-tnc">Offer Valid from {offer.startDate} to {offer.endDate} Applicable only at the store.</p>
     </div>
   </div>
 

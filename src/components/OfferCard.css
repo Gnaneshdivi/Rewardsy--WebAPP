@@ -38,12 +38,14 @@
 .offer-details {
   width: 70%;
   padding: 10px;
+  align-items: start;
 }
 
 .offer-title {
   font-size: 1.2em;
   color: var(--secondary-color);
   font-weight: bold;
+  text-align: left;
 }
 
 .offer-store-name{
@@ -175,10 +177,11 @@
 }
 
 .custom-drawer-header {
+
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-bottom: 20px;
+  margin:20px  0 ;
 }
 
 .custom-drawer-image {

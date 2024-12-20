@@ -1,0 +1,135 @@
+body {
+    background: var(--primary-color);
+    font-family: 'Delius', cursive;
+  }
+  
+  #app {
+    padding: 35px;
+    width: 40%;
+    margin: 20px auto;
+    border-radius: 10px;
+  }
+  
+  .playground-container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 100px;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 20px;
+    height: 100%;
+    width: 100%;
+    background-color: #FFBD0F;
+  }
+  
+  .game-info {
+    margin: 10px;
+    border-radius: 13px;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: transparent;
+    position: sticky;
+    border: 2px solid var(--secondary-color);
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.game-info p {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.game-info .moves-info span, .game-info .timer-info span {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+  
+  .timer-warning {
+    color: red;
+  }
+  
+  .playground {
+    width: 90vw;
+    height: 90vw;
+    display: grid;
+    gap: 15px;
+    margin: 0 auto;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+  
+  /* Card Styles */
+  .card {
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    box-sizing: border-box;
+    text-align: center;
+    transition: 0.6s;
+    display: flex;
+    transform-style: preserve-3d;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+  }
+  
+  .card div {
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    transition: 0.6s;
+  }
+  
+  .card .front {
+    font-size: 50px;
+    line-height: 120px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card .back {
+    transform: rotateY(180deg);
+    line-height: 110px;
+  }
+  
+  .card .back img {
+    vertical-align: middle;
+    width: 70%;
+    display: block;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .card.opened {
+    transform: rotateY(180deg);
+  }
+  
+  .card.matched {
+    transform: rotateY(180deg);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) inset;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  
+  @media (min-width: 1024px) {
+    .playground {
+      width: 60vh;
+      height: 60vh;
+      
+    }
+  }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Links.css";
 import { getLinksByScreen } from "../services/LinksService";
-import { Modal, Button, Divider } from "antd";
+import { Modal, Button, Divider, Carousel } from "antd";
 import {
   FilePdfOutlined,
   LeftOutlined,
@@ -77,11 +77,6 @@ const Links = ({ config }) => {
     return "other";
   };
 
-  const handleLinkClick = (group, index) => {
-    setCurrentLink({ group, index });
-    setIsModalOpen(true);
-  };
-
   const renderAsset = (url) => {
     const assetType = determineAssetType(url);
     switch (assetType) {
@@ -109,23 +104,14 @@ const Links = ({ config }) => {
     }
   };
 
+  const openModal = (group) => {
+    setCurrentGroup(group);
+    setIsModalOpen(true);
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
-    setCurrentLink({ group: null, index: null });
-  };
-
-  const handleNext = () => {
-    const { group, index } = currentLink;
-    const groupLinks = links.overlay[group];
-    const nextIndex = (index + 1) % groupLinks.length;
-    setCurrentLink({ group, index: nextIndex });
-  };
-
-  const handlePrevious = () => {
-    const { group, index } = currentLink;
-    const groupLinks = links.overlay[group];
-    const prevIndex = (index - 1 + groupLinks.length) % groupLinks.length;
-    setCurrentLink({ group, index: prevIndex });
+    setCurrentGroup(null);
   };
 
   if (isLoading) return null;
@@ -167,7 +153,7 @@ const Links = ({ config }) => {
                   <div
                     className="overlay-item"
                     key={index}
-                    onClick={() => handleLinkClick(group, index)}
+                    onClick={() => openModal(group)}
                   >
                     {renderAsset(link.icon)}
                   </div>
@@ -186,24 +172,19 @@ const Links = ({ config }) => {
         centered
         className="overlay-modal"
       >
-        {currentLink.group !== null && currentLink.index !== null && (
-          <div className="modal-overlay-content">
-            {renderAsset(
-              links.overlay[currentLink.group][currentLink.index].url
-            )}
-            <div className="modal-arrows-container">
-              <Button
-                icon={<LeftOutlined />}
-                className="modal-arrow-left"
-                onClick={handlePrevious}
-              />
-              <Button
-                icon={<RightOutlined />}
-                className="modal-arrow-right"
-                onClick={handleNext}
-              />
-            </div>
-          </div>
+        {currentGroup && (
+          <Carousel
+            // dots={false}
+            arrows
+            // prevArrow={<LeftOutlined />}
+            // nextArrow={<RightOutlined />}
+          >
+            {links.overlay[currentGroup].map((link, index) => (
+              <div key={index} className="carousel-item">
+                {renderAsset(link.url)}
+              </div>
+            ))}
+          </Carousel>
         )}
       </Modal>
     </>

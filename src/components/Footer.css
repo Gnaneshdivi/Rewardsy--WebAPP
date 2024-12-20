@@ -76,7 +76,9 @@
 
 .footer-social {
   display: flex;
-  gap: 2px;
+  flex-direction: row;
+  align-items: center;
+  align-items: center;
 }
 
 .social-icon {
@@ -116,10 +118,7 @@
     gap: 5px;
   }
 
-  .footer-bottom {
-    flex-direction: column;
-    align-items: center;
-  }
+
 
   .vertical-divider {
     display: none; /* Hide the vertical divider on mobile */
@@ -127,7 +126,6 @@
   .social-icon {
     font-size: 20px;
     color: var(--primary-color);
-    padding-top: 10px; /* Add padding to space icons out */
   }
   
 }
