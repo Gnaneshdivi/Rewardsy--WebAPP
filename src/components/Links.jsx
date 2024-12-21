@@ -105,13 +105,13 @@ const Links = ({ config }) => {
   };
 
   const openModal = (group) => {
-    setCurrentGroup(group);
+    setCurrentLink({ group, index: null });
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setCurrentGroup(null);
+    setCurrentLink({ group: null, index: null }); 
   };
 
   if (isLoading) return null;
@@ -166,27 +166,23 @@ const Links = ({ config }) => {
       </div>
 
       <Modal
-        open={isModalOpen}
-        onCancel={closeModal}
-        footer={null}
-        centered
-        className="overlay-modal"
-      >
-        {currentGroup && (
-          <Carousel
-            // dots={false}
-            arrows
-            // prevArrow={<LeftOutlined />}
-            // nextArrow={<RightOutlined />}
-          >
-            {links.overlay[currentGroup].map((link, index) => (
-              <div key={index} className="carousel-item">
-                {renderAsset(link.url)}
-              </div>
-            ))}
-          </Carousel>
-        )}
-      </Modal>
+  open={isModalOpen}
+  onCancel={closeModal}
+  footer={null}
+  centered
+  className="overlay-modal"
+>
+  {currentLink.group && (
+    <Carousel arrows>
+      {links.overlay[currentLink.group].map((link, index) => (
+        <div key={index} className="carousel-item">
+          {renderAsset(link.url)}
+        </div>
+      ))}
+    </Carousel>
+  )}
+</Modal>
+
     </>
   );
 };
