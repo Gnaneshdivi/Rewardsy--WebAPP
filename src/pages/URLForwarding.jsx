@@ -15,7 +15,7 @@ const URLForwarding = () => {
         if (data && data.link) {
           const { link, ads, adsLink } = data;
 
-          const redirectUrl = `${link}?showAd=${ads}&img=${encodeURIComponent(adsLink)}`;
+          const redirectUrl = `${link}`;
           // Check if the URL is internal or external
           if (link.startsWith("http") || link.startsWith("https") ) {
             // External URL: Use window.location.href to redirect
