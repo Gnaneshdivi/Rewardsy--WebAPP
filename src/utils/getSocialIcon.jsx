@@ -13,9 +13,9 @@ import {
 import { SocialIcon } from "react-social-icons";
 
 export const getSocialIcon = (url) => {
-  if (!url) return null; // Return null if no URL is provided
+  if (!url) return null; 
 
-  url = url.toLowerCase(); // Convert URL to lowercase for consistent matching
+  url = url.toLowerCase(); 
 
   if (url.includes("instagram")) return <SocialIcon url="https://instagram.com" />;
   if (url.includes("youtube")) return <SocialIcon url="https://youtube.com" />;
@@ -26,7 +26,7 @@ export const getSocialIcon = (url) => {
   if (url.includes("threads")) return <SocialIcon url="https://threads.net" />;
   if (url.includes("link")) return <SocialIcon url={url} network="sharethis" />; // Generic share icon
   if (url.includes("web")) return <SocialIcon url={url} network="website" />; // Website icon
-  if (url.includes("download")) return <SocialIcon url={url} network="email" />;
+  if (url.includes("download")) return <SocialIcon url={url} network="email"/>;
 
   return <GlobalOutlined />; // Return null if no matching platform is found
 };
