@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Links.css";
 import { getLinksByScreen } from "../services/LinksService";
 import { Modal, Button, Divider, Carousel } from "antd";
-import {
-  FilePdfOutlined,
-  LeftOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
+import { FilePdfOutlined } from "@ant-design/icons";
 import { getSocialIcon } from "../utils/getSocialIcon";
 
 const Links = ({ config }) => {
   const [links, setLinks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentLink, setCurrentLink] = useState({ group: null, index: null });
+  const [currentLink, setCurrentLink] = useState({ group: null, index: 0 });
+  const carouselRef = useRef(null); // Ref for the Carousel
 
   useEffect(() => {
     const fetchLinks = async () => {
@@ -104,14 +101,19 @@ const Links = ({ config }) => {
     }
   };
 
-  const openModal = (group) => {
-    setCurrentLink({ group, index: null });
+  const openModal = (group, index) => {
+    setCurrentLink({ group, index });
     setIsModalOpen(true);
+
+    setTimeout(() => {
+      if (carouselRef.current) {
+        carouselRef.current.goTo(index); 
+      }
+    }, 0);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setCurrentLink({ group: null, index: null }); 
   };
 
   if (isLoading) return null;
@@ -153,7 +155,7 @@ const Links = ({ config }) => {
                   <div
                     className="overlay-item"
                     key={index}
-                    onClick={() => openModal(group)}
+                    onClick={() => openModal(group, index)}
                   >
                     {renderAsset(link.icon)}
                   </div>
@@ -166,23 +168,25 @@ const Links = ({ config }) => {
       </div>
 
       <Modal
-  open={isModalOpen}
-  onCancel={closeModal}
-  footer={null}
-  centered
-  className="overlay-modal"
->
-  {currentLink.group && (
-    <Carousel arrows>
-      {links.overlay[currentLink.group].map((link, index) => (
-        <div key={index} className="carousel-item">
-          {renderAsset(link.url)}
-        </div>
-      ))}
-    </Carousel>
-  )}
-</Modal>
-
+        open={isModalOpen}
+        onCancel={closeModal}
+        footer={null}
+        centered
+        className="overlay-modal"
+      >
+        {currentLink.group && (
+          <Carousel
+            arrows
+            ref={carouselRef} 
+          >
+            {links.overlay[currentLink.group].map((link, index) => (
+              <div key={index} className="carousel-item">
+                {renderAsset(link.url)}
+              </div>
+            ))}
+          </Carousel>
+        )}
+      </Modal>
     </>
   );
 };
