@@ -1,24 +1,26 @@
-// src/components/Links.js
 import React, { useEffect, useState } from "react";
 import "./Links.css";
 import { getLinksByScreen } from "../services/LinksService";
-import { Modal, Button, Divider } from "antd"; 
-import { FilePdfOutlined, PlayCircleOutlined, FileImageOutlined } from '@ant-design/icons';
+import { Modal, Button, Divider, Carousel } from "antd";
+import {
+  FilePdfOutlined,
+  LeftOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
 import { getSocialIcon } from "../utils/getSocialIcon";
-// import { SocialIcon } from 'react-social-icons';
-
 
 const Links = ({ config }) => {
   const [links, setLinks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [currentLink, setCurrentLink] = useState({ group: null, index: null });
 
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-        const data = config?.links?.length ? config.links : await getLinksByScreen("store", config?.merchantid);
+        const data = config?.links?.length
+          ? config.links
+          : await getLinksByScreen("store", config?.merchantid);
         const sortedLinks = sortLinks(data);
         setLinks(sortedLinks);
       } catch (error) {
@@ -35,7 +37,7 @@ const Links = ({ config }) => {
       upi: [],
       social: [],
       redirection: [],
-      overlay: {}
+      overlay: {},
     };
 
     links.forEach((link) => {
@@ -68,40 +70,31 @@ const Links = ({ config }) => {
   };
 
   const determineAssetType = (url) => {
-    const extension = url.split('.').pop().toLowerCase();
-    if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) return 'image';
-    if (['mp4', 'webm'].includes(extension)) return 'video';
-    if (['pdf'].includes(extension)) return 'pdf';
-    return 'other';
-  };
-
-  const handleLinkClick = (link) => {
-    if (link.type === "overlay") {
-      setModalContent(link.url);
-      setIsModalOpen(true);
-    } else {
-      window.open(link.url, "_blank");
-    }
+    const extension = url.split(".").pop().toLowerCase();
+    if (["jpg", "jpeg", "png", "gif"].includes(extension)) return "image";
+    if (["mp4", "webm"].includes(extension)) return "video";
+    if (["pdf"].includes(extension)) return "pdf";
+    return "other";
   };
 
   const renderAsset = (url) => {
     const assetType = determineAssetType(url);
     switch (assetType) {
-      case 'image':
+      case "image":
         return <img src={url} alt="Asset" className="overlay-image" />;
-      case 'video':
+      case "video":
         return (
           <video controls className="overlay-video">
             <source src={url} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         );
-      case 'pdf':
+      case "pdf":
         return (
           <Button
             type="primary"
             icon={<FilePdfOutlined />}
-            onClick={() => window.open(url, '_blank')}
+            onClick={() => window.open(url, "_blank")}
           >
             Open PDF
           </Button>
@@ -111,27 +104,38 @@ const Links = ({ config }) => {
     }
   };
 
+  const openModal = (group) => {
+    setCurrentLink({ group, index: null });
+    setIsModalOpen(true);
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
-    setModalContent(null);
+    setCurrentLink({ group: null, index: null }); 
   };
 
   if (isLoading) return null;
+
   return (
     <>
-     <div className="social-links">
+      <div className="social-links">
         {links.social.map((link, index) => (
-          <Button key={index} icon={getSocialIcon(link.url)} onClick={() => handleLinkClick(link)} className="social-icon-button" />
+          <Button
+            key={index}
+            icon={getSocialIcon(link.url)}
+            onClick={() => window.open(link.url, "_blank")}
+            className="social-icon-button"
+          />
         ))}
       </div>
-      {/* Redirection Section */}
+
       <div className="redirection-section">
-        <div className={`chips-container ${isExpanded ? "expanded" : ""}`}>
+        <div className="chips-container">
           {links.redirection.map((link, index) => (
             <div
               key={index}
               className="chip"
-              onClick={() => handleLinkClick(link)}
+              onClick={() => window.open(link.url, "_blank")}
             >
               {link.text}
             </div>
@@ -140,33 +144,45 @@ const Links = ({ config }) => {
       </div>
 
       <div className="overlay-section">
-        {Object.keys(links.overlay).map((identifier, index) => (
-          <React.Fragment key={identifier}>
-          <div className="overlay-group">
-            <h3 className="overlay-group-title">{identifier}</h3>
-            <div className="overlay-horizontal-scroll">
-              {links.overlay[identifier].map((link, linkIndex) => (
-                <div className="overlay-item" key={linkIndex} onClick={() => handleLinkClick(link)}>
-                  {renderAsset(link.icon)}
-                </div>
-              ))}
+        {Object.keys(links.overlay).map((group) => (
+          <React.Fragment key={group}>
+            <div className="overlay-group">
+              <h3 className="overlay-group-title">{group}</h3>
+              <div className="overlay-horizontal-scroll">
+                {links.overlay[group].map((link, index) => (
+                  <div
+                    className="overlay-item"
+                    key={index}
+                    onClick={() => openModal(group)}
+                  >
+                    {renderAsset(link.icon)}
+                  </div>
+                ))}
+              </div>
+              <Divider className="section-divider" />
             </div>
-            <Divider className="section-divider" />
-          </div>
-          
-        </React.Fragment>
-        
+          </React.Fragment>
         ))}
       </div>
 
-      {/* Modal for viewing assets */}
-      <Modal open={isModalOpen} onCancel={closeModal} footer={null} centered className="overlay-modal">
-        {modalContent && (
-          <div className="modal-overlay-content">
-            {renderAsset(modalContent)}
-          </div>
-        )}
-      </Modal>
+      <Modal
+  open={isModalOpen}
+  onCancel={closeModal}
+  footer={null}
+  centered
+  className="overlay-modal"
+>
+  {currentLink.group && (
+    <Carousel arrows>
+      {links.overlay[currentLink.group].map((link, index) => (
+        <div key={index} className="carousel-item">
+          {renderAsset(link.url)}
+        </div>
+      ))}
+    </Carousel>
+  )}
+</Modal>
+
     </>
   );
 };
